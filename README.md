@@ -17,7 +17,9 @@ halo_skills/
 
 ## Installation
 
-### Claude Code
+All skills live under `plugins/halo-skills/skills/<skill-name>/SKILL.md`. Each `SKILL.md` is a self-contained Markdown file with YAML frontmatter (`name`, `description`) followed by the skill body. How you wire that into your agent depends on the runtime.
+
+### Claude Code (marketplace)
 
 ```
 /plugin marketplace add https://github.com/world-federation-of-advertisers/halo_skills
@@ -33,15 +35,35 @@ git clone https://github.com/world-federation-of-advertisers/halo_skills
 cp -r halo_skills/plugins/halo-skills/skills/* ~/.codex/skills/
 ```
 
-### Claude Agent SDK / other agents
+### Claude Agent SDK
 
-Clone the repo and point your skill loader at:
+Clone the repo and point the SDK's skill loader at the skills directory:
 
+```python
+from claude_agent_sdk import ClaudeAgentOptions
+
+options = ClaudeAgentOptions(
+    setting_sources=["project"],
+    # ...
+)
+# Place the cloned skills under .claude/skills/ in your project,
+# or symlink: ln -s /path/to/halo_skills/plugins/halo-skills/skills .claude/skills
 ```
-halo_skills/plugins/halo-skills/skills/
-```
 
-Each subdirectory is a self-contained skill with a `SKILL.md` at its root.
+### Any other agent (generic)
+
+For agents without native skill discovery (Cursor, Continue, Aider, custom LangChain/LlamaIndex agents, raw API clients, etc.):
+
+1. **Clone the repo:**
+   ```bash
+   git clone https://github.com/world-federation-of-advertisers/halo_skills
+   ```
+2. **Choose a loading strategy:**
+   - **Symlink or copy** `plugins/halo-skills/skills/` into whatever path your agent already scans for instructions (e.g. `.cursor/rules/`, `.continue/rules/`, `CONVENTIONS.md` includes).
+   - **Inject into the system prompt** — for lightweight setups, concatenate the `SKILL.md` files (or just their frontmatter) into your agent's system prompt so it knows what's available and can request the body on demand.
+   - **Build a tiny loader** — read each `SKILL.md`, parse the frontmatter, expose `name` + `description` to the model upfront, and load the body only when the model asks for it. This mirrors how Claude Code does progressive disclosure.
+
+The skills themselves are agent-agnostic Markdown — no Claude-specific syntax in the bodies. Any LLM that can follow Markdown instructions can use them.
 
 ## Contributing
 
