@@ -28,7 +28,28 @@ All skills live under `plugins/halo-skills/skills/<skill-name>/SKILL.md`. Each `
 
 Skills auto-activate based on their `description` field — no per-skill configuration needed.
 
-### Codex
+### Any agent via `npx skills`
+
+The [`skills` CLI](https://github.com/vercel-labs/skills) installs `SKILL.md` files into the right directory for 50+ agents (Claude Code, Codex, Cursor, OpenCode, Continue, and more). It reads this repo's `.claude-plugin/marketplace.json` automatically — no extra config needed.
+
+```bash
+# Install into the current project
+npx skills add world-federation-of-advertisers/halo_skills
+
+# Install globally for the current user
+npx skills add world-federation-of-advertisers/halo_skills -g
+
+# Target a specific agent
+npx skills add world-federation-of-advertisers/halo_skills -a codex
+
+# Pick individual skills
+npx skills add world-federation-of-advertisers/halo_skills --list
+npx skills add world-federation-of-advertisers/halo_skills --skill <skill-name>
+```
+
+### Codex (manual)
+
+If you'd rather not use `npx skills`:
 
 ```bash
 git clone https://github.com/world-federation-of-advertisers/halo_skills
@@ -52,7 +73,7 @@ options = ClaudeAgentOptions(
 
 ### Any other agent (generic)
 
-For agents without native skill discovery (Cursor, Continue, Aider, custom LangChain/LlamaIndex agents, raw API clients, etc.):
+For most agents, `npx skills` (above) is the easiest path. For custom setups — raw API clients, in-house LangChain/LlamaIndex agents, or anything else without a `skills`-CLI integration:
 
 1. **Clone the repo:**
    ```bash
