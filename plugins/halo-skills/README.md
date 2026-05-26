@@ -1,12 +1,6 @@
 # halo-skills
 
-Agent skills for users of the [Halo cross-media measurement](https://github.com/world-federation-of-advertisers/cross-media-measurement) system.
-
-Audiences:
-
-- **Advertisers / clients** — campaign measurement workflows
-- **Measurement Coordinators (MCs)** — system operation and report fulfillment
-- **Agencies** — multi-client measurement and reporting
+Agent skills for consumers of the [Halo cross-media measurement](https://github.com/world-federation-of-advertisers/cross-media-measurement) API.
 
 ## Skill directory
 

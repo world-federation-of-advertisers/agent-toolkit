@@ -1,6 +1,6 @@
 # halo_skills
 
-AI agent skills for users of the [Halo cross-media measurement](https://github.com/world-federation-of-advertisers/cross-media-measurement) system — advertisers, Measurement Coordinators (MCs), and agencies.
+AI agent skills for consumers of the [Halo cross-media measurement](https://github.com/world-federation-of-advertisers/cross-media-measurement) API.
 
 ## What's in here
 

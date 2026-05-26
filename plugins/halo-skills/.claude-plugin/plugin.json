@@ -1,7 +1,7 @@
 {
   "name": "halo-skills",
   "version": "0.1.0",
-  "description": "Skill library for advertisers, Measurement Coordinators, and agencies working with Halo cross-media measurement",
+  "description": "Skill library for consumers of the Halo cross-media measurement API",
   "author": {
     "name": "World Federation of Advertisers",
     "url": "https://github.com/world-federation-of-advertisers"
