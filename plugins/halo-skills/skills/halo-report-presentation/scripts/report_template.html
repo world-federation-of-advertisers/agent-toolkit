@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>{{ENTITY}} — Campaign Report | {{BRAND}}</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js"></script>
+<script src="https://unpkg.com/@popperjs/core@2"></script>
+<script src="https://unpkg.com/tippy.js@6"></script>
+<!-- NOTE: This template uses innerHTML for tooltip rendering with pre-validated
+     data from the GLOSSARY constant and formatted metric values. All dynamic
+     content is derived from the embedded DATA_CONTRACT (server-generated, not
+     user-supplied). No user input is rendered as HTML. -->
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --blue:#3B82F6;--blue-light:#EFF6FF;--teal:#14B8A6;--green:#10B981;--green-light:#ECFDF5;
+  --amber:#F59E0B;--amber-light:#FFFBEB;--red:#EF4444;--purple:#8B5CF6;
+  --navy:#0F172A;--navy-800:#1E293B;--slate-700:#334155;--slate-600:#475569;--slate-500:#64748B;
+  --slate-400:#94A3B8;--slate-300:#CBD5E1;--slate-200:#E2E8F0;--slate-100:#F1F5F9;--slate-50:#F8FAFC;--white:#FFFFFF;
+  --sidebar-w:260px;--font:'Plus Jakarta Sans',system-ui,-apple-system,sans-serif;--mono:'IBM Plex Mono','Fira Code',monospace;
+  --shadow-sm:0 1px 2px rgba(0,0,0,.04);--shadow:0 1px 3px rgba(0,0,0,.06),0 1px 2px rgba(0,0,0,.04);
+  --shadow-md:0 4px 6px -1px rgba(0,0,0,.07),0 2px 4px -2px rgba(0,0,0,.05);--radius:12px;--radius-lg:16px;
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--font);background:var(--slate-50);color:var(--navy-800);display:flex;min-height:100vh;-webkit-font-smoothing:antialiased;word-spacing:.05em;letter-spacing:.01em}
+#sidebar{width:var(--sidebar-w);min-height:100vh;position:fixed;top:0;left:0;display:flex;flex-direction:column;z-index:100;overflow-y:auto;background:linear-gradient(180deg,#0F172A 0%,#1a2744 100%)}
+#sidebar::-webkit-scrollbar{width:0}
+.sidebar-brand{padding:28px 24px 24px;border-bottom:1px solid rgba(255,255,255,.06)}
+.sidebar-brand .brand-tag{font-size:9px;font-family:var(--mono);letter-spacing:2.5px;text-transform:uppercase;color:var(--blue);background:rgba(59,130,246,.1);border:1px solid rgba(59,130,246,.2);padding:4px 10px;border-radius:6px;display:inline-block;margin-bottom:12px;font-weight:600}
+.sidebar-brand h2{font-size:15px;font-weight:700;color:#fff;line-height:1.4;letter-spacing:-.01em}
+.sidebar-brand .date-range{font-size:11px;color:var(--slate-400);margin-top:4px;font-family:var(--mono);font-weight:500}
+.scope-toggle{padding:16px 24px;border-bottom:1px solid rgba(255,255,255,.06);display:flex;flex-direction:column;gap:8px}
+.scope-toggle .scope-label{font-size:9px;font-family:var(--mono);letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.3);font-weight:600}
+.scope-pills{display:flex;gap:6px}
+.scope-pill{display:inline-flex;align-items:center;gap:5px;font-size:10px;font-family:var(--mono);font-weight:600;padding:5px 10px;border-radius:6px}
+.scope-pill.active{background:rgba(59,130,246,.15);color:#93C5FD;border:1px solid rgba(59,130,246,.25)}
+.scope-pill.inactive{background:rgba(255,255,255,.04);color:var(--slate-500);border:1px solid rgba(255,255,255,.08)}
+.sidebar-nav{padding:20px 0;flex:1}
+.nav-group-label{font-size:9px;font-family:var(--mono);letter-spacing:2.5px;text-transform:uppercase;color:rgba(255,255,255,.25);padding:0 24px;margin:16px 0 8px;font-weight:600}
+.nav-link{display:flex;align-items:center;gap:12px;padding:10px 24px;font-size:12.5px;font-weight:500;color:var(--slate-400);text-decoration:none;border-left:2px solid transparent;transition:all .2s ease;letter-spacing:-.01em}
+.nav-link:hover{color:#E2E8F0;background:rgba(255,255,255,.03)}
+.nav-link.active{color:#fff;background:rgba(255,255,255,.05);border-left-color:var(--blue)}
+.nav-link .num{width:22px;height:22px;border-radius:6px;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-family:var(--mono);background:rgba(255,255,255,.06);color:var(--slate-500);transition:all .2s ease}
+.nav-link.active .num{background:var(--blue);color:#fff}
+.sidebar-footer{padding:20px 24px;border-top:1px solid rgba(255,255,255,.06);font-size:10px;color:var(--slate-500);font-family:var(--mono)}
+#main{margin-left:var(--sidebar-w);flex:1;padding:40px 56px 80px;max-width:1140px}
+.hero{margin-bottom:40px;padding-bottom:32px;border-bottom:1px solid var(--slate-200)}
+.hero .eyebrow{font-size:10px;font-family:var(--mono);letter-spacing:2.5px;text-transform:uppercase;color:var(--blue);font-weight:600;margin-bottom:12px}
+.hero h1{font-size:32px;font-weight:800;color:var(--navy);line-height:1.15;letter-spacing:-.025em;margin-bottom:4px}
+.hero h1 .entity{color:var(--blue)}
+.hero .meta-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px;font-size:12px;color:var(--slate-500);align-items:center}
+.hero .meta-row .sep{color:var(--slate-300)}
+.hero .meta-row strong{color:var(--slate-700);font-weight:600}
+.hero .report-id{margin-top:8px;font-size:10px;color:var(--slate-400);font-family:var(--mono);font-weight:500}
+.narrative{background:linear-gradient(135deg,#0F172A,#1E3A5F);border-radius:var(--radius-lg);padding:28px 32px;margin-bottom:32px;color:#fff;position:relative;overflow:hidden}
+.narrative::before{content:'';position:absolute;top:-50%;right:-20%;width:300px;height:300px;background:radial-gradient(circle,rgba(59,130,246,.15) 0%,transparent 70%);pointer-events:none}
+.narrative .nar-label{font-size:10px;font-family:var(--mono);letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:12px;font-weight:600}
+.narrative p{font-size:14px;line-height:1.7;color:rgba(255,255,255,.85);max-width:680px;position:relative;word-spacing:.05em;letter-spacing:.01em}
+.narrative p strong{color:#fff;font-weight:600}
+.kpi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:48px}
+.kpi{background:var(--white);border:1px solid var(--slate-200);border-radius:var(--radius);padding:22px 24px;position:relative;overflow:hidden;box-shadow:var(--shadow-sm);transition:box-shadow .2s ease,transform .2s ease}
+.kpi:hover{box-shadow:var(--shadow-md);transform:translateY(-1px)}
+.kpi .accent{position:absolute;top:0;left:0;right:0;height:3px;border-radius:var(--radius) var(--radius) 0 0}
+.kpi .kpi-label{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:1.2px;color:var(--slate-400);margin-bottom:8px}
+.kpi .kpi-value{font-size:28px;font-weight:800;color:var(--navy);font-family:var(--mono);line-height:1;letter-spacing:-.02em}
+.kpi .kpi-sub{font-size:11px;color:var(--slate-500);margin-top:6px;display:flex;align-items:center;gap:8px}
+.kpi .kpi-badge{font-size:8px;font-family:var(--mono);font-weight:700;letter-spacing:1px;padding:2px 6px;border-radius:4px;text-transform:uppercase}
+.badge-all{background:rgba(16,185,129,.08);color:var(--green);border:1px solid rgba(16,185,129,.15)}
+.section{margin-bottom:56px;scroll-margin-top:24px;opacity:0;transform:translateY(16px);transition:all .5s ease}
+.section.visible{opacity:1;transform:translateY(0)}
+.section-head{display:flex;align-items:flex-start;gap:16px;margin-bottom:24px}
+.section-num{width:36px;height:36px;border-radius:10px;background:var(--blue);color:#fff;font-size:14px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-family:var(--mono);box-shadow:0 2px 8px rgba(59,130,246,.25)}
+.section-head h2{font-size:20px;font-weight:700;color:var(--navy);letter-spacing:-.01em}
+.section-head .desc{font-size:13px;color:var(--slate-500);margin-top:4px;line-height:1.5}
+.card{background:var(--white);border:1px solid var(--slate-200);border-radius:var(--radius-lg);padding:28px;margin-bottom:20px;box-shadow:var(--shadow-sm)}
+.card-title{font-size:14px;font-weight:700;color:var(--navy-800);margin-bottom:4px;letter-spacing:-.01em}
+.card-sub{font-size:11px;color:var(--slate-400);margin-bottom:24px;font-weight:500;line-height:1.6}
+.chart-wrap{position:relative;height:300px;width:100%}
+.chart-wrap.tall{height:340px}
+.note{border-radius:var(--radius);padding:16px 20px;margin-bottom:16px;display:flex;gap:14px;align-items:flex-start;font-size:13px;line-height:1.65}
+.note-icon{font-size:15px;flex-shrink:0;margin-top:1px}
+.note-body .note-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;margin-bottom:4px}
+.note-green{background:var(--green-light);border:1px solid #A7F3D0;color:#065F46}
+.note-amber{background:var(--amber-light);border:1px solid #FDE68A;color:#92400E}
+.note-subtle{background:var(--slate-50);border:1px solid var(--slate-200);color:var(--slate-600)}
+.pub-table{width:100%;border-collapse:collapse;font-size:13px}
+.pub-table thead th{padding:12px 16px;text-align:left;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:var(--slate-400);border-bottom:2px solid var(--slate-200);font-family:var(--mono)}
+.pub-table thead th.right{text-align:right}
+.pub-table tbody td{padding:14px 16px;border-bottom:1px solid var(--slate-100);font-family:var(--mono);font-weight:500;font-size:13px}
+.pub-table tbody td.right{text-align:right}
+.pub-table tbody td.bold{font-weight:700}
+.pub-table .dot{width:10px;height:10px;border-radius:50%;display:inline-block;margin-right:8px;vertical-align:middle}
+.pub-table tfoot td{padding:14px 16px;font-weight:700;border-top:2px solid var(--slate-200);font-family:var(--mono);font-size:13px}
+.pub-table tfoot td.right{text-align:right}
+.venn-container{display:flex;justify-content:center;padding:16px 0 8px}
+.venn-container svg{max-width:100%;height:auto}
+.venn-equation{display:flex;align-items:center;justify-content:center;gap:12px;padding:16px 0 4px;flex-wrap:wrap}
+.venn-eq-item{display:flex;flex-direction:column;align-items:center;gap:2px;padding:10px 18px;border-radius:10px;background:var(--slate-50);border:1px solid var(--slate-200);min-width:100px}
+.venn-eq-item .eq-val{font-size:18px;font-weight:800;font-family:var(--mono);color:var(--navy);letter-spacing:-.02em}
+.venn-eq-item .eq-label{font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:var(--slate-400)}
+.venn-eq-item.eq-result{background:var(--green-light);border-color:#A7F3D0}
+.venn-eq-item.eq-result .eq-val{color:#065F46}
+.venn-eq-item.eq-result .eq-label{color:#059669}
+.venn-eq-op{font-size:20px;font-weight:700;color:var(--slate-400);font-family:var(--mono)}
+.divider{border:none;border-top:1px solid var(--slate-200);margin:48px 0}
+.tooltip-term{border-bottom:1px dotted rgba(255,255,255,.35);cursor:help;color:inherit;font-weight:inherit;padding-bottom:1px;display:inline}
+.card .tooltip-term,.note .tooltip-term,.hero .tooltip-term,.section-head .tooltip-term{border-bottom-color:var(--blue);opacity:.85}
+.card .tooltip-term:hover,.note .tooltip-term:hover,.hero .tooltip-term:hover,.section-head .tooltip-term:hover{opacity:1;color:var(--blue);border-bottom-color:var(--blue)}
+.tippy-box[data-theme~='xmm']{background-color:var(--navy);font-size:12px;line-height:1.6;border-radius:8px;box-shadow:0 8px 24px rgba(0,0,0,.4)}
+.tippy-box[data-theme~='xmm'][data-placement^='top']>.tippy-arrow::before{border-top-color:var(--navy)}
+.tippy-box[data-theme~='xmm'][data-placement^='bottom']>.tippy-arrow::before{border-bottom-color:var(--navy)}
+.tippy-box[data-theme~='xmm'] .tooltip-title{font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--blue);margin-bottom:6px;font-family:var(--mono);display:block}
+.tippy-box[data-theme~='xmm'] .tooltip-body{font-size:11.5px;line-height:1.55;color:#fff}
+.pitfall-alert{background:#FFFBEB;border:1px solid #FDE68A;border-left:4px solid #F59E0B;border-radius:10px;padding:14px 18px;margin-top:14px;font-size:13px;color:#92400E;line-height:1.6}
+.pitfall-alert strong{font-weight:700}
+@media(max-width:1024px){.kpi-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:768px){#sidebar{display:none}#main{margin-left:0;padding:24px 20px}.kpi-grid{grid-template-columns:1fr}.hero h1{font-size:24px}}
+</style>
+</head>
+<body>
+<nav id="sidebar">
+  <div class="sidebar-brand">
+    <div class="brand-tag">Aquila XMM</div>
+    <h2 id="sb-entity"></h2>
+    <div class="date-range" id="sb-dates"></div>
+  </div>
+  <div class="scope-toggle">
+    <div class="scope-label">IQ Filters</div>
+    <div class="scope-pills" id="sb-iq"></div>
+  </div>
+  <div class="sidebar-nav">
+    <div class="nav-group-label">Report</div>
+    <a href="#summary" class="nav-link active"><span class="num">0</span>Executive Summary</a>
+    <a href="#reach"   class="nav-link"><span class="num">1</span>Reach Analysis</a>
+    <a href="#freq"    class="nav-link"><span class="num">2</span>Frequency Distribution</a>
+    <a href="#weekly"  class="nav-link" id="nav-weekly" style="display:none"><span class="num">3</span>Weekly Delivery</a>
+    <a href="#pubs"    class="nav-link"><span class="num">4</span>Publisher Breakdown</a>
+    <a href="#synth"   class="nav-link"><span class="num">5</span>Synthesis</a>
+  </div>
+  <div class="sidebar-footer">Origin XMM &middot; Cross-Media Measurement</div>
+</nav>
+<main id="main">
+  <div class="hero" id="summary">
+    <div class="eyebrow">Origin Cross-Media Measurement</div>
+    <h1>Campaign Report<br><span class="entity" id="hdr-entity"></span></h1>
+    <div class="meta-row">
+      <span id="hdr-brand"></span><span class="sep">/</span>
+      <span id="hdr-dates"></span><span class="sep">/</span>
+      <span>Universe: <strong id="hdr-universe"></strong></span>
+    </div>
+    <div class="report-id" id="hdr-report"></div>
+  </div>
+  <div class="narrative">
+    <div class="nar-label">Executive Summary</div>
+    <p id="narrative-text"></p>
+  </div>
+  <div class="kpi-grid" id="kpi-grid"></div>
+  <hr class="divider" />
+  <section class="section" id="reach">
+    <div class="section-head"><div class="section-num">1</div><div><h2>Reach Analysis</h2><div class="desc">Stacked incremental reach across publishers and cross-publisher overlap.</div></div></div>
+    <div class="card">
+      <div class="card-title">Stacked Incremental Reach</div>
+      <div class="card-sub">Each publisher's contribution to total net reach, ordered by anchor.</div>
+      <div class="chart-wrap tall"><div id="chartReach" style="width:100%;height:100%"></div></div>
+    </div>
+    <div class="card" id="venn-card" style="display:none">
+      <div class="card-title">Cross-Publisher Overlap</div>
+      <div class="card-sub">Audience deduplication across publishers.</div>
+      <div class="venn-container" id="venn-container"></div>
+      <div class="venn-equation" id="venn-equation"></div>
+    </div>
+    <div id="pitfall-reach"></div>
+    <div id="interp-reach" class="note note-subtle" style="display:none"><div class="note-icon">&#128202;</div><div class="note-body"><div class="note-label">Interpretation</div><span id="insight-reach"></span></div></div>
+  </section>
+  <section class="section" id="freq">
+    <div class="section-head"><div class="section-num">2</div><div><h2>Frequency Distribution</h2><div class="desc">K+ reach: how many people saw the campaign at each frequency threshold.</div></div></div>
+    <div class="card"><div class="card-title">Reach by Frequency Threshold</div><div class="card-sub" id="freq-caption"></div><div class="chart-wrap tall"><div id="chartFreq" style="width:100%;height:100%"></div></div></div>
+    <div id="pitfall-freq"></div>
+    <div id="interp-freq" class="note note-subtle" style="display:none"><div class="note-icon">&#128202;</div><div class="note-body"><div class="note-label">Interpretation</div><span id="insight-freq"></span></div></div>
+  </section>
+  <section class="section" id="weekly" style="display:none">
+    <div class="section-head"><div class="section-num">3</div><div><h2>Weekly Delivery</h2><div class="desc">Impression delivery and reach build over time, by publisher.</div></div></div>
+    <div id="weekly-imps-section"><div class="card"><div class="card-title">Weekly Impressions by Publisher</div><div class="card-sub">Stacked impression delivery per week showing pacing patterns.</div><div class="chart-wrap tall"><div id="chartWeeklyImps" style="width:100%;height:100%"></div></div></div>
+    <div id="pitfall-weekly-imps"></div>
+    <div id="interp-weekly-imps" class="note note-subtle" style="display:none"><div class="note-icon">&#128202;</div><div class="note-body"><div class="note-label">Interpretation</div><span id="insight-weekly-imps"></span></div></div></div>
+    <div class="card"><div class="card-title">Cumulative Reach Build</div><div class="card-sub">How net reach accumulated over the campaign.</div><div class="chart-wrap"><div id="chartWeeklyReach" style="width:100%;height:100%"></div></div></div>
+    <div id="pitfall-weekly-reach"></div>
+    <div id="interp-weekly-reach" class="note note-subtle" style="display:none"><div class="note-icon">&#128202;</div><div class="note-body"><div class="note-label">Interpretation</div><span id="insight-weekly-reach"></span></div></div>
+    <div id="weekly-freq-section"><div class="card"><div class="card-title">Weekly Frequency by Publisher</div><div class="card-sub">Per-publisher average frequency each week.</div><div class="chart-wrap"><div id="chartWeeklyFreq" style="width:100%;height:100%"></div></div></div>
+    <div id="pitfall-weekly-freq"></div>
+    <div id="interp-weekly-freq" class="note note-subtle" style="display:none"><div class="note-icon">&#128202;</div><div class="note-body"><div class="note-label">Interpretation</div><span id="insight-weekly-freq"></span></div></div></div>
+  </section>
+  <section class="section" id="pubs">
+    <div class="section-head"><div class="section-num">4</div><div><h2>Publisher Breakdown</h2><div class="desc">Per-publisher reach, frequency, impressions, and unique contribution.</div></div></div>
+    <div class="card"><div id="pub-table-wrap"></div></div>
+    <div id="pitfall-pubs"></div>
+    <div id="interp-pubs" class="note note-subtle" style="display:none"><div class="note-icon">&#128202;</div><div class="note-body"><div class="note-label">Interpretation</div><span id="insight-pubs"></span></div></div>
+  </section>
+  <div id="custom-graphs-container"></div>
+  <section class="section" id="synth">
+    <div class="section-head"><div class="section-num">5</div><div><h2>Synthesis</h2><div class="desc">Key findings from the cross-media measurement.</div></div></div>
+    <div class="note note-green"><div class="note-icon">&#128161;</div><div class="note-body"><div class="note-label">Key Findings</div><span id="synth-findings"></span></div></div>
+    <div class="note note-amber"><div class="note-icon">&#9888;</div><div class="note-body"><div class="note-label">Note</div>Cost data is not available in Origin reports. Overlay publisher spend data for efficiency analysis.</div></div>
+  </section>
+</main>
+<script>
+var DATA = {{DATA_CONTRACT}};
+
+var M = DATA.meta, K = DATA.kpis, PD = DATA.publisher_details || [], SI = DATA.stacked_incremental || [];
+var fc = DATA.freq_curve || [], PR = DATA.publisher_reach || {};
+var fmt = function(n,d){d=d||0;return n==null?'—':n.toLocaleString('en-US',{maximumFractionDigits:d})};
+var fmtM = function(n){return n==null?'—':(n/1e6).toFixed(1)+'M'};
+var C = {blue:'#3B82F6',teal:'#14B8A6',green:'#10B981',amber:'#F59E0B',red:'#EF4444',purple:'#8B5CF6'};
+var PCOLS = ['#3B82F6','#14B8A6','#8B5CF6','#F59E0B'];
+
+// Header
+document.getElementById('sb-entity').textContent = M.entity;
+document.getElementById('sb-dates').textContent = M.date_range;
+document.getElementById('hdr-entity').textContent = M.entity;
+document.getElementById('hdr-brand').textContent = M.brand;
+document.getElementById('hdr-dates').textContent = M.date_range;
+document.getElementById('hdr-universe').textContent = fmt(M.universe);
+document.getElementById('hdr-report').textContent = M.report_name;
+document.title = M.entity + ' — Report';
+
+// IQ pills
+var iqEl = document.getElementById('sb-iq');
+(M.iq_filters||[]).forEach(function(f){
+  var s = document.createElement('span');
+  s.className = 'scope-pill active';
+  s.textContent = '✓ ' + f;
+  iqEl.appendChild(s);
+});
+
+// Narrative
+var pop = M.universe || 1, netReach = K.net_reach || 0;
+var narText = 'This campaign delivered ' + fmtM(K.total_impressions) + ' impressions across ' +
+  (M.publishers||[]).length + ' publishers, reaching a deduplicated audience of ' + fmtM(netReach) +
+  ' people — ' + (K.percent_reach||0).toFixed(1) + '% of the ' + fmt(pop) + ' universe.';
+if (K.avg_frequency) narText += ' Average frequency: ' + K.avg_frequency.toFixed(1) + '×.';
+if (K.grps) narText += ' GRPs: ' + K.grps.toFixed(1) + '.';
+document.getElementById('narrative-text').textContent = narText;
+
+// KPI cards
+var kpis = [
+  {label:'Net Reach',val:fmtM(K.net_reach),sub:(K.percent_reach||0).toFixed(1)+'% of universe',color:C.blue},
+  {label:'Impressions',val:fmtM(K.total_impressions),sub:'across all publishers',color:C.teal},
+  {label:'Avg Frequency',val:K.avg_frequency?(K.avg_frequency.toFixed(2)+'×'):'—',sub:'impressions per person',color:C.green},
+  {label:'GRPs',val:K.grps?K.grps.toFixed(1):'—',sub:'gross rating points',color:C.purple},
+  {label:'Publishers',val:''+PD.length,sub:(M.publishers||[]).join(', '),color:C.amber},
+  {label:'Duration',val:M.duration||'—',sub:M.date_range,color:'#64748B'}
+];
+var kpiEl = document.getElementById('kpi-grid');
+kpis.forEach(function(k){
+  var div = document.createElement('div'); div.className = 'kpi';
+  var acc = document.createElement('div'); acc.className = 'accent'; acc.style.background = k.color; div.appendChild(acc);
+  var lbl = document.createElement('div'); lbl.className = 'kpi-label'; lbl.textContent = k.label; div.appendChild(lbl);
+  var val = document.createElement('div'); val.className = 'kpi-value'; val.textContent = k.val; div.appendChild(val);
+  var sub = document.createElement('div'); sub.className = 'kpi-sub'; sub.textContent = k.sub; div.appendChild(sub);
+  kpiEl.appendChild(div);
+});
+
+// Reach chart (stacked incremental)
+if (SI.length > 0 && PD.length > 0) {
+  var chart = echarts.init(document.getElementById('chartReach'));
+  var cats = PD.map(function(p,i){ return p.name + '\n(' + (SI[i] ? (SI[i]/netReach*100).toFixed(0) : '0') + '%)'; });
+  chart.setOption({
+    tooltip:{trigger:'axis',axisPointer:{type:'shadow'},formatter:function(p){return p[0].name.split('\n')[0]+': '+fmtM(p[0].value)}},
+    grid:{left:'60px',right:'30px',top:'30px',bottom:'60px'},
+    xAxis:{type:'category',data:cats,axisLine:{lineStyle:{color:'#E2E8F0'}},axisTick:{show:false},axisLabel:{color:'#94A3B8',fontSize:11,interval:0}},
+    yAxis:{type:'value',axisLine:{show:false},axisTick:{show:false},splitLine:{lineStyle:{color:'rgba(226,232,240,.5)'}},axisLabel:{color:'#94A3B8',fontSize:11,formatter:function(v){return (v/1e6).toFixed(0)+'M'}}},
+    series:[{type:'bar',data:SI.map(function(v,i){return{value:v,itemStyle:{color:PCOLS[i%PCOLS.length],borderRadius:[6,6,0,0]}}}),barMaxWidth:60,label:{show:true,position:'top',formatter:function(p){return fmtM(p.value)},fontSize:11,fontWeight:700,color:'#334155',fontFamily:"'IBM Plex Mono',monospace"}}]
+  });
+  window.addEventListener('resize',function(){chart.resize()});
+}
+
+// Venn diagram (matching internal VennDiagram.tsx from xmm_reports)
+var PR = DATA.publisher_reach || {};
+if (PR.meta_total_reach && PR.tv_total_reach && PD.length >= 2) {
+  document.getElementById('venn-card').style.display = '';
+
+  var pub1Reach = PR.meta_total_reach, pub2Reach = PR.tv_total_reach;
+  var pub1Unique = PR.meta_unique_reach || 0, pub2Unique = PR.tv_unique_reach || 0;
+  var grossR = pub1Reach + pub2Reach;
+  var overlapR = grossR - netReach;
+  var pub1Label = PR.pub1_name || PD[0].name;
+  var pub2Label = PR.pub2_name || (PD.length > 2 ? 'Others' : PD[1].name);
+
+  var overlapPct = (overlapR / pop * 100).toFixed(1);
+  var netPct = (netReach / pop * 100).toFixed(1);
+  var pub1OnlyPct = (pub1Unique / pop * 100).toFixed(1);
+  var pub2OnlyPct = (pub2Unique / pop * 100).toFixed(1);
+
+  // Proportional circle radii (area ~ reach)
+  var maxR = 145;
+  var maxReachVal = Math.max(pub1Reach, pub2Reach) || 1;
+  var r1 = maxR * Math.sqrt(pub1Reach / maxReachVal);
+  var r2 = maxR * Math.sqrt(pub2Reach / maxReachVal);
+
+  // Binary search for circle distance matching overlap area
+  function intersectionArea(ra, rb, d) {
+    if (d >= ra + rb) return 0;
+    if (d <= Math.abs(ra - rb)) return Math.PI * Math.min(ra, rb) * Math.min(ra, rb);
+    var a = (ra * ra - rb * rb + d * d) / (2 * d);
+    var h = Math.sqrt(Math.max(0, ra * ra - a * a));
+    return ra * ra * Math.acos(a / ra) + rb * rb * Math.acos((d - a) / rb) - d * h;
+  }
+  var targetArea = Math.PI * r1 * r1 * (overlapR / (pub1Reach || 1));
+  var dLo = Math.abs(r1 - r2), dHi = r1 + r2, dist = (dLo + dHi) / 2;
+  for (var iter = 0; iter < 80; iter++) {
+    dist = (dLo + dHi) / 2;
+    if (intersectionArea(r1, r2, dist) > targetArea) dLo = dist; else dHi = dist;
+  }
+
+  var W = 700, H = 440, cy = 195;
+  var totalSpan = dist + r1 + r2;
+  var startX = (W - totalSpan) / 2 + r1;
+  var cx1 = startX, cx2 = startX + dist;
+  var intX = (r1 * r1 - r2 * r2 + dist * dist) / (2 * dist);
+  var pub1LabelX = cx1 - (r1 - intX) / 2;
+  var pub2LabelX = cx2 + (r2 - (dist - intX)) / 2;
+  var overlapCx = (cx1 + cx2) / 2;
+  var netBoxY = cy + Math.max(r1, r2) + 42;
+
+  var FONT_D = "'Plus Jakarta Sans',system-ui,sans-serif";
+  var FONT_M = "'IBM Plex Mono',monospace";
+
+  // Build SVG
+  var ns = 'http://www.w3.org/2000/svg';
+  var svg = document.createElementNS(ns, 'svg');
+  svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
+  svg.style.maxWidth = '100%'; svg.style.height = 'auto';
+
+  // Defs: clip-path for overlap
+  var defs = document.createElementNS(ns, 'defs');
+  var cp = document.createElementNS(ns, 'clipPath'); cp.setAttribute('id', 'clip-overlap');
+  var cpC = document.createElementNS(ns, 'circle');
+  cpC.setAttribute('cx', cx2); cpC.setAttribute('cy', cy); cpC.setAttribute('r', r2);
+  cp.appendChild(cpC); defs.appendChild(cp); svg.appendChild(defs);
+
+  // Universe background
+  var bg = document.createElementNS(ns, 'rect');
+  bg.setAttribute('x', 30); bg.setAttribute('y', 16);
+  bg.setAttribute('width', W - 60); bg.setAttribute('height', cy + Math.max(r1, r2) + 20 - 16);
+  bg.setAttribute('rx', 16); bg.setAttribute('fill', '#F8FAFC');
+  bg.setAttribute('stroke', '#E2E8F0'); bg.setAttribute('stroke-width', '1');
+  svg.appendChild(bg);
+
+  function svgText(x, y, text, size, weight, color, family, anchor) {
+    var t = document.createElementNS(ns, 'text');
+    t.setAttribute('x', x); t.setAttribute('y', y);
+    t.setAttribute('text-anchor', anchor || 'middle');
+    t.setAttribute('font-size', size); t.setAttribute('font-weight', weight);
+    t.setAttribute('fill', color); t.setAttribute('font-family', family || FONT_D);
+    t.textContent = text; svg.appendChild(t);
+  }
+
+  svgText(50, 40, 'UNIVERSE: ' + fmt(pop), 10, 600, '#94A3B8', FONT_M, 'start');
+
+  // Circles
+  function svgCircle(cx, cy, r, fill, opacity, stroke, sw, clip) {
+    var c = document.createElementNS(ns, 'circle');
+    c.setAttribute('cx', cx); c.setAttribute('cy', cy); c.setAttribute('r', r);
+    c.setAttribute('fill', fill); c.setAttribute('fill-opacity', opacity);
+    if (stroke) { c.setAttribute('stroke', stroke); c.setAttribute('stroke-width', sw || 2.5); }
+    else { c.setAttribute('stroke', 'none'); }
+    if (clip) c.setAttribute('clip-path', clip);
+    svg.appendChild(c);
+  }
+  svgCircle(cx1, cy, r1, C.blue, 0.18, C.blue, 2.5);
+  svgCircle(cx2, cy, r2, C.teal, 0.18, C.teal, 2.5);
+  svgCircle(cx1, cy, r1, '#8B5CF6', 0.22, null, 0, 'url(#clip-overlap)');
+
+  // Publisher headers above circles — push apart if too close
+  var labelGap = Math.abs(cx2 - cx1);
+  var minLabelGap = 160;
+  var lx1 = cx1, lx2 = cx2;
+  if (labelGap < minLabelGap) {
+    var mid = (cx1 + cx2) / 2;
+    lx1 = mid - minLabelGap / 2;
+    lx2 = mid + minLabelGap / 2;
+  }
+  svgText(lx1, cy - Math.max(r1, r2) - 18, pub1Label, 13, 700, C.blue, FONT_D);
+  svgText(lx1, cy - Math.max(r1, r2) - 4, fmtM(pub1Reach) + ' total', 10, 500, '#64748B', FONT_M);
+  svgText(lx2, cy - Math.max(r1, r2) - 18, pub2Label, 13, 700, C.teal, FONT_D);
+  svgText(lx2, cy - Math.max(r1, r2) - 4, fmtM(pub2Reach) + ' total', 10, 500, '#64748B', FONT_M);
+
+  // Numbers inside circles (no text labels)
+  svgText(pub1LabelX, cy + 4, fmtM(pub1Unique), 17, 800, '#1E3A5F', FONT_M);
+  svgText(pub1LabelX, cy + 22, pub1OnlyPct + '%', 11, 600, C.blue, FONT_M);
+  svgText(pub2LabelX, cy + 4, fmtM(pub2Unique), 17, 800, '#134E4A', FONT_M);
+  svgText(pub2LabelX, cy + 22, pub2OnlyPct + '%', 11, 600, C.teal, FONT_M);
+  svgText(overlapCx, cy + 2, fmtM(overlapR), 15, 800, '#5B21B6', FONT_M);
+  svgText(overlapCx, cy + 20, overlapPct + '%', 11, 600, '#7C3AED', FONT_M);
+
+  // Net Reach box
+  var nb = document.createElementNS(ns, 'rect');
+  nb.setAttribute('x', W / 2 - 145); nb.setAttribute('y', netBoxY - 18);
+  nb.setAttribute('width', 290); nb.setAttribute('height', 36);
+  nb.setAttribute('rx', 8); nb.setAttribute('fill', '#ECFDF5');
+  nb.setAttribute('stroke', '#A7F3D0'); nb.setAttribute('stroke-width', '1.5');
+  svg.appendChild(nb);
+  svgText(W / 2 - 76, netBoxY + 5, 'Net Campaign Reach:', 11, 600, '#065F46', FONT_D);
+  svgText(W / 2 + 48, netBoxY + 5, fmtM(netReach), 14, 800, '#065F46', FONT_M);
+  svgText(W / 2 + 106, netBoxY + 5, '(' + netPct + '%)', 11, 600, '#10B981', FONT_M);
+
+  document.getElementById('venn-container').appendChild(svg);
+
+  // Equation bar
+  var eqEl = document.getElementById('venn-equation');
+  [{val:fmtM(pub1Reach),label:pub1Label,cls:''},{op:'+'},{val:fmtM(pub2Reach),label:pub2Label,cls:''},{op:'−'},{val:fmtM(overlapR),label:'Overlap',cls:''},{op:'='},{val:fmtM(netReach),label:'Net Reach',cls:' eq-result'}].forEach(function(item){
+    if(item.op){var s=document.createElement('span');s.className='venn-eq-op';s.textContent=item.op;eqEl.appendChild(s);}
+    else{var d=document.createElement('div');d.className='venn-eq-item'+item.cls;var v=document.createElement('div');v.className='eq-val';v.textContent=item.val;d.appendChild(v);var l=document.createElement('div');l.className='eq-label';l.textContent=item.label;d.appendChild(l);eqEl.appendChild(d);}
+  });
+}
+
+// Reach insight
+var reachInsight = 'Net campaign reach: ' + fmtM(netReach) + ' (' + (K.percent_reach||0).toFixed(1) + '% of universe).';
+if (SI.length > 1) {
+  var anchor = PD[0];
+  var incr = SI.slice(1).reduce(function(s,v){return s+v},0);
+  reachInsight += ' ' + anchor.name + ' anchors with ' + fmtM(SI[0]) + '. Other publishers add ' + fmtM(incr) + ' incremental reach (' + (incr/netReach*100).toFixed(0) + '%).';
+}
+document.getElementById('insight-reach').textContent = reachInsight;
+
+// Frequency chart
+if (fc.length > 0) {
+  var reach1p = fc[0].reach || netReach;
+  var reach3p = fc.length >= 3 ? fc[2].reach : 0;
+  var pct3p = reach1p > 0 ? (reach3p/reach1p*100).toFixed(0) : '0';
+
+  document.getElementById('freq-caption').textContent =
+    'Average frequency ' + (K.avg_frequency||0).toFixed(1) + '×. ' + pct3p + '% of 1+ audience reached 3+ effective frequency.';
+
+  var chart2 = echarts.init(document.getElementById('chartFreq'));
+  chart2.setOption({
+    tooltip:{trigger:'axis',axisPointer:{type:'shadow'},formatter:function(p){return p[0].name+': '+fmtM(p[0].value*1e6)+' ('+fc[p[0].dataIndex].reach_pct+'%)';}},
+    grid:{left:'50px',right:'30px',top:'30px',bottom:'40px'},
+    xAxis:{type:'category',data:fc.map(function(d){return d.freq}),axisLine:{lineStyle:{color:'#E2E8F0'}},axisTick:{show:false},axisLabel:{color:'#94A3B8',fontSize:11}},
+    yAxis:{type:'value',axisLine:{show:false},axisTick:{show:false},splitLine:{lineStyle:{color:'rgba(226,232,240,.5)'}},axisLabel:{color:'#94A3B8',fontSize:11,formatter:function(v){return v.toFixed(0)+'M'}}},
+    series:[{type:'bar',data:fc.map(function(d,i){return{value:d.reach/1e6,itemStyle:{color:i<2?C.blue:(i===2?C.red:'#94A3B8'),borderRadius:[6,6,0,0]}}}),barMaxWidth:50,label:{show:true,position:'top',formatter:function(p){return fmtM(p.value*1e6)},fontSize:10,fontWeight:700,color:'#334155',fontFamily:"'IBM Plex Mono',monospace"}}]
+  });
+  window.addEventListener('resize',function(){chart2.resize()});
+
+  document.getElementById('insight-freq').textContent =
+    (reach1p>0?((reach3p/reach1p*100).toFixed(0)):'0') + '% of the 1+ audience (' + fmtM(reach3p) + ' people) reached the 3+ effective frequency threshold. Average frequency: ' + (K.avg_frequency||0).toFixed(1) + '×.';
+} else {
+  document.getElementById('freq').style.display = 'none';
+}
+
+// Publisher table
+if (PD.length > 0) {
+  var wrap = document.getElementById('pub-table-wrap');
+  while(wrap.firstChild) wrap.removeChild(wrap.firstChild);
+  var tbl = document.createElement('table'); tbl.className = 'pub-table';
+  var thead = document.createElement('thead');
+  var hrow = document.createElement('tr');
+  ['Publisher','Reach','% Universe','Impressions','Avg Freq','Unique Reach'].forEach(function(h,i){
+    var th = document.createElement('th'); th.textContent = h;
+    if(i>0) th.className = 'right'; hrow.appendChild(th);
+  });
+  thead.appendChild(hrow); tbl.appendChild(thead);
+
+  var tbody = document.createElement('tbody');
+  PD.forEach(function(p,i){
+    var tr = document.createElement('tr');
+    var td0 = document.createElement('td');
+    var dot = document.createElement('span'); dot.className = 'dot'; dot.style.background = p.color;
+    td0.appendChild(dot); td0.appendChild(document.createTextNode(p.name)); tr.appendChild(td0);
+
+    [{v:fmtM(p.reach)},{v:p.percent_reach+'%'},{v:fmtM(p.impressions)},{v:p.avg_frequency+'×'},{v:p.unique_reach?fmtM(p.unique_reach):'—',bold:true}].forEach(function(c){
+      var td = document.createElement('td'); td.className = 'right'; if(c.bold) td.className += ' bold';
+      td.textContent = c.v; tr.appendChild(td);
+    });
+    tbody.appendChild(tr);
+  });
+  tbl.appendChild(tbody);
+
+  var tfoot = document.createElement('tfoot');
+  var frow = document.createElement('tr');
+  var ftd0 = document.createElement('td'); ftd0.textContent = 'Net Campaign Reach'; frow.appendChild(ftd0);
+  var ftd1 = document.createElement('td'); ftd1.className = 'right'; ftd1.textContent = fmtM(netReach); frow.appendChild(ftd1);
+  var ftd2 = document.createElement('td'); ftd2.className = 'right'; ftd2.textContent = (K.percent_reach||0).toFixed(1)+'%'; frow.appendChild(ftd2);
+  var ftd3 = document.createElement('td'); ftd3.className = 'right'; ftd3.textContent = fmtM(K.total_impressions); frow.appendChild(ftd3);
+  var ftd4 = document.createElement('td'); ftd4.className = 'right'; ftd4.textContent = (K.avg_frequency||0).toFixed(1)+'×'; frow.appendChild(ftd4);
+  var ftd5 = document.createElement('td'); ftd5.className = 'right'; ftd5.textContent = '—'; frow.appendChild(ftd5);
+  tfoot.appendChild(frow); tbl.appendChild(tfoot);
+  wrap.appendChild(tbl);
+}
+
+// Synthesis
+var findings = [];
+findings.push('Net reach: ' + fmtM(netReach) + ' (' + (K.percent_reach||0).toFixed(1) + '% of universe).');
+if (K.avg_frequency >= 3 && K.avg_frequency <= 7)
+  findings.push('Healthy average frequency of ' + K.avg_frequency.toFixed(1) + '× within the 3–7× optimal range.');
+else if (K.avg_frequency > 7)
+  findings.push('Elevated average frequency of ' + K.avg_frequency.toFixed(1) + '× — review per-publisher frequency caps.');
+if (SI.length > 1) {
+  var incr = SI.slice(1).reduce(function(s,v){return s+v},0);
+  findings.push('Cross-media strategy adds ' + fmtM(incr) + ' incremental reach beyond the anchor publisher.');
+}
+findings.push('No cost data in this report — overlay spend data for efficiency analysis.');
+document.getElementById('synth-findings').textContent = findings.join(' ');
+
+// Weekly delivery charts
+var WK = DATA.weekly || [];
+if (WK.length > 1) {
+  document.getElementById('weekly').style.display = '';
+  document.getElementById('nav-weekly').style.display = '';
+
+  var weekLabels = WK.map(function(w){ return 'W' + w.week; });
+  var pubNames = WK[0].publishers.map(function(p){ return p.name; });
+
+  // Weekly impressions stacked bar — hide if no impression data
+  var hasWeeklyImps = WK.some(function(w){ return w.publishers.some(function(p){ return p.impressions > 0; }); });
+  if (hasWeeklyImps) {
+    var impsSeries = pubNames.map(function(pn, pi) {
+      return {
+        name: pn, type: 'bar', stack: 'imps',
+        data: WK.map(function(w){ return w.publishers[pi] ? w.publishers[pi].impressions / 1e6 : 0; }),
+        itemStyle: { color: PCOLS[pi % PCOLS.length], borderRadius: pi === pubNames.length - 1 ? [6,6,0,0] : [0,0,0,0] }
+      };
+    });
+    var cImps = echarts.init(document.getElementById('chartWeeklyImps'));
+    cImps.setOption({
+      tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' }, formatter: function(ps) { var s = ps[0].name + '<br>'; var total = 0; ps.forEach(function(p){ s += '<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:'+p.color+';margin-right:4px"></span>' + p.seriesName + ': ' + p.value.toFixed(1) + 'M<br>'; total += p.value; }); s += '<strong>Total: ' + total.toFixed(1) + 'M</strong>'; return s; } },
+      legend: { data: pubNames, bottom: 0, textStyle: { fontSize: 11, color: '#94A3B8' } },
+      grid: { left: '50px', right: '30px', top: '20px', bottom: '40px' },
+      xAxis: { type: 'category', data: weekLabels, axisLine: { lineStyle: { color: '#E2E8F0' } }, axisTick: { show: false }, axisLabel: { color: '#94A3B8', fontSize: 11 } },
+      yAxis: { type: 'value', axisLine: { show: false }, axisTick: { show: false }, splitLine: { lineStyle: { color: 'rgba(226,232,240,.5)' } }, axisLabel: { color: '#94A3B8', fontSize: 11, formatter: function(v){ return v.toFixed(0)+'M'; } } },
+      series: impsSeries
+    });
+    window.addEventListener('resize', function(){ cImps.resize(); });
+  } else {
+    document.getElementById('weekly-imps-section').style.display = 'none';
+  }
+
+  // Cumulative reach line
+  var cReach = echarts.init(document.getElementById('chartWeeklyReach'));
+  cReach.setOption({
+    tooltip: { trigger: 'axis', formatter: function(ps){ return ps[0].name + ': ' + fmtM(ps[0].value * 1e6); } },
+    grid: { left: '50px', right: '30px', top: '20px', bottom: '30px' },
+    xAxis: { type: 'category', data: weekLabels, axisLine: { lineStyle: { color: '#E2E8F0' } }, axisTick: { show: false }, axisLabel: { color: '#94A3B8', fontSize: 11 } },
+    yAxis: { type: 'value', axisLine: { show: false }, axisTick: { show: false }, splitLine: { lineStyle: { color: 'rgba(226,232,240,.5)' } }, axisLabel: { color: '#94A3B8', fontSize: 11, formatter: function(v){ return v.toFixed(0)+'M'; } } },
+    series: [{ type: 'line', data: WK.map(function(w){ return w.cumulative_reach / 1e6; }), smooth: true, lineStyle: { color: C.blue, width: 3 }, itemStyle: { color: C.blue }, areaStyle: { color: { type: 'linear', x: 0, y: 0, x2: 0, y2: 1, colorStops: [{ offset: 0, color: 'rgba(59,130,246,0.15)' }, { offset: 1, color: 'rgba(59,130,246,0)' }] } }, label: { show: true, position: 'top', formatter: function(p){ return fmtM(p.value*1e6); }, fontSize: 10, fontWeight: 700, color: '#334155', fontFamily: "'IBM Plex Mono',monospace" } }]
+  });
+  window.addEventListener('resize', function(){ cReach.resize(); });
+
+  // Weekly frequency by publisher grouped bar — hide if no frequency data
+  var hasWeeklyFreq = WK.some(function(w){ return w.publishers.some(function(p){ return p.frequency > 0; }); });
+  if (hasWeeklyFreq) {
+    var freqSeries = pubNames.map(function(pn, pi) {
+      return {
+        name: pn, type: 'bar',
+        data: WK.map(function(w){ return w.publishers[pi] ? +(w.publishers[pi].frequency.toFixed(1)) : 0; }),
+        itemStyle: { color: PCOLS[pi % PCOLS.length], borderRadius: [4,4,0,0] }
+      };
+    });
+    var cFreq = echarts.init(document.getElementById('chartWeeklyFreq'));
+    cFreq.setOption({
+      tooltip: { trigger: 'axis', formatter: function(ps) { var s = ps[0].name + '<br>'; ps.forEach(function(p){ s += '<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:'+p.color+';margin-right:4px"></span>' + p.seriesName + ': ' + p.value + 'x<br>'; }); return s; } },
+      legend: { data: pubNames, bottom: 0, textStyle: { fontSize: 11, color: '#94A3B8' } },
+      grid: { left: '40px', right: '30px', top: '20px', bottom: '40px' },
+      xAxis: { type: 'category', data: weekLabels, axisLine: { lineStyle: { color: '#E2E8F0' } }, axisTick: { show: false }, axisLabel: { color: '#94A3B8', fontSize: 11 } },
+      yAxis: { type: 'value', axisLine: { show: false }, axisTick: { show: false }, splitLine: { lineStyle: { color: 'rgba(226,232,240,.5)' } }, axisLabel: { color: '#94A3B8', fontSize: 11, formatter: function(v){ return v+'x'; } } },
+      series: freqSeries
+    });
+    window.addEventListener('resize', function(){ cFreq.resize(); });
+  } else {
+    document.getElementById('weekly-freq-section').style.display = 'none';
+  }
+
+  // Weekly generic fallbacks (overridden by interpretation if present)
+  var maxImps = Math.max.apply(null, WK.map(function(w){ return w.impressions; }));
+  var minImps = Math.min.apply(null, WK.map(function(w){ return w.impressions; }));
+  var ratio = minImps > 0 ? (maxImps / minImps).toFixed(1) : 'N/A';
+  showInterpBox('interp-weekly-imps', 'insight-weekly-imps',
+    'Weekly impressions range from ' + fmtM(minImps) + ' to ' + fmtM(maxImps) + ' (ratio: ' + ratio + 'x).');
+  showInterpBox('interp-weekly-reach', 'insight-weekly-reach',
+    'Cumulative reach builds from ' + fmtM(WK[0].cumulative_reach) + ' to ' + fmtM(WK[WK.length-1].cumulative_reach) + ' over ' + WK.length + ' weeks.');
+}
+
+// Pitfall annotations — add weekly pitfalls
+var pitfalls = DATA.pitfalls || [];
+function renderPitfalls(elementId, pitfallNumbers) {
+  var el = document.getElementById(elementId);
+  if (!el) return;
+  var relevant = pitfalls.filter(function(p) {
+    return pitfallNumbers.indexOf(p.number) >= 0 && (p.severity === 'HIGH' || p.severity === 'MEDIUM');
+  });
+  if (relevant.length === 0) return;
+  el.innerHTML = relevant.map(function(p) {
+    return '<div class="pitfall-alert"><strong>&#9888; Pitfall #' + p.number + ' (' + p.severity + '):</strong> ' + p.finding + '</div>';
+  }).join('');
+}
+// Render pitfall annotations by target_graph from interpretation data
+var targetToElement = {
+  'stacked_incremental_reach': 'pitfall-reach', 'incremental_reach': 'pitfall-reach',
+  'frequency_distribution': 'pitfall-freq', 'frequency': 'pitfall-freq',
+  'weekly_impressions': 'pitfall-weekly-imps', 'weekly_reach': 'pitfall-weekly-reach', 'weekly_frequency': 'pitfall-weekly-freq', 'weekly': 'pitfall-weekly-imps',
+  'publisher_table': 'pitfall-pubs', 'publisher_breakdown': 'pitfall-pubs',
+  'venn_overlap': 'pitfall-reach', 'overlap': 'pitfall-reach',
+  'kpi_reach': 'pitfall-freq'
+};
+
+pitfalls.forEach(function(p) {
+  if (p.severity !== 'HIGH' && p.severity !== 'MEDIUM') return;
+  var annotations = p.graph_annotations || [];
+  annotations.forEach(function(a) {
+    var elemId = targetToElement[a.target_graph];
+    if (!elemId) return;
+    var el = document.getElementById(elemId);
+    if (!el) return;
+    el.innerHTML += '<div class="pitfall-alert"><strong>&#9888; Pitfall #' + p.number + ' (' + p.severity + '):</strong> ' + a.annotation + '</div>';
+  });
+  // Fallback: if no graph_annotations, use the old number-based mapping
+  if (annotations.length === 0 && p.finding) {
+    var fallbackMap = {1:'pitfall-freq',2:'pitfall-reach',8:'pitfall-freq',9:'pitfall-weekly-imps',11:'pitfall-pubs',12:'pitfall-reach',13:'pitfall-weekly-reach',14:'pitfall-weekly-imps',18:'pitfall-pubs'};
+    var elemId = fallbackMap[p.number];
+    if (elemId) {
+      var el = document.getElementById(elemId);
+      if (el) el.innerHTML += '<div class="pitfall-alert"><strong>&#9888; Pitfall #' + p.number + ' (' + p.severity + '):</strong> ' + p.finding + '</div>';
+    }
+  }
+});
+
+// Show interpretation boxes for every chart section that has annotation data
+var ga = DATA.graph_annotations || {};
+
+function showInterpBox(wrapId, spanId, text) {
+  if (!text) return;
+  var wrap = document.getElementById(wrapId);
+  var span = document.getElementById(spanId);
+  if (wrap && span) { wrap.style.display = ''; span.textContent = text; }
+}
+
+// Reach: stacked incremental + venn overlap combined
+var reachText = [ga.stacked_incremental_reach, ga.venn_overlap].filter(Boolean).join(' ');
+showInterpBox('interp-reach', 'insight-reach', reachText);
+
+// Frequency
+showInterpBox('interp-freq', 'insight-freq', ga.frequency_distribution);
+
+// Weekly: each chart gets its own interpretation box
+showInterpBox('interp-weekly-imps', 'insight-weekly-imps', ga.weekly_impressions);
+showInterpBox('interp-weekly-reach', 'insight-weekly-reach', ga.weekly_reach);
+showInterpBox('interp-weekly-freq', 'insight-weekly-freq', ga.weekly_frequency);
+
+// Publisher table
+showInterpBox('interp-pubs', 'insight-pubs', ga.publisher_table);
+
+// KPI reach warning
+if (ga.kpi_reach) {
+  var kpiGrid = document.getElementById('kpi-grid');
+  if (kpiGrid) {
+    var noteDiv = document.createElement('div');
+    noteDiv.className = 'pitfall-alert';
+    noteDiv.style.marginTop = '12px';
+    noteDiv.innerHTML = '<strong>&#9888; Reach:</strong> ' + ga.kpi_reach;
+    kpiGrid.parentNode.insertBefore(noteDiv, kpiGrid.nextSibling);
+  }
+}
+
+// Custom graphs from interpretation
+var customGraphs = DATA.custom_graphs || [];
+if (customGraphs.length > 0) {
+  var cgContainer = document.getElementById('custom-graphs-container');
+  customGraphs.forEach(function(cg, idx) {
+    var section = document.createElement('section');
+    section.className = 'section visible';
+    section.innerHTML = '<div class="section-head"><div class="section-num" style="background:#F59E0B">!</div><div><h2>' + (cg.title || 'Additional Analysis') + '</h2><div class="desc">' + (cg.description || '') + '</div></div></div>' +
+      '<div class="card"><div class="chart-wrap tall"><div id="customChart' + idx + '" style="width:100%;height:100%"></div></div>' +
+      (cg.annotation ? '<div class="pitfall-alert" style="margin-top:12px">' + cg.annotation + '</div>' : '') +
+      '</div>';
+    cgContainer.appendChild(section);
+
+    if (cg.data && cg.data.series) {
+      var chart = echarts.init(document.getElementById('customChart' + idx));
+      var series = cg.data.series.map(function(s, si) {
+        var base = { name: s.name, data: s.values, itemStyle: { color: PCOLS[si % PCOLS.length] } };
+        if (cg.chart_type === 'line') { base.type = 'line'; base.smooth = true; base.lineStyle = { width: 3 }; }
+        else if (cg.chart_type === 'grouped_bar') { base.type = 'bar'; base.itemStyle.borderRadius = [4,4,0,0]; }
+        else { base.type = 'bar'; base.stack = 'stack'; base.itemStyle.borderRadius = si === cg.data.series.length - 1 ? [6,6,0,0] : [0,0,0,0]; }
+        return base;
+      });
+
+      var option = {
+        tooltip: { trigger: 'axis' },
+        legend: { data: cg.data.series.map(function(s){ return s.name; }), bottom: 0, textStyle: { fontSize: 11, color: '#94A3B8' } },
+        grid: { left: '50px', right: '30px', top: '30px', bottom: '40px' },
+        xAxis: { type: 'category', data: cg.data.x_axis || [], axisLine: { lineStyle: { color: '#E2E8F0' } }, axisTick: { show: false }, axisLabel: { color: '#94A3B8', fontSize: 11 } },
+        yAxis: { type: 'value', name: cg.data.y_label || '', axisLine: { show: false }, axisTick: { show: false }, splitLine: { lineStyle: { color: 'rgba(226,232,240,.5)' } }, axisLabel: { color: '#94A3B8', fontSize: 11 } },
+        series: series
+      };
+
+      if (cg.data.threshold_line) {
+        option.series.push({
+          type: 'line', markLine: {
+            silent: true, lineStyle: { color: cg.data.threshold_line.color || '#EF4444', type: 'dashed', width: 2 },
+            data: [{ yAxis: cg.data.threshold_line.value, label: { formatter: cg.data.threshold_line.label || '', color: cg.data.threshold_line.color || '#EF4444', fontSize: 11 } }]
+          }, data: []
+        });
+      }
+
+      chart.setOption(option);
+      window.addEventListener('resize', function(){ chart.resize(); });
+    }
+  });
+}
+
+// Scroll-spy + animations
+var navLinks = document.querySelectorAll('.nav-link');
+var sections = document.querySelectorAll('.section');
+var spy = new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){navLinks.forEach(function(l){l.classList.remove('active')});var link=document.querySelector('.nav-link[href="#'+e.target.id+'"]');if(link)link.classList.add('active')}})},{threshold:0.2});
+sections.forEach(function(s){spy.observe(s)});
+var reveal = new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting)e.target.classList.add('visible')})},{threshold:0.05});
+sections.forEach(function(s){reveal.observe(s)});
+
+// Tippy tooltips
+setTimeout(function(){
+  if(typeof tippy!=='undefined'){
+    tippy('.tooltip-term',{theme:'xmm',placement:'top',allowHTML:true,arrow:true,maxWidth:320,
+      content:function(ref){return '<span class="tooltip-title">'+ref.getAttribute('data-term')+'</span><span class="tooltip-body">'+ref.getAttribute('data-definition')+'</span>';}
+    });
+  }
+},500);
+</script>
+</body>
+</html>

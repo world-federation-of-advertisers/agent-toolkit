@@ -1,0 +1,1528 @@
+{
+  "name": "measurementConsumers/example-mc/basicReports/example-rich",
+  "title": "FreshBrew Coffee Q1 Launch",
+  "campaignGroup": "measurementConsumers/example-mc/reportingSets/freshbrew-q1",
+  "campaignGroupDisplayName": "FreshBrew Coffee Q1 2026",
+  "createTime": "2026-05-27T13:48:58.198031Z",
+  "modelLine": "",
+  "effectiveModelLine": "",
+  "state": "SUCCEEDED",
+  "reportingInterval": {
+    "reportStart": {
+      "year": 2026,
+      "month": 1,
+      "day": 1,
+      "hours": 0,
+      "minutes": 0,
+      "seconds": 0,
+      "nanos": 0,
+      "utcOffset": "0s"
+    },
+    "effectiveReportStart": {
+      "year": 2026,
+      "month": 1,
+      "day": 1,
+      "hours": 0,
+      "minutes": 0,
+      "seconds": 0,
+      "nanos": 0,
+      "utcOffset": "0s"
+    },
+    "reportEnd": {
+      "year": 2026,
+      "month": 1,
+      "day": 28
+    }
+  },
+  "impressionQualificationFilters": [],
+  "effectiveImpressionQualificationFilters": [],
+  "resultGroupSpecs": [],
+  "resultGroups": [
+    {
+      "title": "Total Reach",
+      "results": [
+        {
+          "metadata": {
+            "reportingUnitSummary": {
+              "reportingUnitComponentSummary": [
+                {
+                  "component": "dataProviders/mediacorp-tv",
+                  "displayName": "MediaCorp TV",
+                  "eventGroupSummaries": [
+                    {
+                      "eventGroup": "measurementConsumers/example-mc/eventGroups/mediacorp-tv"
+                    }
+                  ]
+                },
+                {
+                  "component": "dataProviders/videostream",
+                  "displayName": "VideoStream Platform",
+                  "eventGroupSummaries": [
+                    {
+                      "eventGroup": "measurementConsumers/example-mc/eventGroups/videostream"
+                    }
+                  ]
+                }
+              ]
+            },
+            "nonCumulativeMetricStartTime": "2026-01-01T00:00:00Z",
+            "cumulativeMetricStartTime": "1970-01-01T00:00:00Z",
+            "metricEndTime": "2026-01-28T00:00:00Z",
+            "metricFrequency": {
+              "total": true
+            },
+            "dimensionSpecSummary": {
+              "groupings": [],
+              "filters": [
+                {
+                  "terms": []
+                }
+              ]
+            },
+            "filter": {
+              "custom": {
+                "filterSpec": [
+                  {
+                    "mediaType": "OTHER",
+                    "filters": []
+                  },
+                  {
+                    "mediaType": "VIDEO",
+                    "filters": []
+                  }
+                ]
+              }
+            }
+          },
+          "metricSet": {
+            "populationSize": "55942000",
+            "reportingUnit": {
+              "cumulative": {
+                "reach": "12300000",
+                "impressions": "25990000",
+                "percentReach": 0.22,
+                "averageFrequency": 2.11,
+                "grps": 46.5,
+                "kPlusReach": [
+                  "12300000",
+                  "8000000",
+                  "5000000",
+                  "3000000",
+                  "1800000",
+                  "1000000"
+                ],
+                "percentKPlusReach": [
+                  0.22,
+                  0.143,
+                  0.089,
+                  0.054,
+                  0.032,
+                  0.018
+                ]
+              },
+              "nonCumulative": {
+                "reach": "12300000",
+                "impressions": "25990000",
+                "percentReach": 0.22,
+                "averageFrequency": 2.11,
+                "grps": 46.5,
+                "kPlusReach": [
+                  "12300000",
+                  "8000000",
+                  "5000000",
+                  "3000000",
+                  "1800000",
+                  "1000000"
+                ],
+                "percentKPlusReach": [
+                  0.22,
+                  0.143,
+                  0.089,
+                  0.054,
+                  0.032,
+                  0.018
+                ]
+              },
+              "stackedIncrementalReach": [
+                "8500000",
+                "3800000"
+              ]
+            },
+            "components": [
+              {
+                "key": "dataProviders/mediacorp-tv",
+                "value": {
+                  "cumulative": {
+                    "reach": "8500000",
+                    "impressions": "19550000",
+                    "percentReach": 0.152,
+                    "averageFrequency": 2.3,
+                    "grps": 35.0,
+                    "kPlusReach": [],
+                    "percentKPlusReach": []
+                  },
+                  "nonCumulative": {
+                    "reach": "8500000",
+                    "impressions": "19550000",
+                    "percentReach": 0.152,
+                    "averageFrequency": 2.3,
+                    "grps": 35.0,
+                    "kPlusReach": [],
+                    "percentKPlusReach": []
+                  },
+                  "cumulativeUnique": {
+                    "reach": "5200000"
+                  },
+                  "nonCumulativeUnique": {
+                    "reach": "5200000"
+                  }
+                }
+              },
+              {
+                "key": "dataProviders/videostream",
+                "value": {
+                  "cumulative": {
+                    "reach": "6300000",
+                    "impressions": "12096000",
+                    "percentReach": 0.113,
+                    "averageFrequency": 1.92,
+                    "grps": 21.6,
+                    "kPlusReach": [],
+                    "percentKPlusReach": []
+                  },
+                  "nonCumulative": {
+                    "reach": "6300000",
+                    "impressions": "12096000",
+                    "percentReach": 0.113,
+                    "averageFrequency": 1.92,
+                    "grps": 21.6,
+                    "kPlusReach": [],
+                    "percentKPlusReach": []
+                  },
+                  "cumulativeUnique": {
+                    "reach": "3800000"
+                  },
+                  "nonCumulativeUnique": {
+                    "reach": "3800000"
+                  }
+                }
+              }
+            ],
+            "componentIntersections": [
+              {
+                "components": [
+                  "dataProviders/mediacorp-tv",
+                  "dataProviders/videostream"
+                ],
+                "cumulative": {
+                  "reach": "2500000"
+                },
+                "nonCumulative": {
+                  "reach": "2500000"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "title": "Weekly (Week 1)",
+      "results": [
+        {
+          "metadata": {
+            "reportingUnitSummary": {
+              "reportingUnitComponentSummary": [
+                {
+                  "component": "dataProviders/mediacorp-tv",
+                  "displayName": "MediaCorp TV",
+                  "eventGroupSummaries": [
+                    {
+                      "eventGroup": "measurementConsumers/example-mc/eventGroups/mediacorp-tv"
+                    }
+                  ]
+                },
+                {
+                  "component": "dataProviders/videostream",
+                  "displayName": "VideoStream Platform",
+                  "eventGroupSummaries": [
+                    {
+                      "eventGroup": "measurementConsumers/example-mc/eventGroups/videostream"
+                    }
+                  ]
+                }
+              ]
+            },
+            "nonCumulativeMetricStartTime": "1970-01-01T00:00:00Z",
+            "cumulativeMetricStartTime": "2026-01-01T00:00:00Z",
+            "metricEndTime": "2026-01-07T00:00:00Z",
+            "metricFrequency": {
+              "weekly": "THURSDAY"
+            },
+            "dimensionSpecSummary": {
+              "groupings": [],
+              "filters": [
+                {
+                  "terms": []
+                }
+              ]
+            },
+            "filter": {
+              "custom": {
+                "filterSpec": [
+                  {
+                    "mediaType": "OTHER",
+                    "filters": []
+                  },
+                  {
+                    "mediaType": "VIDEO",
+                    "filters": []
+                  }
+                ]
+              }
+            }
+          },
+          "metricSet": {
+            "populationSize": "55942000",
+            "reportingUnit": {
+              "cumulative": {
+                "reach": "4200000",
+                "impressions": "8900000",
+                "percentReach": 0.0751,
+                "averageFrequency": 2.12,
+                "kPlusReach": [],
+                "percentKPlusReach": []
+              },
+              "nonCumulative": {
+                "reach": "4200000",
+                "impressions": "8900000",
+                "percentReach": 0.0751,
+                "averageFrequency": 2.12,
+                "kPlusReach": [],
+                "percentKPlusReach": []
+              },
+              "stackedIncrementalReach": []
+            },
+            "components": [
+              {
+                "key": "dataProviders/mediacorp-tv",
+                "value": {
+                  "cumulative": {
+                    "reach": "2898000",
+                    "impressions": "6675000",
+                    "kPlusReach": [],
+                    "percentKPlusReach": []
+                  },
+                  "nonCumulative": {
+                    "reach": "2898000",
+                    "impressions": "6675000",
+                    "kPlusReach": [],
+                    "percentKPlusReach": []
+                  },
+                  "cumulativeUnique": null,
+                  "nonCumulativeUnique": null
+                }
+              },
+              {
+                "key": "dataProviders/videostream",
+                "value": {
+                  "cumulative": {
+                    "reach": "2142000",
+                    "impressions": "4094000",
+                    "kPlusReach": [],
+                    "percentKPlusReach": []
+                  },
+                  "nonCumulative": {
+                    "reach": "2142000",
+                    "impressions": "4094000",
+                    "kPlusReach": [],
+                    "percentKPlusReach": []
+                  },
+                  "cumulativeUnique": null,
+                  "nonCumulativeUnique": null
+                }
+              }
+            ],
+            "componentIntersections": []
+          }
+        }
+      ]
+    },
+    {
+      "title": "Weekly (Week 2)",
+      "results": [
+        {
+          "metadata": {
+            "reportingUnitSummary": {
+              "reportingUnitComponentSummary": [
+                {
+                  "component": "dataProviders/mediacorp-tv",
+                  "displayName": "MediaCorp TV",
+                  "eventGroupSummaries": [
+                    {
+                      "eventGroup": "measurementConsumers/example-mc/eventGroups/mediacorp-tv"
+                    }
+                  ]
+                },
+                {
+                  "component": "dataProviders/videostream",
+                  "displayName": "VideoStream Platform",
+                  "eventGroupSummaries": [
+                    {
+                      "eventGroup": "measurementConsumers/example-mc/eventGroups/videostream"
+                    }
+                  ]
+                }
+              ]
+            },
+            "nonCumulativeMetricStartTime": "1970-01-01T00:00:00Z",
+            "cumulativeMetricStartTime": "2026-01-01T00:00:00Z",
+            "metricEndTime": "2026-01-14T00:00:00Z",
+            "metricFrequency": {
+              "weekly": "THURSDAY"
+            },
+            "dimensionSpecSummary": {
+              "groupings": [],
+              "filters": [
+                {
+                  "terms": []
+                }
+              ]
+            },
+            "filter": {
+              "custom": {
+                "filterSpec": [
+                  {
+                    "mediaType": "OTHER",
+                    "filters": []
+                  },
+                  {
+                    "mediaType": "VIDEO",
+                    "filters": []
+                  }
+                ]
+              }
+            }
+          },
+          "metricSet": {
+            "populationSize": "55942000",
+            "reportingUnit": {
+              "cumulative": {
+                "reach": "7800000",
+                "impressions": "16200000",
+                "percentReach": 0.1394,
+                "averageFrequency": 2.08,
+                "kPlusReach": [],
+                "percentKPlusReach": []
+              },
+              "nonCumulative": {
+                "reach": "7800000",
+                "impressions": "16200000",
+                "percentReach": 0.1394,
+                "averageFrequency": 2.08,
+                "kPlusReach": [],
+                "percentKPlusReach": []
+              },
+              "stackedIncrementalReach": []
+            },
+            "components": [
+              {
+                "key": "dataProviders/mediacorp-tv",
+                "value": {
+                  "cumulative": {
+                    "reach": "5382000",
+                    "impressions": "12150000",
+                    "kPlusReach": [],
+                    "percentKPlusReach": []
+                  },
+                  "nonCumulative": {
+                    "reach": "5382000",
+                    "impressions": "12150000",
+                    "kPlusReach": [],
+                    "percentKPlusReach": []
+                  },
+                  "cumulativeUnique": null,
+                  "nonCumulativeUnique": null
+                }
+              },
+              {
+                "key": "dataProviders/videostream",
+                "value": {
+                  "cumulative": {
+                    "reach": "3978000",
+                    "impressions": "7452000",
+                    "kPlusReach": [],
+                    "percentKPlusReach": []
+                  },
+                  "nonCumulative": {
+                    "reach": "3978000",
+                    "impressions": "7452000",
+                    "kPlusReach": [],
+                    "percentKPlusReach": []
+                  },
+                  "cumulativeUnique": null,
+                  "nonCumulativeUnique": null
+                }
+              }
+            ],
+            "componentIntersections": []
+          }
+        }
+      ]
+    },
+    {
+      "title": "Weekly (Week 3)",
+      "results": [
+        {
+          "metadata": {
+            "reportingUnitSummary": {
+              "reportingUnitComponentSummary": [
+                {
+                  "component": "dataProviders/mediacorp-tv",
+                  "displayName": "MediaCorp TV",
+                  "eventGroupSummaries": [
+                    {
+                      "eventGroup": "measurementConsumers/example-mc/eventGroups/mediacorp-tv"
+                    }
+                  ]
+                },
+                {
+                  "component": "dataProviders/videostream",
+                  "displayName": "VideoStream Platform",
+                  "eventGroupSummaries": [
+                    {
+                      "eventGroup": "measurementConsumers/example-mc/eventGroups/videostream"
+                    }
+                  ]
+                }
+              ]
+            },
+            "nonCumulativeMetricStartTime": "1970-01-01T00:00:00Z",
+            "cumulativeMetricStartTime": "2026-01-01T00:00:00Z",
+            "metricEndTime": "2026-01-21T00:00:00Z",
+            "metricFrequency": {
+              "weekly": "THURSDAY"
+            },
+            "dimensionSpecSummary": {
+              "groupings": [],
+              "filters": [
+                {
+                  "terms": []
+                }
+              ]
+            },
+            "filter": {
+              "custom": {
+                "filterSpec": [
+                  {
+                    "mediaType": "OTHER",
+                    "filters": []
+                  },
+                  {
+                    "mediaType": "VIDEO",
+                    "filters": []
+                  }
+                ]
+              }
+            }
+          },
+          "metricSet": {
+            "populationSize": "55942000",
+            "reportingUnit": {
+              "cumulative": {
+                "reach": "10500000",
+                "impressions": "22100000",
+                "percentReach": 0.1877,
+                "averageFrequency": 2.1,
+                "kPlusReach": [],
+                "percentKPlusReach": []
+              },
+              "nonCumulative": {
+                "reach": "10500000",
+                "impressions": "22100000",
+                "percentReach": 0.1877,
+                "averageFrequency": 2.1,
+                "kPlusReach": [],
+                "percentKPlusReach": []
+              },
+              "stackedIncrementalReach": []
+            },
+            "components": [
+              {
+                "key": "dataProviders/mediacorp-tv",
+                "value": {
+                  "cumulative": {
+                    "reach": "7244999",
+                    "impressions": "16575000",
+                    "kPlusReach": [],
+                    "percentKPlusReach": []
+                  },
+                  "nonCumulative": {
+                    "reach": "7244999",
+                    "impressions": "16575000",
+                    "kPlusReach": [],
+                    "percentKPlusReach": []
+                  },
+                  "cumulativeUnique": null,
+                  "nonCumulativeUnique": null
+                }
+              },
+              {
+                "key": "dataProviders/videostream",
+                "value": {
+                  "cumulative": {
+                    "reach": "5355000",
+                    "impressions": "10166000",
+                    "kPlusReach": [],
+                    "percentKPlusReach": []
+                  },
+                  "nonCumulative": {
+                    "reach": "5355000",
+                    "impressions": "10166000",
+                    "kPlusReach": [],
+                    "percentKPlusReach": []
+                  },
+                  "cumulativeUnique": null,
+                  "nonCumulativeUnique": null
+                }
+              }
+            ],
+            "componentIntersections": []
+          }
+        }
+      ]
+    },
+    {
+      "title": "Weekly (Week 4)",
+      "results": [
+        {
+          "metadata": {
+            "reportingUnitSummary": {
+              "reportingUnitComponentSummary": [
+                {
+                  "component": "dataProviders/mediacorp-tv",
+                  "displayName": "MediaCorp TV",
+                  "eventGroupSummaries": [
+                    {
+                      "eventGroup": "measurementConsumers/example-mc/eventGroups/mediacorp-tv"
+                    }
+                  ]
+                },
+                {
+                  "component": "dataProviders/videostream",
+                  "displayName": "VideoStream Platform",
+                  "eventGroupSummaries": [
+                    {
+                      "eventGroup": "measurementConsumers/example-mc/eventGroups/videostream"
+                    }
+                  ]
+                }
+              ]
+            },
+            "nonCumulativeMetricStartTime": "1970-01-01T00:00:00Z",
+            "cumulativeMetricStartTime": "2026-01-01T00:00:00Z",
+            "metricEndTime": "2026-01-28T00:00:00Z",
+            "metricFrequency": {
+              "weekly": "THURSDAY"
+            },
+            "dimensionSpecSummary": {
+              "groupings": [],
+              "filters": [
+                {
+                  "terms": []
+                }
+              ]
+            },
+            "filter": {
+              "custom": {
+                "filterSpec": [
+                  {
+                    "mediaType": "OTHER",
+                    "filters": []
+                  },
+                  {
+                    "mediaType": "VIDEO",
+                    "filters": []
+                  }
+                ]
+              }
+            }
+          },
+          "metricSet": {
+            "populationSize": "55942000",
+            "reportingUnit": {
+              "cumulative": {
+                "reach": "12300000",
+                "impressions": "25990000",
+                "percentReach": 0.2199,
+                "averageFrequency": 2.11,
+                "kPlusReach": [],
+                "percentKPlusReach": []
+              },
+              "nonCumulative": {
+                "reach": "12300000",
+                "impressions": "25990000",
+                "percentReach": 0.2199,
+                "averageFrequency": 2.11,
+                "kPlusReach": [],
+                "percentKPlusReach": []
+              },
+              "stackedIncrementalReach": []
+            },
+            "components": [
+              {
+                "key": "dataProviders/mediacorp-tv",
+                "value": {
+                  "cumulative": {
+                    "reach": "8487000",
+                    "impressions": "19492500",
+                    "kPlusReach": [],
+                    "percentKPlusReach": []
+                  },
+                  "nonCumulative": {
+                    "reach": "8487000",
+                    "impressions": "19492500",
+                    "kPlusReach": [],
+                    "percentKPlusReach": []
+                  },
+                  "cumulativeUnique": null,
+                  "nonCumulativeUnique": null
+                }
+              },
+              {
+                "key": "dataProviders/videostream",
+                "value": {
+                  "cumulative": {
+                    "reach": "6273000",
+                    "impressions": "11955400",
+                    "kPlusReach": [],
+                    "percentKPlusReach": []
+                  },
+                  "nonCumulative": {
+                    "reach": "6273000",
+                    "impressions": "11955400",
+                    "kPlusReach": [],
+                    "percentKPlusReach": []
+                  },
+                  "cumulativeUnique": null,
+                  "nonCumulativeUnique": null
+                }
+              }
+            ],
+            "componentIntersections": []
+          }
+        }
+      ]
+    },
+    {
+      "title": "Total Reach",
+      "results": [
+        {
+          "metadata": {
+            "reportingUnitSummary": {
+              "reportingUnitComponentSummary": [
+                {
+                  "component": "dataProviders/mediacorp-tv",
+                  "displayName": "MediaCorp TV",
+                  "eventGroupSummaries": [
+                    {
+                      "eventGroup": "measurementConsumers/example-mc/eventGroups/mediacorp-tv"
+                    }
+                  ]
+                },
+                {
+                  "component": "dataProviders/videostream",
+                  "displayName": "VideoStream Platform",
+                  "eventGroupSummaries": [
+                    {
+                      "eventGroup": "measurementConsumers/example-mc/eventGroups/videostream"
+                    }
+                  ]
+                }
+              ]
+            },
+            "nonCumulativeMetricStartTime": "2026-01-01T00:00:00Z",
+            "cumulativeMetricStartTime": "1970-01-01T00:00:00Z",
+            "metricEndTime": "2026-01-28T00:00:00Z",
+            "metricFrequency": {
+              "total": true
+            },
+            "dimensionSpecSummary": {
+              "groupings": [
+                {
+                  "path": "common.sex",
+                  "value": {
+                    "enumValue": "FEMALE"
+                  }
+                },
+                {
+                  "path": "common.age_group",
+                  "value": {
+                    "enumValue": "YEARS_16_TO_34"
+                  }
+                }
+              ],
+              "filters": [
+                {
+                  "terms": []
+                }
+              ]
+            },
+            "filter": {
+              "custom": {
+                "filterSpec": [
+                  {
+                    "mediaType": "OTHER",
+                    "filters": []
+                  },
+                  {
+                    "mediaType": "VIDEO",
+                    "filters": []
+                  }
+                ]
+              }
+            }
+          },
+          "metricSet": {
+            "populationSize": "10069560",
+            "reportingUnit": {
+              "cumulative": {
+                "reach": "2583000",
+                "impressions": "5036850",
+                "percentReach": 0.2565,
+                "averageFrequency": 1.95,
+                "kPlusReach": [],
+                "percentKPlusReach": []
+              },
+              "nonCumulative": {
+                "reach": "2583000",
+                "impressions": "5036850",
+                "percentReach": 0.2565,
+                "averageFrequency": 1.95,
+                "kPlusReach": [],
+                "percentKPlusReach": []
+              },
+              "stackedIncrementalReach": []
+            },
+            "components": [
+              {
+                "key": "dataProviders/mediacorp-tv",
+                "value": {
+                  "cumulative": {
+                    "reach": "1782269",
+                    "impressions": "3777637",
+                    "kPlusReach": [],
+                    "percentKPlusReach": []
+                  },
+                  "nonCumulative": {
+                    "reach": "1782269",
+                    "impressions": "3777637",
+                    "kPlusReach": [],
+                    "percentKPlusReach": []
+                  },
+                  "cumulativeUnique": null,
+                  "nonCumulativeUnique": null
+                }
+              },
+              {
+                "key": "dataProviders/videostream",
+                "value": {
+                  "cumulative": {
+                    "reach": "1317330",
+                    "impressions": "2316951",
+                    "kPlusReach": [],
+                    "percentKPlusReach": []
+                  },
+                  "nonCumulative": {
+                    "reach": "1317330",
+                    "impressions": "2316951",
+                    "kPlusReach": [],
+                    "percentKPlusReach": []
+                  },
+                  "cumulativeUnique": null,
+                  "nonCumulativeUnique": null
+                }
+              }
+            ],
+            "componentIntersections": []
+          }
+        }
+      ]
+    },
+    {
+      "title": "Total Reach",
+      "results": [
+        {
+          "metadata": {
+            "reportingUnitSummary": {
+              "reportingUnitComponentSummary": [
+                {
+                  "component": "dataProviders/mediacorp-tv",
+                  "displayName": "MediaCorp TV",
+                  "eventGroupSummaries": [
+                    {
+                      "eventGroup": "measurementConsumers/example-mc/eventGroups/mediacorp-tv"
+                    }
+                  ]
+                },
+                {
+                  "component": "dataProviders/videostream",
+                  "displayName": "VideoStream Platform",
+                  "eventGroupSummaries": [
+                    {
+                      "eventGroup": "measurementConsumers/example-mc/eventGroups/videostream"
+                    }
+                  ]
+                }
+              ]
+            },
+            "nonCumulativeMetricStartTime": "2026-01-01T00:00:00Z",
+            "cumulativeMetricStartTime": "1970-01-01T00:00:00Z",
+            "metricEndTime": "2026-01-28T00:00:00Z",
+            "metricFrequency": {
+              "total": true
+            },
+            "dimensionSpecSummary": {
+              "groupings": [
+                {
+                  "path": "common.sex",
+                  "value": {
+                    "enumValue": "FEMALE"
+                  }
+                },
+                {
+                  "path": "common.age_group",
+                  "value": {
+                    "enumValue": "YEARS_35_TO_54"
+                  }
+                }
+              ],
+              "filters": [
+                {
+                  "terms": []
+                }
+              ]
+            },
+            "filter": {
+              "custom": {
+                "filterSpec": [
+                  {
+                    "mediaType": "OTHER",
+                    "filters": []
+                  },
+                  {
+                    "mediaType": "VIDEO",
+                    "filters": []
+                  }
+                ]
+              }
+            }
+          },
+          "metricSet": {
+            "populationSize": "9510140",
+            "reportingUnit": {
+              "cumulative": {
+                "reach": "2460000",
+                "impressions": "5043000",
+                "percentReach": 0.2587,
+                "averageFrequency": 2.05,
+                "kPlusReach": [],
+                "percentKPlusReach": []
+              },
+              "nonCumulative": {
+                "reach": "2460000",
+                "impressions": "5043000",
+                "percentReach": 0.2587,
+                "averageFrequency": 2.05,
+                "kPlusReach": [],
+                "percentKPlusReach": []
+              },
+              "stackedIncrementalReach": []
+            },
+            "components": [
+              {
+                "key": "dataProviders/mediacorp-tv",
+                "value": {
+                  "cumulative": {
+                    "reach": "1697399",
+                    "impressions": "3782250",
+                    "kPlusReach": [],
+                    "percentKPlusReach": []
+                  },
+                  "nonCumulative": {
+                    "reach": "1697399",
+                    "impressions": "3782250",
+                    "kPlusReach": [],
+                    "percentKPlusReach": []
+                  },
+                  "cumulativeUnique": null,
+                  "nonCumulativeUnique": null
+                }
+              },
+              {
+                "key": "dataProviders/videostream",
+                "value": {
+                  "cumulative": {
+                    "reach": "1254600",
+                    "impressions": "2319780",
+                    "kPlusReach": [],
+                    "percentKPlusReach": []
+                  },
+                  "nonCumulative": {
+                    "reach": "1254600",
+                    "impressions": "2319780",
+                    "kPlusReach": [],
+                    "percentKPlusReach": []
+                  },
+                  "cumulativeUnique": null,
+                  "nonCumulativeUnique": null
+                }
+              }
+            ],
+            "componentIntersections": []
+          }
+        }
+      ]
+    },
+    {
+      "title": "Total Reach",
+      "results": [
+        {
+          "metadata": {
+            "reportingUnitSummary": {
+              "reportingUnitComponentSummary": [
+                {
+                  "component": "dataProviders/mediacorp-tv",
+                  "displayName": "MediaCorp TV",
+                  "eventGroupSummaries": [
+                    {
+                      "eventGroup": "measurementConsumers/example-mc/eventGroups/mediacorp-tv"
+                    }
+                  ]
+                },
+                {
+                  "component": "dataProviders/videostream",
+                  "displayName": "VideoStream Platform",
+                  "eventGroupSummaries": [
+                    {
+                      "eventGroup": "measurementConsumers/example-mc/eventGroups/videostream"
+                    }
+                  ]
+                }
+              ]
+            },
+            "nonCumulativeMetricStartTime": "2026-01-01T00:00:00Z",
+            "cumulativeMetricStartTime": "1970-01-01T00:00:00Z",
+            "metricEndTime": "2026-01-28T00:00:00Z",
+            "metricFrequency": {
+              "total": true
+            },
+            "dimensionSpecSummary": {
+              "groupings": [
+                {
+                  "path": "common.sex",
+                  "value": {
+                    "enumValue": "FEMALE"
+                  }
+                },
+                {
+                  "path": "common.age_group",
+                  "value": {
+                    "enumValue": "YEARS_55_PLUS"
+                  }
+                }
+              ],
+              "filters": [
+                {
+                  "terms": []
+                }
+              ]
+            },
+            "filter": {
+              "custom": {
+                "filterSpec": [
+                  {
+                    "mediaType": "OTHER",
+                    "filters": []
+                  },
+                  {
+                    "mediaType": "VIDEO",
+                    "filters": []
+                  }
+                ]
+              }
+            }
+          },
+          "metricSet": {
+            "populationSize": "8391300",
+            "reportingUnit": {
+              "cumulative": {
+                "reach": "1722000",
+                "impressions": "3788400",
+                "percentReach": 0.2052,
+                "averageFrequency": 2.2,
+                "kPlusReach": [],
+                "percentKPlusReach": []
+              },
+              "nonCumulative": {
+                "reach": "1722000",
+                "impressions": "3788400",
+                "percentReach": 0.2052,
+                "averageFrequency": 2.2,
+                "kPlusReach": [],
+                "percentKPlusReach": []
+              },
+              "stackedIncrementalReach": []
+            },
+            "components": [
+              {
+                "key": "dataProviders/mediacorp-tv",
+                "value": {
+                  "cumulative": {
+                    "reach": "1188180",
+                    "impressions": "2841300",
+                    "kPlusReach": [],
+                    "percentKPlusReach": []
+                  },
+                  "nonCumulative": {
+                    "reach": "1188180",
+                    "impressions": "2841300",
+                    "kPlusReach": [],
+                    "percentKPlusReach": []
+                  },
+                  "cumulativeUnique": null,
+                  "nonCumulativeUnique": null
+                }
+              },
+              {
+                "key": "dataProviders/videostream",
+                "value": {
+                  "cumulative": {
+                    "reach": "878220",
+                    "impressions": "1742664",
+                    "kPlusReach": [],
+                    "percentKPlusReach": []
+                  },
+                  "nonCumulative": {
+                    "reach": "878220",
+                    "impressions": "1742664",
+                    "kPlusReach": [],
+                    "percentKPlusReach": []
+                  },
+                  "cumulativeUnique": null,
+                  "nonCumulativeUnique": null
+                }
+              }
+            ],
+            "componentIntersections": []
+          }
+        }
+      ]
+    },
+    {
+      "title": "Total Reach",
+      "results": [
+        {
+          "metadata": {
+            "reportingUnitSummary": {
+              "reportingUnitComponentSummary": [
+                {
+                  "component": "dataProviders/mediacorp-tv",
+                  "displayName": "MediaCorp TV",
+                  "eventGroupSummaries": [
+                    {
+                      "eventGroup": "measurementConsumers/example-mc/eventGroups/mediacorp-tv"
+                    }
+                  ]
+                },
+                {
+                  "component": "dataProviders/videostream",
+                  "displayName": "VideoStream Platform",
+                  "eventGroupSummaries": [
+                    {
+                      "eventGroup": "measurementConsumers/example-mc/eventGroups/videostream"
+                    }
+                  ]
+                }
+              ]
+            },
+            "nonCumulativeMetricStartTime": "2026-01-01T00:00:00Z",
+            "cumulativeMetricStartTime": "1970-01-01T00:00:00Z",
+            "metricEndTime": "2026-01-28T00:00:00Z",
+            "metricFrequency": {
+              "total": true
+            },
+            "dimensionSpecSummary": {
+              "groupings": [
+                {
+                  "path": "common.sex",
+                  "value": {
+                    "enumValue": "MALE"
+                  }
+                },
+                {
+                  "path": "common.age_group",
+                  "value": {
+                    "enumValue": "YEARS_16_TO_34"
+                  }
+                }
+              ],
+              "filters": [
+                {
+                  "terms": []
+                }
+              ]
+            },
+            "filter": {
+              "custom": {
+                "filterSpec": [
+                  {
+                    "mediaType": "OTHER",
+                    "filters": []
+                  },
+                  {
+                    "mediaType": "VIDEO",
+                    "filters": []
+                  }
+                ]
+              }
+            }
+          },
+          "metricSet": {
+            "populationSize": "10069560",
+            "reportingUnit": {
+              "cumulative": {
+                "reach": "2337000",
+                "impressions": "4487040",
+                "percentReach": 0.2321,
+                "averageFrequency": 1.92,
+                "kPlusReach": [],
+                "percentKPlusReach": []
+              },
+              "nonCumulative": {
+                "reach": "2337000",
+                "impressions": "4487040",
+                "percentReach": 0.2321,
+                "averageFrequency": 1.92,
+                "kPlusReach": [],
+                "percentKPlusReach": []
+              },
+              "stackedIncrementalReach": []
+            },
+            "components": [
+              {
+                "key": "dataProviders/mediacorp-tv",
+                "value": {
+                  "cumulative": {
+                    "reach": "1612529",
+                    "impressions": "3365280",
+                    "kPlusReach": [],
+                    "percentKPlusReach": []
+                  },
+                  "nonCumulative": {
+                    "reach": "1612529",
+                    "impressions": "3365280",
+                    "kPlusReach": [],
+                    "percentKPlusReach": []
+                  },
+                  "cumulativeUnique": null,
+                  "nonCumulativeUnique": null
+                }
+              },
+              {
+                "key": "dataProviders/videostream",
+                "value": {
+                  "cumulative": {
+                    "reach": "1191870",
+                    "impressions": "2064038",
+                    "kPlusReach": [],
+                    "percentKPlusReach": []
+                  },
+                  "nonCumulative": {
+                    "reach": "1191870",
+                    "impressions": "2064038",
+                    "kPlusReach": [],
+                    "percentKPlusReach": []
+                  },
+                  "cumulativeUnique": null,
+                  "nonCumulativeUnique": null
+                }
+              }
+            ],
+            "componentIntersections": []
+          }
+        }
+      ]
+    },
+    {
+      "title": "Total Reach",
+      "results": [
+        {
+          "metadata": {
+            "reportingUnitSummary": {
+              "reportingUnitComponentSummary": [
+                {
+                  "component": "dataProviders/mediacorp-tv",
+                  "displayName": "MediaCorp TV",
+                  "eventGroupSummaries": [
+                    {
+                      "eventGroup": "measurementConsumers/example-mc/eventGroups/mediacorp-tv"
+                    }
+                  ]
+                },
+                {
+                  "component": "dataProviders/videostream",
+                  "displayName": "VideoStream Platform",
+                  "eventGroupSummaries": [
+                    {
+                      "eventGroup": "measurementConsumers/example-mc/eventGroups/videostream"
+                    }
+                  ]
+                }
+              ]
+            },
+            "nonCumulativeMetricStartTime": "2026-01-01T00:00:00Z",
+            "cumulativeMetricStartTime": "1970-01-01T00:00:00Z",
+            "metricEndTime": "2026-01-28T00:00:00Z",
+            "metricFrequency": {
+              "total": true
+            },
+            "dimensionSpecSummary": {
+              "groupings": [
+                {
+                  "path": "common.sex",
+                  "value": {
+                    "enumValue": "MALE"
+                  }
+                },
+                {
+                  "path": "common.age_group",
+                  "value": {
+                    "enumValue": "YEARS_35_TO_54"
+                  }
+                }
+              ],
+              "filters": [
+                {
+                  "terms": []
+                }
+              ]
+            },
+            "filter": {
+              "custom": {
+                "filterSpec": [
+                  {
+                    "mediaType": "OTHER",
+                    "filters": []
+                  },
+                  {
+                    "mediaType": "VIDEO",
+                    "filters": []
+                  }
+                ]
+              }
+            }
+          },
+          "metricSet": {
+            "populationSize": "9510140",
+            "reportingUnit": {
+              "cumulative": {
+                "reach": "1968000",
+                "impressions": "4290240",
+                "percentReach": 0.2069,
+                "averageFrequency": 2.18,
+                "kPlusReach": [],
+                "percentKPlusReach": []
+              },
+              "nonCumulative": {
+                "reach": "1968000",
+                "impressions": "4290240",
+                "percentReach": 0.2069,
+                "averageFrequency": 2.18,
+                "kPlusReach": [],
+                "percentKPlusReach": []
+              },
+              "stackedIncrementalReach": []
+            },
+            "components": [
+              {
+                "key": "dataProviders/mediacorp-tv",
+                "value": {
+                  "cumulative": {
+                    "reach": "1357920",
+                    "impressions": "3217680",
+                    "kPlusReach": [],
+                    "percentKPlusReach": []
+                  },
+                  "nonCumulative": {
+                    "reach": "1357920",
+                    "impressions": "3217680",
+                    "kPlusReach": [],
+                    "percentKPlusReach": []
+                  },
+                  "cumulativeUnique": null,
+                  "nonCumulativeUnique": null
+                }
+              },
+              {
+                "key": "dataProviders/videostream",
+                "value": {
+                  "cumulative": {
+                    "reach": "1003680",
+                    "impressions": "1973510",
+                    "kPlusReach": [],
+                    "percentKPlusReach": []
+                  },
+                  "nonCumulative": {
+                    "reach": "1003680",
+                    "impressions": "1973510",
+                    "kPlusReach": [],
+                    "percentKPlusReach": []
+                  },
+                  "cumulativeUnique": null,
+                  "nonCumulativeUnique": null
+                }
+              }
+            ],
+            "componentIntersections": []
+          }
+        }
+      ]
+    },
+    {
+      "title": "Total Reach",
+      "results": [
+        {
+          "metadata": {
+            "reportingUnitSummary": {
+              "reportingUnitComponentSummary": [
+                {
+                  "component": "dataProviders/mediacorp-tv",
+                  "displayName": "MediaCorp TV",
+                  "eventGroupSummaries": [
+                    {
+                      "eventGroup": "measurementConsumers/example-mc/eventGroups/mediacorp-tv"
+                    }
+                  ]
+                },
+                {
+                  "component": "dataProviders/videostream",
+                  "displayName": "VideoStream Platform",
+                  "eventGroupSummaries": [
+                    {
+                      "eventGroup": "measurementConsumers/example-mc/eventGroups/videostream"
+                    }
+                  ]
+                }
+              ]
+            },
+            "nonCumulativeMetricStartTime": "2026-01-01T00:00:00Z",
+            "cumulativeMetricStartTime": "1970-01-01T00:00:00Z",
+            "metricEndTime": "2026-01-28T00:00:00Z",
+            "metricFrequency": {
+              "total": true
+            },
+            "dimensionSpecSummary": {
+              "groupings": [
+                {
+                  "path": "common.sex",
+                  "value": {
+                    "enumValue": "MALE"
+                  }
+                },
+                {
+                  "path": "common.age_group",
+                  "value": {
+                    "enumValue": "YEARS_55_PLUS"
+                  }
+                }
+              ],
+              "filters": [
+                {
+                  "terms": []
+                }
+              ]
+            },
+            "filter": {
+              "custom": {
+                "filterSpec": [
+                  {
+                    "mediaType": "OTHER",
+                    "filters": []
+                  },
+                  {
+                    "mediaType": "VIDEO",
+                    "filters": []
+                  }
+                ]
+              }
+            }
+          },
+          "metricSet": {
+            "populationSize": "8391300",
+            "reportingUnit": {
+              "cumulative": {
+                "reach": "1230000",
+                "impressions": "2890500",
+                "percentReach": 0.1466,
+                "averageFrequency": 2.35,
+                "kPlusReach": [],
+                "percentKPlusReach": []
+              },
+              "nonCumulative": {
+                "reach": "1230000",
+                "impressions": "2890500",
+                "percentReach": 0.1466,
+                "averageFrequency": 2.35,
+                "kPlusReach": [],
+                "percentKPlusReach": []
+              },
+              "stackedIncrementalReach": []
+            },
+            "components": [
+              {
+                "key": "dataProviders/mediacorp-tv",
+                "value": {
+                  "cumulative": {
+                    "reach": "848699",
+                    "impressions": "2167875",
+                    "kPlusReach": [],
+                    "percentKPlusReach": []
+                  },
+                  "nonCumulative": {
+                    "reach": "848699",
+                    "impressions": "2167875",
+                    "kPlusReach": [],
+                    "percentKPlusReach": []
+                  },
+                  "cumulativeUnique": null,
+                  "nonCumulativeUnique": null
+                }
+              },
+              {
+                "key": "dataProviders/videostream",
+                "value": {
+                  "cumulative": {
+                    "reach": "627300",
+                    "impressions": "1329630",
+                    "kPlusReach": [],
+                    "percentKPlusReach": []
+                  },
+                  "nonCumulative": {
+                    "reach": "627300",
+                    "impressions": "1329630",
+                    "kPlusReach": [],
+                    "percentKPlusReach": []
+                  },
+                  "cumulativeUnique": null,
+                  "nonCumulativeUnique": null
+                }
+              }
+            ],
+            "componentIntersections": []
+          }
+        }
+      ]
+    }
+  ]
+}
