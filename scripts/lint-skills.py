@@ -22,7 +22,7 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 SKILLS_GLOB = "plugins/*/skills/*/SKILL.md"
 
 NAME_RE = re.compile(r"^[a-z0-9-]+$")
-FRONTMATTER_RE = re.compile(r"\A---\n(.*?)\n---\n", re.DOTALL)
+FRONTMATTER_RE = re.compile(r"\A---\r?\n(.*?)\r?\n---(?:\r?\n|\Z)", re.DOTALL)
 KEY_RE = re.compile(r"^([a-zA-Z_][a-zA-Z0-9_-]*)\s*:\s*(.*)$")
 WORD_LIMIT = 500
 
