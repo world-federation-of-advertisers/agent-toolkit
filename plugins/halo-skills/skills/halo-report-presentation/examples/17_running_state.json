@@ -1,0 +1,60 @@
+{
+  "name": "measurementConsumers/synthmc001/basicReports/br_017",
+  "title": "Brand Y New Product Launch 2025",
+  "campaignGroup": "measurementConsumers/synthmc001/reportingSets/brandy_launch2025",
+  "campaignGroupDisplayName": "Brand Y New Product Launch",
+  "reportingInterval": {
+    "reportStart": {
+      "year": 2025,
+      "month": 9,
+      "day": 15,
+      "hours": 5,
+      "timeOffset": {
+        "id": "America/New_York"
+      }
+    },
+    "reportEnd": {
+      "year": 2025,
+      "month": 10,
+      "day": 15
+    }
+  },
+  "impressionQualificationFilters": [
+    {
+      "impressionQualificationFilter": "impressionQualificationFilters/ami_standard"
+    }
+  ],
+  "state": "RUNNING",
+  "modelLine": "modelProviders/synthetic_provider/modelLines/synth_model_v1",
+  "effectiveModelLine": "modelProviders/synthetic_provider/modelLines/synth_model_v1",
+  "createTime": {
+    "seconds": 1760572800
+  },
+  "resultGroupSpecs": [
+    {
+      "title": "Total Campaign",
+      "reportingUnit": {
+        "components": [
+          "dataProviders/tv_broadcaster_alpha",
+          "dataProviders/social_platform_gamma"
+        ]
+      },
+      "metricFrequency": {
+        "total": true
+      },
+      "dimensionSpec": {
+        "grouping": {}
+      },
+      "resultGroupMetricSpec": {
+        "reportingUnit": {
+          "cumulative": {
+            "reach": "1",
+            "percentReach": true,
+            "averageFrequency": true,
+            "impressions": "1"
+          }
+        }
+      }
+    }
+  ]
+}

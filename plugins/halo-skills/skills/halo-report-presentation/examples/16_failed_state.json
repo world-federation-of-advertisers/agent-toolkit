@@ -1,0 +1,58 @@
+{
+  "name": "measurementConsumers/synthmc001/basicReports/br_016",
+  "title": "Brand X Q4 2025 - Holiday Campaign",
+  "campaignGroup": "measurementConsumers/synthmc001/reportingSets/brandx_q4_2025",
+  "campaignGroupDisplayName": "Brand X Q4 2025",
+  "reportingInterval": {
+    "reportStart": {
+      "year": 2025,
+      "month": 10,
+      "day": 1,
+      "hours": 5,
+      "timeOffset": {
+        "id": "America/New_York"
+      }
+    },
+    "reportEnd": {
+      "year": 2025,
+      "month": 12,
+      "day": 31
+    }
+  },
+  "impressionQualificationFilters": [
+    {
+      "impressionQualificationFilter": "impressionQualificationFilters/mrc_video_standard"
+    }
+  ],
+  "state": "FAILED",
+  "modelLine": "modelProviders/synthetic_provider/modelLines/synth_model_v1",
+  "effectiveModelLine": "modelProviders/synthetic_provider/modelLines/synth_model_v1",
+  "createTime": {
+    "seconds": 1767225600
+  },
+  "resultGroupSpecs": [
+    {
+      "title": "Total Campaign",
+      "reportingUnit": {
+        "components": [
+          "dataProviders/tv_broadcaster_alpha",
+          "dataProviders/digital_platform_beta"
+        ]
+      },
+      "metricFrequency": {
+        "total": true
+      },
+      "dimensionSpec": {
+        "grouping": {}
+      },
+      "resultGroupMetricSpec": {
+        "reportingUnit": {
+          "cumulative": {
+            "reach": "1",
+            "averageFrequency": true
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,536 @@
+{
+  "name": "measurementConsumers/synthmc001/basicReports/br_004",
+  "title": "Brand Z Spring 2025 - Cross-Platform Extension",
+  "campaignGroup": "measurementConsumers/synthmc001/reportingSets/brandz_spring2025",
+  "campaignGroupDisplayName": "Brand Z Spring Campaign",
+  "reportingInterval": {
+    "reportStart": {
+      "year": 2025,
+      "month": 4,
+      "day": 1,
+      "hours": 5,
+      "timeOffset": {
+        "id": "America/New_York"
+      }
+    },
+    "reportEnd": {
+      "year": 2025,
+      "month": 4,
+      "day": 29
+    }
+  },
+  "impressionQualificationFilters": [
+    {
+      "impressionQualificationFilter": "impressionQualificationFilters/mrc_video_standard"
+    }
+  ],
+  "effectiveImpressionQualificationFilters": [
+    {
+      "impressionQualificationFilter": "impressionQualificationFilters/mrc_video_standard"
+    }
+  ],
+  "state": "SUCCEEDED",
+  "modelLine": "modelProviders/synthetic_provider/modelLines/synth_model_v1",
+  "effectiveModelLine": "modelProviders/synthetic_provider/modelLines/synth_model_v1",
+  "createTime": {
+    "seconds": 1745971200
+  },
+  "resultGroupSpecs": [
+    {
+      "title": "Total Campaign - Incremental",
+      "reportingUnit": {
+        "components": [
+          "dataProviders/tv_broadcaster_alpha",
+          "dataProviders/digital_platform_beta",
+          "dataProviders/social_platform_gamma"
+        ]
+      },
+      "metricFrequency": {
+        "total": true
+      },
+      "dimensionSpec": {
+        "grouping": {}
+      },
+      "resultGroupMetricSpec": {
+        "reportingUnit": {
+          "cumulative": {
+            "reach": "1",
+            "percentReach": true,
+            "averageFrequency": true,
+            "impressions": "1"
+          },
+          "stackedIncrementalReach": [
+            "1"
+          ]
+        },
+        "component": {
+          "cumulative": {
+            "reach": "1",
+            "averageFrequency": true,
+            "impressions": "1"
+          },
+          "cumulativeUnique": {
+            "reach": "1"
+          }
+        }
+      }
+    }
+  ],
+  "resultGroups": [
+    {
+      "title": "TV + Digital Full Period",
+      "results": [
+        {
+          "metadata": {
+            "reportingUnitSummary": {
+              "reportingUnitComponentSummary": [
+                {
+                  "component": "dataProviders/tv_broadcaster_alpha",
+                  "displayName": "TV Broadcaster Alpha",
+                  "eventGroupSummaries": [
+                    {
+                      "eventGroup": "dataProviders/tv_broadcaster_alpha/eventGroups/eg_brandz_tv"
+                    }
+                  ]
+                },
+                {
+                  "component": "dataProviders/digital_platform_beta",
+                  "displayName": "Digital Platform Beta",
+                  "eventGroupSummaries": [
+                    {
+                      "eventGroup": "dataProviders/digital_platform_beta/eventGroups/eg_brandz_digital"
+                    }
+                  ]
+                }
+              ]
+            },
+            "cumulativeMetricStartTime": {
+              "seconds": 1743483600
+            },
+            "metricEndTime": {
+              "seconds": 1745902800
+            },
+            "metricFrequency": {
+              "total": true
+            },
+            "dimensionSpecSummary": {},
+            "filter": {
+              "impressionQualificationFilter": "impressionQualificationFilters/mrc_video_standard"
+            }
+          },
+          "metricSet": {
+            "populationSize": "55000000",
+            "reportingUnit": {
+              "cumulative": {
+                "reach": "25000000",
+                "percentReach": 0.4545,
+                "averageFrequency": 4.1,
+                "impressions": "102500000"
+              }
+            },
+            "components": [
+              {
+                "key": "dataProviders/tv_broadcaster_alpha",
+                "value": {
+                  "cumulative": {
+                    "reach": "20000000",
+                    "averageFrequency": 3.8,
+                    "impressions": "76000000"
+                  },
+                  "cumulativeUnique": {
+                    "reach": "8500000"
+                  }
+                }
+              },
+              {
+                "key": "dataProviders/digital_platform_beta",
+                "value": {
+                  "cumulative": {
+                    "reach": "14000000",
+                    "averageFrequency": 1.89,
+                    "impressions": "26500000"
+                  },
+                  "cumulativeUnique": {
+                    "reach": "5000000"
+                  }
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "title": "All Publishers Including Late-Start Social",
+      "results": [
+        {
+          "metadata": {
+            "reportingUnitSummary": {
+              "reportingUnitComponentSummary": [
+                {
+                  "component": "dataProviders/tv_broadcaster_alpha",
+                  "displayName": "TV Broadcaster Alpha",
+                  "eventGroupSummaries": [
+                    {
+                      "eventGroup": "dataProviders/tv_broadcaster_alpha/eventGroups/eg_brandz_tv"
+                    }
+                  ]
+                },
+                {
+                  "component": "dataProviders/digital_platform_beta",
+                  "displayName": "Digital Platform Beta",
+                  "eventGroupSummaries": [
+                    {
+                      "eventGroup": "dataProviders/digital_platform_beta/eventGroups/eg_brandz_digital"
+                    }
+                  ]
+                },
+                {
+                  "component": "dataProviders/social_platform_gamma",
+                  "displayName": "Social Platform Gamma",
+                  "eventGroupSummaries": [
+                    {
+                      "eventGroup": "dataProviders/social_platform_gamma/eventGroups/eg_brandz_social"
+                    }
+                  ]
+                }
+              ]
+            },
+            "cumulativeMetricStartTime": {
+              "seconds": 1743483600
+            },
+            "nonCumulativeMetricStartTime": {
+              "seconds": 1744693200
+            },
+            "metricEndTime": {
+              "seconds": 1745902800
+            },
+            "metricFrequency": {
+              "total": true
+            },
+            "dimensionSpecSummary": {},
+            "filter": {
+              "impressionQualificationFilter": "impressionQualificationFilters/mrc_video_standard"
+            }
+          },
+          "metricSet": {
+            "populationSize": "55000000",
+            "reportingUnit": {
+              "cumulative": {
+                "reach": "25200000",
+                "percentReach": 0.4582,
+                "averageFrequency": 4.22,
+                "impressions": "106344000"
+              },
+              "stackedIncrementalReach": [
+                "20000000",
+                "5000000",
+                "200000"
+              ]
+            },
+            "components": [
+              {
+                "key": "dataProviders/tv_broadcaster_alpha",
+                "value": {
+                  "cumulative": {
+                    "reach": "20000000",
+                    "averageFrequency": 3.8,
+                    "impressions": "76000000"
+                  },
+                  "cumulativeUnique": {
+                    "reach": "8400000"
+                  }
+                }
+              },
+              {
+                "key": "dataProviders/digital_platform_beta",
+                "value": {
+                  "cumulative": {
+                    "reach": "14000000",
+                    "averageFrequency": 1.89,
+                    "impressions": "26500000"
+                  },
+                  "cumulativeUnique": {
+                    "reach": "4900000"
+                  }
+                }
+              },
+              {
+                "key": "dataProviders/social_platform_gamma",
+                "value": {
+                  "cumulative": {
+                    "reach": "2500000",
+                    "averageFrequency": 1.54,
+                    "impressions": "3844000"
+                  },
+                  "cumulativeUnique": {
+                    "reach": "150000"
+                  }
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "title": "Demographic Breakdown",
+      "results": [
+        {
+          "metadata": {
+            "reportingUnitSummary": {
+              "components": [
+                {
+                  "key": "dataProviders/tv_broadcaster_alpha",
+                  "displayName": "TV Broadcaster Alpha"
+                },
+                {
+                  "key": "dataProviders/digital_platform_beta",
+                  "displayName": "Digital Platform Beta"
+                },
+                {
+                  "key": "dataProviders/social_platform_gamma",
+                  "displayName": "Social Platform Gamma"
+                }
+              ]
+            },
+            "metricFrequency": {
+              "total": true
+            },
+            "dimensionSpecSummary": {
+              "groupings": [
+                {
+                  "eventTemplateFields": [
+                    "common.gender",
+                    "common.age_group"
+                  ]
+                }
+              ]
+            }
+          },
+          "metricSet": {
+            "populationSize": "55000000",
+            "reportingUnit": {
+              "cumulative": {
+                "reach": "25200000",
+                "percentReach": 45.8,
+                "averageFrequency": 4.22,
+                "impressions": "106344000"
+              }
+            }
+          }
+        },
+        {
+          "metadata": {
+            "dimensionSpecSummary": {
+              "groupings": [
+                {
+                  "eventTemplateFields": [
+                    "common.gender",
+                    "common.age_group"
+                  ]
+                }
+              ],
+              "filters": [
+                {
+                  "key": "common.gender",
+                  "value": "Female"
+                },
+                {
+                  "key": "common.age_group",
+                  "value": "18-34"
+                }
+              ]
+            }
+          },
+          "metricSet": {
+            "populationSize": "9400000",
+            "reportingUnit": {
+              "cumulative": {
+                "reach": "4522000",
+                "percentReach": 48.1,
+                "averageFrequency": 4.43,
+                "impressions": "20032000"
+              }
+            }
+          }
+        },
+        {
+          "metadata": {
+            "dimensionSpecSummary": {
+              "groupings": [
+                {
+                  "eventTemplateFields": [
+                    "common.gender",
+                    "common.age_group"
+                  ]
+                }
+              ],
+              "filters": [
+                {
+                  "key": "common.gender",
+                  "value": "Female"
+                },
+                {
+                  "key": "common.age_group",
+                  "value": "35-54"
+                }
+              ]
+            }
+          },
+          "metricSet": {
+            "populationSize": "9400000",
+            "reportingUnit": {
+              "cumulative": {
+                "reach": "4221000",
+                "percentReach": 44.9,
+                "averageFrequency": 4.09,
+                "impressions": "17264000"
+              }
+            }
+          }
+        },
+        {
+          "metadata": {
+            "dimensionSpecSummary": {
+              "groupings": [
+                {
+                  "eventTemplateFields": [
+                    "common.gender",
+                    "common.age_group"
+                  ]
+                }
+              ],
+              "filters": [
+                {
+                  "key": "common.gender",
+                  "value": "Female"
+                },
+                {
+                  "key": "common.age_group",
+                  "value": "55+"
+                }
+              ]
+            }
+          },
+          "metricSet": {
+            "populationSize": "8800000",
+            "reportingUnit": {
+              "cumulative": {
+                "reach": "3709000",
+                "percentReach": 42.2,
+                "averageFrequency": 3.92,
+                "impressions": "14539000"
+              }
+            }
+          }
+        },
+        {
+          "metadata": {
+            "dimensionSpecSummary": {
+              "groupings": [
+                {
+                  "eventTemplateFields": [
+                    "common.gender",
+                    "common.age_group"
+                  ]
+                }
+              ],
+              "filters": [
+                {
+                  "key": "common.gender",
+                  "value": "Male"
+                },
+                {
+                  "key": "common.age_group",
+                  "value": "18-34"
+                }
+              ]
+            }
+          },
+          "metricSet": {
+            "populationSize": "9400000",
+            "reportingUnit": {
+              "cumulative": {
+                "reach": "4393000",
+                "percentReach": 46.7,
+                "averageFrequency": 4.56,
+                "impressions": "20032000"
+              }
+            }
+          }
+        },
+        {
+          "metadata": {
+            "dimensionSpecSummary": {
+              "groupings": [
+                {
+                  "eventTemplateFields": [
+                    "common.gender",
+                    "common.age_group"
+                  ]
+                }
+              ],
+              "filters": [
+                {
+                  "key": "common.gender",
+                  "value": "Male"
+                },
+                {
+                  "key": "common.age_group",
+                  "value": "35-54"
+                }
+              ]
+            }
+          },
+          "metricSet": {
+            "populationSize": "9400000",
+            "reportingUnit": {
+              "cumulative": {
+                "reach": "4092000",
+                "percentReach": 43.5,
+                "averageFrequency": 4.22,
+                "impressions": "17268000"
+              }
+            }
+          }
+        },
+        {
+          "metadata": {
+            "dimensionSpecSummary": {
+              "groupings": [
+                {
+                  "eventTemplateFields": [
+                    "common.gender",
+                    "common.age_group"
+                  ]
+                }
+              ],
+              "filters": [
+                {
+                  "key": "common.gender",
+                  "value": "Male"
+                },
+                {
+                  "key": "common.age_group",
+                  "value": "55+"
+                }
+              ]
+            }
+          },
+          "metricSet": {
+            "populationSize": "8800000",
+            "reportingUnit": {
+              "cumulative": {
+                "reach": "3548000",
+                "percentReach": 40.3,
+                "averageFrequency": 3.8,
+                "impressions": "13482000"
+              }
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

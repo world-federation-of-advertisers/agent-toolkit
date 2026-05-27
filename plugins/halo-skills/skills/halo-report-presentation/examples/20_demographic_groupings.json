@@ -1,0 +1,336 @@
+{
+  "name": "measurementConsumers/synthmc001/basicReports/br_020",
+  "title": "Brand N Sports Campaign - Male 25-44 Target",
+  "campaignGroup": "measurementConsumers/synthmc001/reportingSets/brandn_sports",
+  "campaignGroupDisplayName": "Brand N Sports Awareness",
+  "reportingInterval": {
+    "reportStart": {
+      "year": 2025,
+      "month": 9,
+      "day": 1,
+      "hours": 5,
+      "timeOffset": {
+        "id": "America/New_York"
+      }
+    },
+    "reportEnd": {
+      "year": 2025,
+      "month": 9,
+      "day": 29
+    }
+  },
+  "impressionQualificationFilters": [
+    {
+      "impressionQualificationFilter": "impressionQualificationFilters/mrc_video_standard"
+    },
+    {
+      "impressionQualificationFilter": "impressionQualificationFilters/ami_standard"
+    }
+  ],
+  "effectiveImpressionQualificationFilters": [
+    {
+      "impressionQualificationFilter": "impressionQualificationFilters/mrc_video_standard"
+    },
+    {
+      "impressionQualificationFilter": "impressionQualificationFilters/ami_standard"
+    }
+  ],
+  "state": "SUCCEEDED",
+  "modelLine": "modelProviders/synthetic_provider/modelLines/synth_model_v1",
+  "effectiveModelLine": "modelProviders/synthetic_provider/modelLines/synth_model_v1",
+  "createTime": {
+    "seconds": 1759305600
+  },
+  "resultGroupSpecs": [
+    {
+      "title": "All Demographics - MRC",
+      "reportingUnit": {
+        "components": [
+          "dataProviders/tv_broadcaster_alpha",
+          "dataProviders/digital_platform_beta",
+          "dataProviders/social_platform_gamma"
+        ]
+      },
+      "metricFrequency": {
+        "total": true
+      },
+      "dimensionSpec": {
+        "grouping": {
+          "eventTemplateFields": [
+            "common.age_group",
+            "common.gender"
+          ]
+        }
+      },
+      "resultGroupMetricSpec": {
+        "reportingUnit": {
+          "cumulative": {
+            "reach": "1",
+            "percentReach": true,
+            "averageFrequency": true,
+            "impressions": "1"
+          }
+        },
+        "component": {
+          "cumulative": {
+            "reach": "1",
+            "percentReach": true
+          }
+        }
+      }
+    }
+  ],
+  "resultGroups": [
+    {
+      "title": "Demographic Breakdown",
+      "results": [
+        {
+          "metadata": {
+            "reportingUnitSummary": {
+              "components": [
+                {
+                  "key": "dataProviders/tv_broadcaster_alpha",
+                  "displayName": "TV Broadcaster Alpha"
+                },
+                {
+                  "key": "dataProviders/digital_platform_beta",
+                  "displayName": "Digital Platform Beta"
+                },
+                {
+                  "key": "dataProviders/social_platform_gamma",
+                  "displayName": "Social Platform Gamma"
+                }
+              ]
+            },
+            "metricFrequency": {
+              "total": true
+            },
+            "dimensionSpecSummary": {
+              "groupings": [
+                {
+                  "eventTemplateFields": [
+                    "common.gender",
+                    "common.age_group"
+                  ]
+                }
+              ]
+            }
+          },
+          "metricSet": {
+            "populationSize": "55000000"
+          }
+        },
+        {
+          "metadata": {
+            "dimensionSpecSummary": {
+              "groupings": [
+                {
+                  "eventTemplateFields": [
+                    "common.gender",
+                    "common.age_group"
+                  ]
+                }
+              ],
+              "filters": [
+                {
+                  "key": "common.gender",
+                  "value": "Female"
+                },
+                {
+                  "key": "common.age_group",
+                  "value": "18-34"
+                }
+              ]
+            }
+          },
+          "metricSet": {
+            "populationSize": "13500000",
+            "reportingUnit": {
+              "cumulative": {
+                "reach": "5400000",
+                "percentReach": 40.0,
+                "averageFrequency": 2.5,
+                "impressions": "13500000"
+              }
+            }
+          }
+        },
+        {
+          "metadata": {
+            "dimensionSpecSummary": {
+              "groupings": [
+                {
+                  "eventTemplateFields": [
+                    "common.gender",
+                    "common.age_group"
+                  ]
+                }
+              ],
+              "filters": [
+                {
+                  "key": "common.gender",
+                  "value": "Female"
+                },
+                {
+                  "key": "common.age_group",
+                  "value": "35-54"
+                }
+              ]
+            }
+          },
+          "metricSet": {
+            "populationSize": "11500000",
+            "reportingUnit": {
+              "cumulative": {
+                "reach": "4600000",
+                "percentReach": 40.0,
+                "averageFrequency": 2.5,
+                "impressions": "11500000"
+              }
+            }
+          }
+        },
+        {
+          "metadata": {
+            "dimensionSpecSummary": {
+              "groupings": [
+                {
+                  "eventTemplateFields": [
+                    "common.gender",
+                    "common.age_group"
+                  ]
+                }
+              ],
+              "filters": [
+                {
+                  "key": "common.gender",
+                  "value": "Female"
+                },
+                {
+                  "key": "common.age_group",
+                  "value": "55+"
+                }
+              ]
+            }
+          },
+          "metricSet": {
+            "populationSize": "10000000",
+            "reportingUnit": {
+              "cumulative": {
+                "reach": "4000000",
+                "percentReach": 40.0,
+                "averageFrequency": 2.5,
+                "impressions": "10000000"
+              }
+            }
+          }
+        },
+        {
+          "metadata": {
+            "dimensionSpecSummary": {
+              "groupings": [
+                {
+                  "eventTemplateFields": [
+                    "common.gender",
+                    "common.age_group"
+                  ]
+                }
+              ],
+              "filters": [
+                {
+                  "key": "common.gender",
+                  "value": "Male"
+                },
+                {
+                  "key": "common.age_group",
+                  "value": "18-34"
+                }
+              ]
+            }
+          },
+          "metricSet": {
+            "populationSize": "14000000",
+            "reportingUnit": {
+              "cumulative": {
+                "reach": "2800000",
+                "percentReach": 20.0,
+                "averageFrequency": 2.5,
+                "impressions": "7000000"
+              }
+            }
+          }
+        },
+        {
+          "metadata": {
+            "dimensionSpecSummary": {
+              "groupings": [
+                {
+                  "eventTemplateFields": [
+                    "common.gender",
+                    "common.age_group"
+                  ]
+                }
+              ],
+              "filters": [
+                {
+                  "key": "common.gender",
+                  "value": "Male"
+                },
+                {
+                  "key": "common.age_group",
+                  "value": "35-54"
+                }
+              ]
+            }
+          },
+          "metricSet": {
+            "populationSize": "16000000",
+            "reportingUnit": {
+              "cumulative": {
+                "reach": "6400000",
+                "percentReach": 40.0,
+                "averageFrequency": 2.5,
+                "impressions": "16000000"
+              }
+            }
+          }
+        },
+        {
+          "metadata": {
+            "dimensionSpecSummary": {
+              "groupings": [
+                {
+                  "eventTemplateFields": [
+                    "common.gender",
+                    "common.age_group"
+                  ]
+                }
+              ],
+              "filters": [
+                {
+                  "key": "common.gender",
+                  "value": "Male"
+                },
+                {
+                  "key": "common.age_group",
+                  "value": "55+"
+                }
+              ]
+            }
+          },
+          "metricSet": {
+            "populationSize": "10000000",
+            "reportingUnit": {
+              "cumulative": {
+                "reach": "4000000",
+                "percentReach": 40.0,
+                "averageFrequency": 2.5,
+                "impressions": "10000000"
+              }
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

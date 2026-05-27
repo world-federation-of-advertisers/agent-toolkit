@@ -1,0 +1,45 @@
+name: render-examples
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install renderer deps
+        run: python3 -m pip install --quiet python-pptx lxml
+      - name: Render every example to .pptx and .html
+        run: |
+          set -euo pipefail
+          EX=plugins/halo-skills/skills/halo-report-presentation/examples
+          SC=plugins/halo-skills/skills/halo-report-presentation/scripts
+          shopt -s nullglob
+          jsons=("$EX"/*.json)
+          if [ ${#jsons[@]} -eq 0 ]; then
+            echo "no example JSONs found in $EX" >&2
+            exit 1
+          fi
+          for j in "${jsons[@]}"; do
+            echo "::group::$(basename "$j")"
+            python3 "$SC/generate_presentation.py" "$j"
+            python3 "$SC/generate_html_report.py"  "$j"
+            echo "::endgroup::"
+          done
+          echo "rendered ${#jsons[@]} example(s)"
+      - name: Upload rendered artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: rendered-examples
+          path: |
+            plugins/halo-skills/skills/halo-report-presentation/examples/*.pptx
+            plugins/halo-skills/skills/halo-report-presentation/examples/*.html
+          if-no-files-found: error
+          retention-days: 14

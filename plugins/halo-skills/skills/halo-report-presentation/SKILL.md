@@ -41,7 +41,7 @@ If the output path is omitted, the file is written next to the JSON with a match
 
 ### Rebuild examples
 
-The `examples/` folder ships only the JSON fixtures — rendered `.pptx` / `.html` are gitignored. Rebuild locally:
+The `examples/` folder ships JSON fixtures only (rendered `.pptx` / `.html` are gitignored). Two sets: `{1pub_tv,2pub_rich,5pub_overflow,failed}.json` from `generate_mock.py`, plus `01_*.json` … `24_*.json` — a goal/pitfall/state scenario suite converted from proto text-format via `textproto_to_json.py`.
 
 ```bash
 EX=plugins/halo-skills/skills/halo-report-presentation/examples
