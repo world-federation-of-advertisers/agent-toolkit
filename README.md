@@ -4,15 +4,23 @@ AI agent skills for consumers of the [Halo cross-media measurement](https://gith
 
 ## What's in here
 
-A single skill plugin — `halo-skills` — packaged as a Claude Code marketplace **and** usable directly by any agent that loads `SKILL.md` files.
+A Claude Code marketplace bundling **two plugins**:
+
+- **`halo-skills`** — agent-agnostic `SKILL.md` files (e.g. `report-interpretation`) that any LLM runtime can load.
+- **`halo-mcp`** — an MCP server that exposes the Halo Reporting API as tools, renders interactive React dashboards inline in chat, and exports reports as PowerPoint. Distributable as a Claude Code plugin or a Claude Desktop Extension (`.dxt`).
 
 ```
 halo_skills/
 ├── .claude-plugin/marketplace.json
-└── plugins/halo-skills/
-    ├── .claude-plugin/plugin.json
-    └── skills/
-        └── <skill-name>/SKILL.md   ← the actual skills
+└── plugins/
+    ├── halo-skills/
+    │   ├── .claude-plugin/plugin.json
+    │   └── skills/<skill-name>/SKILL.md   ← agent-discoverable skills
+    └── halo-mcp/
+        ├── .claude-plugin/plugin.json     ← Claude Code plugin manifest
+        ├── manifest.json                  ← DXT manifest for Claude Desktop
+        ├── main.ts · server.ts · lib/ · src/
+        └── scripts/build-dxt.sh
 ```
 
 ## Installation
@@ -24,9 +32,22 @@ All skills live under `plugins/halo-skills/skills/<skill-name>/SKILL.md`. Each `
 ```
 /plugin marketplace add https://github.com/world-federation-of-advertisers/halo_skills
 /plugin install halo-skills@halo_skills
+/plugin install halo-mcp@halo_skills      # optional: adds interactive dashboards + PPTX export
 ```
 
-Skills auto-activate based on their `description` field — no per-skill configuration needed.
+Skills auto-activate based on their `description` field — no per-skill configuration needed. The `halo-mcp` plugin reads six `HALO_*` environment variables for credentials and endpoint URLs (see [`plugins/halo-mcp/.env.example`](./plugins/halo-mcp/.env.example)). After installing the plugin, run `npm install` inside `plugins/halo-mcp/` once to fetch its Node dependencies.
+
+### Claude Desktop (Extension)
+
+Build a `.dxt` you can drag into Claude Desktop's Settings → Extensions:
+
+```bash
+cd plugins/halo-mcp
+npm install
+npm run build:dxt   # produces halo-mcp.dxt
+```
+
+The user is prompted for the six `HALO_*` config values at install time. Sensitive ones (`HALO_CLIENT_ID`, `HALO_CLIENT_SECRET`) are stored in the OS keychain.
 
 ### Any agent via `npx skills`
 

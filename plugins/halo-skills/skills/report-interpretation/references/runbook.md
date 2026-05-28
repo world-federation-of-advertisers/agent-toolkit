@@ -493,4 +493,4 @@ Running the skill across many reports (e.g., for a demo UI or a regression set):
    - `custom_graphs` is `[]`
 3. If quality issues are found, re-run the affected batch with corrected instructions.
 
-The downstream auto-critic (pitfall detection, goal alignment, recommendations, completeness scoring against the source report) is the [`halo-report-presentation`](../../halo-report-presentation/scripts/critic.py) `critic.py` script — it scores generated decks rather than re-doing the interpretation.
+Downstream rendering (HTML dashboards, PowerPoint export) is handled by the `halo-mcp` server, not by this skill.

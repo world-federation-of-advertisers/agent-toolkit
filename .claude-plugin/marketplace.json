@@ -14,6 +14,14 @@
       "source": "./plugins/halo-skills",
       "category": "productivity",
       "strict": false
+    },
+    {
+      "name": "halo-mcp",
+      "description": "MCP server + interactive React UI for the Halo cross-media measurement API",
+      "version": "0.1.0",
+      "source": "./plugins/halo-mcp",
+      "category": "productivity",
+      "strict": false
     }
   ]
 }

@@ -1,0 +1,8 @@
+node_modules/
+dist/
+*.dxt
+.env
+.env.development.local
+.env.local
+*.log
+.DS_Store
