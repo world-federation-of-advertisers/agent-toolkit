@@ -21,9 +21,30 @@ import {
 } from "./lib/halo-client.ts";
 import { writePptx } from "./lib/halo-export-pptx.ts";
 
-// Resolve dist/mcp-app.html regardless of whether this is run from source (tsx) or compiled.
+// Resolve mcp-app.html regardless of whether this runs from source (tsx) or
+// compiled. The depths differ: source runs as <root>/server.ts (UI at
+// <root>/dist/mcp-app.html), while the compiled bundle runs as
+// <root>/dist/server/main.mjs (UI at <root>/dist/mcp-app.html, i.e. ../). Try
+// both candidates and use whichever exists.
 const HERE = path.dirname(new URL(import.meta.url).pathname);
-const HTML_PATH = path.join(HERE, "dist", "mcp-app.html");
+const HTML_CANDIDATES = [
+  path.join(HERE, "dist", "mcp-app.html"), // source: <root>/dist/mcp-app.html
+  path.join(HERE, "..", "mcp-app.html"), // compiled: dist/server/../mcp-app.html
+];
+
+async function resolveHtmlPath(): Promise<string> {
+  for (const candidate of HTML_CANDIDATES) {
+    try {
+      await fs.access(candidate);
+      return candidate;
+    } catch {
+      // try next candidate
+    }
+  }
+  throw new Error(
+    `mcp-app.html not found. Looked in:\n  ${HTML_CANDIDATES.join("\n  ")}`,
+  );
+}
 
 const RESOURCE_URI = "ui://halo/mcp-app.html";
 
@@ -368,7 +389,7 @@ export function createServer(): McpServer {
     RESOURCE_URI,
     { mimeType: RESOURCE_MIME_TYPE, description: "Interactive UI for Halo report tools" },
     async (): Promise<ReadResourceResult> => {
-      const html = await fs.readFile(HTML_PATH, "utf-8");
+      const html = await fs.readFile(await resolveHtmlPath(), "utf-8");
       return {
         contents: [{ uri: RESOURCE_URI, mimeType: RESOURCE_MIME_TYPE, text: html }],
       };
