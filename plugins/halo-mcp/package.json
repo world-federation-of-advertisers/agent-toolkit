@@ -12,7 +12,7 @@
     "test": "tsx --test test/*.test.ts",
     "dev": "cross-env NODE_ENV=development concurrently 'cross-env INPUT=mcp-app.html vite build --watch' 'tsx --watch main.ts'",
     "start": "npm run build && npm run serve",
-    "build:dxt": "npm run build && bash scripts/build-dxt.sh"
+    "build:mcpb": "npm run build && bash scripts/build-mcpb.sh"
   },
   "license": "MIT",
   "type": "module",

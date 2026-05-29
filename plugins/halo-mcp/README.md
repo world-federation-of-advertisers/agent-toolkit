@@ -4,7 +4,7 @@ A read-only MCP server that exposes the [Halo Cross-Media Measurement REST API](
 
 This package can be consumed three ways:
 - as a **Claude Code plugin** (registered via the parent `halo_skills` marketplace),
-- as a **Claude Desktop Extension** (`.dxt`), or
+- as a **Claude Desktop Extension** (`.mcpb`), or
 - as a **standalone MCP server** over HTTP or stdio for any MCP-compatible host.
 
 ## Tools
@@ -46,10 +46,33 @@ npm run serve         # HTTP transport on http://localhost:3001/mcp
 npm run serve:stdio   # stdio transport
 ```
 
+## Fake-data mode
+
+For demos and offline development, set `HALO_FAKE_DATA=1`. The client
+bypasses Auth0 and the Halo API entirely and returns fixtures defined in
+[`lib/halo-fixtures.ts`](lib/halo-fixtures.ts). No other env vars are
+required.
+
+```bash
+HALO_FAKE_DATA=1 npm run serve
+```
+
+Three fictional reports ship with the fixture set:
+
+| ID | Title | Story |
+|---|---|---|
+| `fixture_helia_q1` | Helia Athletic — Run 1 Launch | Healthy 3-publisher launch — no pitfalls |
+| `fixture_halcyon_q1` | Halcyon Vitamin-C Serum — Q1 Launch | One publisher (Vega) over-saturates: 60% of impressions, 9% of reach, 53× frequency |
+| `fixture_aldea_q1` | Aldea Coffee — Brand Awareness Q1 | Two publishers heavily overlap — 89% of Cygnus's reach also in Orion |
+
+Publisher names are constellations (Orion, Vega, Lyra, Cygnus, Draco) so no
+real platform is implicitly characterized. Add or edit fixtures by
+modifying `lib/halo-fixtures.ts`.
+
 ## Build as Claude Desktop Extension
 
 ```bash
-npm run build:dxt   # produces halo-mcp.dxt — drag into Claude Desktop's Settings → Extensions
+npm run build:mcpb  # produces halo-mcp.mcpb — drag into Claude Desktop's Settings → Extensions
 ```
 
 The user is prompted for `HALO_CLIENT_ID`, `HALO_CLIENT_SECRET`, and the four `HALO_*` URLs at install time. Secrets are stored by the host (Keychain on macOS, Credential Manager on Windows, libsecret on Linux); the user never has to edit a dotfile.
@@ -67,7 +90,7 @@ export HALO_CLIENT_ID=…
 export HALO_CLIENT_SECRET=…
 ```
 
-If any are missing, the server fails fast with a `Missing required env var …` error. Use the `.dxt` build above if you want secrets stored in the OS keychain instead.
+If any are missing, the server fails fast with a `Missing required env var …` error. Use the `.mcpb` build above if you want secrets stored in the OS keychain instead.
 
 ## Develop
 

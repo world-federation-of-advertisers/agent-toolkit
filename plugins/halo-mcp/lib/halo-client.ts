@@ -5,13 +5,28 @@
  * - Auth0 client_credentials grant; tokens cached on disk for ~55 min.
  * - Optional outbound proxy via HTTPS_PROXY.
  * - Pagination via nextPageToken on all LIST endpoints.
+ *
+ * Fake mode: when HALO_FAKE_DATA=1, the client bypasses Auth0 and HTTP
+ * entirely and returns fixtures from ./halo-fixtures.ts. Used for demos
+ * and offline development. No env vars required in fake mode.
  */
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 import { ProxyAgent, type Dispatcher } from "undici";
+import {
+  FIXTURE_EVENT_GROUPS,
+  FIXTURE_REPORTING_SETS,
+  FIXTURE_REPORTS,
+  findFixtureReport,
+} from "./halo-fixtures.ts";
 
 const TOKEN_MAX_AGE_SECONDS = 3300; // refresh ~5 min before the 60-min expiry
+
+export function isFakeMode(): boolean {
+  const v = (process.env.HALO_FAKE_DATA ?? "").toLowerCase().trim();
+  return v === "1" || v === "true" || v === "yes";
+}
 
 function requiredEnv(name: string): string {
   const v = process.env[name];
@@ -35,6 +50,20 @@ export interface HaloConfig {
 }
 
 export function loadHaloConfig(): HaloConfig {
+  if (isFakeMode()) {
+    // No env vars are required in fake mode; return a stub config. None of
+    // these fields are read by the fake-mode short-circuits below, but
+    // returning a real-shaped object keeps the type system honest.
+    return {
+      baseUrl: "fake://halo",
+      mcId: "measurementConsumers/demo",
+      auth0Url: "fake://auth0",
+      auth0Audience: "fake",
+      clientId: "fake",
+      clientSecret: "fake",
+      tokenFile: path.join(os.tmpdir(), ".halo_token_fake"),
+    };
+  }
   const proxyUrl = process.env.HTTPS_PROXY ?? process.env.https_proxy;
   return {
     baseUrl: requiredEnv("HALO_BASE_URL").replace(/\/+$/, ""),
@@ -191,6 +220,11 @@ export async function listEventGroups(
   cfg: HaloConfig,
   opts: { search?: string; pageSize?: number; maxPages?: number } = {},
 ): Promise<EventGroup[]> {
+  if (isFakeMode()) {
+    const q = opts.search?.toLowerCase().trim();
+    const all = FIXTURE_EVENT_GROUPS as EventGroup[];
+    return q ? all.filter((g) => JSON.stringify(g).toLowerCase().includes(q)) : all;
+  }
   const pageSize = opts.pageSize ?? 100;
   const maxPages = opts.maxPages ?? 5;
   const search = opts.search?.trim();
@@ -210,6 +244,9 @@ export async function listReportingSets(
   cfg: HaloConfig,
   opts: { pageSize?: number; maxPages?: number } = {},
 ): Promise<ReportingSet[]> {
+  if (isFakeMode()) {
+    return FIXTURE_REPORTING_SETS as ReportingSet[];
+  }
   const pageSize = opts.pageSize ?? 100;
   const maxPages = opts.maxPages ?? 5;
   return paginate<
@@ -228,6 +265,16 @@ export async function listBasicReports(
   cfg: HaloConfig,
   opts: { pageSize?: number; maxPages?: number } = {},
 ): Promise<BasicReportSummary[]> {
+  if (isFakeMode()) {
+    return FIXTURE_REPORTS.map((r) => ({
+      name: r.name,
+      title: r.title,
+      state: r.state,
+      createTime: r.createTime,
+      campaignGroupDisplayName: r.campaignGroupDisplayName,
+      reportingInterval: r.reportingInterval as BasicReportSummary["reportingInterval"],
+    }));
+  }
   const pageSize = opts.pageSize ?? 25;
   const maxPages = opts.maxPages ?? 4;
   return paginate<
@@ -262,6 +309,15 @@ export async function getBasicReport(
 ): Promise<BasicReport> {
   // Accept either bare ID or the full "basicReports/<id>" form.
   const id = reportId.replace(/^basicReports\//, "");
+  if (isFakeMode()) {
+    const fixture = findFixtureReport(id) ?? findFixtureReport(reportId);
+    if (!fixture) {
+      throw new Error(
+        `Unknown fake report '${reportId}'. Available: ${FIXTURE_REPORTS.map((r) => (r.name as string).split("/").pop()).join(", ")}`,
+      );
+    }
+    return fixture;
+  }
   const key = `${cfg.mcId}:${id}`;
   const cached = reportCache.get(key);
   if (cached && cached.expiresAt > Date.now()) {

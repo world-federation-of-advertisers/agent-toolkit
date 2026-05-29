@@ -1,5 +1,5 @@
 {
-  "dxt_version": "0.1",
+  "manifest_version": "0.2",
   "name": "halo",
   "display_name": "Halo Cross-Media Measurement",
   "version": "0.1.0",
