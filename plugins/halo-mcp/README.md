@@ -61,9 +61,9 @@ Three fictional reports ship with the fixture set:
 
 | ID | Title | Story |
 |---|---|---|
-| `fixture_helia_q1` | Helia Athletic — Run 1 Launch | Healthy 3-publisher launch — no pitfalls |
-| `fixture_halcyon_q1` | Halcyon Vitamin-C Serum — Q1 Launch | One publisher (Vega) over-saturates: 60% of impressions, 9% of reach, 53× frequency |
-| `fixture_aldea_q1` | Aldea Coffee — Brand Awareness Q1 | Two publishers heavily overlap — 89% of Cygnus's reach also in Orion |
+| `fixture_veliro_q1` | Veliro Athletic — Run 1 Launch | Healthy 3-publisher launch — no pitfalls |
+| `fixture_pellura_q1` | Pellura Vitamin-C Serum — Q1 Launch | One publisher (Vega) over-saturates: 60% of impressions, 9% of reach, 53× frequency |
+| `fixture_cobari_q1` | Cobari Coffee — Brand Awareness Q1 | Two publishers heavily overlap — 89% of Cygnus's reach also in Orion |
 
 Publisher names are constellations (Orion, Vega, Lyra, Cygnus, Draco) so no
 real platform is implicitly characterized. Add or edit fixtures by
