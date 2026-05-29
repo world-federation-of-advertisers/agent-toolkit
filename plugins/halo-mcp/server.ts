@@ -8,6 +8,7 @@ import type { CallToolResult, ReadResourceResult } from "@modelcontextprotocol/s
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
+import { fileURLToPath } from "node:url";
 import { z } from "zod";
 import {
   type BasicReportSummary,
@@ -26,7 +27,7 @@ import { writePptx } from "./lib/halo-export-pptx.ts";
 // <root>/dist/mcp-app.html), while the compiled bundle runs as
 // <root>/dist/server/main.mjs (UI at <root>/dist/mcp-app.html, i.e. ../). Try
 // both candidates and use whichever exists.
-const HERE = path.dirname(new URL(import.meta.url).pathname);
+const HERE = path.dirname(fileURLToPath(import.meta.url));
 const HTML_CANDIDATES = [
   path.join(HERE, "dist", "mcp-app.html"), // source: <root>/dist/mcp-app.html
   path.join(HERE, "..", "mcp-app.html"), // compiled: dist/server/../mcp-app.html
