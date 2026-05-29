@@ -7,7 +7,7 @@ AI agent skills for consumers of the [Halo cross-media measurement](https://gith
 A Claude Code marketplace bundling **two plugins**:
 
 - **`halo-skills`** — agent-agnostic `SKILL.md` files (e.g. `report-interpretation`) that any LLM runtime can load.
-- **`halo-mcp`** — an MCP server that exposes the Halo Reporting API as tools, renders interactive React dashboards inline in chat, and exports reports as PowerPoint. Distributable as a Claude Code plugin or a Claude Desktop Extension (`.dxt`).
+- **`halo-mcp`** — an MCP server that exposes the Halo Reporting API as tools, renders interactive React dashboards inline in chat, and exports reports as PowerPoint. Distributable as a Claude Code plugin or a Claude Desktop Extension (`.mcpb`).
 
 ```
 halo_skills/
@@ -18,9 +18,9 @@ halo_skills/
     │   └── skills/<skill-name>/SKILL.md   ← agent-discoverable skills
     └── halo-mcp/
         ├── .claude-plugin/plugin.json     ← Claude Code plugin manifest
-        ├── manifest.json                  ← DXT manifest for Claude Desktop
+        ├── manifest.json                  ← MCPB manifest for Claude Desktop
         ├── main.ts · server.ts · lib/ · src/
-        └── scripts/build-dxt.sh
+        └── scripts/build-mcpb.sh
 ```
 
 ## Installation
@@ -39,12 +39,12 @@ Skills auto-activate based on their `description` field — no per-skill configu
 
 ### Claude Desktop (Extension)
 
-Build a `.dxt` you can drag into Claude Desktop's Settings → Extensions:
+Build a `.mcpb` you can drag into Claude Desktop's Settings → Extensions:
 
 ```bash
 cd plugins/halo-mcp
 npm install
-npm run build:dxt   # produces halo-mcp.dxt
+npm run build:mcpb   # produces halo-mcp.mcpb
 ```
 
 The user is prompted for the six `HALO_*` config values at install time. Sensitive ones (`HALO_CLIENT_ID`, `HALO_CLIENT_SECRET`) are stored in the OS keychain.

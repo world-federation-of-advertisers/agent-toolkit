@@ -7,7 +7,7 @@ This repository packages AI agent skills for consumers of the [Halo cross-media 
 A Claude Code marketplace (via `.claude-plugin/marketplace.json`) bundling two plugins:
 
 - **`halo-skills`** — `SKILL.md` files under `plugins/halo-skills/skills/` that any agent (Claude Code, Codex, Claude Agent SDK, etc.) can load.
-- **`halo-mcp`** — an MCP server with React UI rendering for the Halo Reporting API. Distributable as a Claude Code plugin or as a Claude Desktop `.dxt` extension (see `plugins/halo-mcp/manifest.json`).
+- **`halo-mcp`** — an MCP server with React UI rendering for the Halo Reporting API. Distributable as a Claude Code plugin or as a Claude Desktop `.mcpb` extension (see `plugins/halo-mcp/manifest.json`).
 
 ```
 halo_skills/
@@ -18,9 +18,9 @@ halo_skills/
     │   └── skills/<skill-name>/SKILL.md   ← agent-discoverable skills live here
     └── halo-mcp/
         ├── .claude-plugin/plugin.json     ← Claude Code plugin (registers MCP server)
-        ├── manifest.json                  ← DXT manifest for Claude Desktop
+        ├── manifest.json                  ← MCPB manifest for Claude Desktop
         ├── main.ts · server.ts · lib/ · src/
-        └── scripts/build-dxt.sh
+        └── scripts/build-mcpb.sh
 ```
 
 ## For agents working in this repo

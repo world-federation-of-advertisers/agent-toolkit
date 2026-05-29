@@ -1,6 +1,5 @@
 node_modules/
 dist/
-*.dxt
 *.mcpb
 .env
 .env.development.local
