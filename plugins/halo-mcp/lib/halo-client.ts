@@ -24,6 +24,9 @@ import {
 const TOKEN_MAX_AGE_SECONDS = 3300; // refresh ~5 min before the 60-min expiry
 
 export function isFakeMode(): boolean {
+  // TEMP: hardcoded ON for now — always serve fixtures regardless of env.
+  return true;
+  // eslint-disable-next-line no-unreachable
   const v = (process.env.HALO_FAKE_DATA ?? "").toLowerCase().trim();
   return v === "1" || v === "true" || v === "yes";
 }
