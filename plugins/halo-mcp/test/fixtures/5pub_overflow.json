@@ -1,0 +1,357 @@
+{
+  "name": "measurementConsumers/example-mc/basicReports/example-overflow",
+  "title": "OmniReach Multi-Platform Campaign",
+  "campaignGroup": "measurementConsumers/example-mc/reportingSets/omnireach-feb",
+  "campaignGroupDisplayName": "OmniReach February 2026",
+  "createTime": "2026-05-27T13:48:58.199359Z",
+  "modelLine": "",
+  "effectiveModelLine": "",
+  "state": "SUCCEEDED",
+  "reportingInterval": {
+    "reportStart": {
+      "year": 2026,
+      "month": 2,
+      "day": 1,
+      "hours": 0,
+      "minutes": 0,
+      "seconds": 0,
+      "nanos": 0,
+      "utcOffset": "0s"
+    },
+    "effectiveReportStart": {
+      "year": 2026,
+      "month": 2,
+      "day": 1,
+      "hours": 0,
+      "minutes": 0,
+      "seconds": 0,
+      "nanos": 0,
+      "utcOffset": "0s"
+    },
+    "reportEnd": {
+      "year": 2026,
+      "month": 2,
+      "day": 28
+    }
+  },
+  "impressionQualificationFilters": [],
+  "effectiveImpressionQualificationFilters": [],
+  "resultGroupSpecs": [],
+  "resultGroups": [
+    {
+      "title": "Total Reach",
+      "results": [
+        {
+          "metadata": {
+            "reportingUnitSummary": {
+              "reportingUnitComponentSummary": [
+                {
+                  "component": "dataProviders/mediacorp-tv",
+                  "displayName": "MediaCorp TV",
+                  "eventGroupSummaries": [
+                    {
+                      "eventGroup": "measurementConsumers/example-mc/eventGroups/mediacorp-tv"
+                    }
+                  ]
+                },
+                {
+                  "component": "dataProviders/videostream",
+                  "displayName": "VideoStream Platform",
+                  "eventGroupSummaries": [
+                    {
+                      "eventGroup": "measurementConsumers/example-mc/eventGroups/videostream"
+                    }
+                  ]
+                },
+                {
+                  "component": "dataProviders/socialbuzz",
+                  "displayName": "SocialBuzz Network",
+                  "eventGroupSummaries": [
+                    {
+                      "eventGroup": "measurementConsumers/example-mc/eventGroups/socialbuzz"
+                    }
+                  ]
+                },
+                {
+                  "component": "dataProviders/streammax",
+                  "displayName": "StreamMax Audio",
+                  "eventGroupSummaries": [
+                    {
+                      "eventGroup": "measurementConsumers/example-mc/eventGroups/streammax"
+                    }
+                  ]
+                },
+                {
+                  "component": "dataProviders/audiocast",
+                  "displayName": "AudioCast Radio",
+                  "eventGroupSummaries": [
+                    {
+                      "eventGroup": "measurementConsumers/example-mc/eventGroups/audiocast"
+                    }
+                  ]
+                }
+              ]
+            },
+            "nonCumulativeMetricStartTime": "2026-02-01T00:00:00Z",
+            "cumulativeMetricStartTime": "1970-01-01T00:00:00Z",
+            "metricEndTime": "2026-02-28T00:00:00Z",
+            "metricFrequency": {
+              "total": true
+            },
+            "dimensionSpecSummary": {
+              "groupings": [],
+              "filters": [
+                {
+                  "terms": []
+                }
+              ]
+            },
+            "filter": {
+              "custom": {
+                "filterSpec": [
+                  {
+                    "mediaType": "OTHER",
+                    "filters": []
+                  },
+                  {
+                    "mediaType": "VIDEO",
+                    "filters": []
+                  }
+                ]
+              }
+            }
+          },
+          "metricSet": {
+            "populationSize": "62400000",
+            "reportingUnit": {
+              "cumulative": {
+                "reach": "18900000",
+                "impressions": "46305000",
+                "percentReach": 0.303,
+                "averageFrequency": 2.45,
+                "grps": 74.2,
+                "kPlusReach": [
+                  "18900000",
+                  "12400000",
+                  "8100000",
+                  "5200000",
+                  "3300000"
+                ],
+                "percentKPlusReach": [
+                  0.303,
+                  0.199,
+                  0.13,
+                  0.083,
+                  0.053
+                ]
+              },
+              "nonCumulative": {
+                "reach": "18900000",
+                "impressions": "46305000",
+                "percentReach": 0.303,
+                "averageFrequency": 2.45,
+                "grps": 74.2,
+                "kPlusReach": [
+                  "18900000",
+                  "12400000",
+                  "8100000",
+                  "5200000",
+                  "3300000"
+                ],
+                "percentKPlusReach": [
+                  0.303,
+                  0.199,
+                  0.13,
+                  0.083,
+                  0.053
+                ]
+              },
+              "stackedIncrementalReach": [
+                "8500000",
+                "4300000",
+                "3100000",
+                "1800000",
+                "1200000"
+              ]
+            },
+            "components": [
+              {
+                "key": "dataProviders/mediacorp-tv",
+                "value": {
+                  "cumulative": {
+                    "reach": "8500000",
+                    "impressions": "19550000",
+                    "percentReach": 0.1362,
+                    "averageFrequency": 2.3,
+                    "kPlusReach": [],
+                    "percentKPlusReach": []
+                  },
+                  "nonCumulative": {
+                    "reach": "8500000",
+                    "impressions": "19550000",
+                    "percentReach": 0.1362,
+                    "averageFrequency": 2.3,
+                    "kPlusReach": [],
+                    "percentKPlusReach": []
+                  },
+                  "cumulativeUnique": {
+                    "reach": "4100000"
+                  },
+                  "nonCumulativeUnique": {
+                    "reach": "4100000"
+                  }
+                }
+              },
+              {
+                "key": "dataProviders/videostream",
+                "value": {
+                  "cumulative": {
+                    "reach": "6300000",
+                    "impressions": "12096000",
+                    "percentReach": 0.101,
+                    "averageFrequency": 1.92,
+                    "kPlusReach": [],
+                    "percentKPlusReach": []
+                  },
+                  "nonCumulative": {
+                    "reach": "6300000",
+                    "impressions": "12096000",
+                    "percentReach": 0.101,
+                    "averageFrequency": 1.92,
+                    "kPlusReach": [],
+                    "percentKPlusReach": []
+                  },
+                  "cumulativeUnique": {
+                    "reach": "3200000"
+                  },
+                  "nonCumulativeUnique": {
+                    "reach": "3200000"
+                  }
+                }
+              },
+              {
+                "key": "dataProviders/socialbuzz",
+                "value": {
+                  "cumulative": {
+                    "reach": "4800000",
+                    "impressions": "9120000",
+                    "percentReach": 0.0769,
+                    "averageFrequency": 1.9,
+                    "kPlusReach": [],
+                    "percentKPlusReach": []
+                  },
+                  "nonCumulative": {
+                    "reach": "4800000",
+                    "impressions": "9120000",
+                    "percentReach": 0.0769,
+                    "averageFrequency": 1.9,
+                    "kPlusReach": [],
+                    "percentKPlusReach": []
+                  },
+                  "cumulativeUnique": {
+                    "reach": "2700000"
+                  },
+                  "nonCumulativeUnique": {
+                    "reach": "2700000"
+                  }
+                }
+              },
+              {
+                "key": "dataProviders/streammax",
+                "value": {
+                  "cumulative": {
+                    "reach": "3100000",
+                    "impressions": "3565000",
+                    "percentReach": 0.0497,
+                    "averageFrequency": 1.15,
+                    "kPlusReach": [],
+                    "percentKPlusReach": []
+                  },
+                  "nonCumulative": {
+                    "reach": "3100000",
+                    "impressions": "3565000",
+                    "percentReach": 0.0497,
+                    "averageFrequency": 1.15,
+                    "kPlusReach": [],
+                    "percentKPlusReach": []
+                  },
+                  "cumulativeUnique": {
+                    "reach": "1800000"
+                  },
+                  "nonCumulativeUnique": {
+                    "reach": "1800000"
+                  }
+                }
+              },
+              {
+                "key": "dataProviders/audiocast",
+                "value": {
+                  "cumulative": {
+                    "reach": "2400000",
+                    "impressions": "1974000",
+                    "percentReach": 0.0385,
+                    "averageFrequency": 0.82,
+                    "kPlusReach": [],
+                    "percentKPlusReach": []
+                  },
+                  "nonCumulative": {
+                    "reach": "2400000",
+                    "impressions": "1974000",
+                    "percentReach": 0.0385,
+                    "averageFrequency": 0.82,
+                    "kPlusReach": [],
+                    "percentKPlusReach": []
+                  },
+                  "cumulativeUnique": {
+                    "reach": "1500000"
+                  },
+                  "nonCumulativeUnique": {
+                    "reach": "1500000"
+                  }
+                }
+              }
+            ],
+            "componentIntersections": [
+              {
+                "components": [
+                  "dataProviders/mediacorp-tv",
+                  "dataProviders/videostream"
+                ],
+                "cumulative": {
+                  "reach": "2500000"
+                },
+                "nonCumulative": {
+                  "reach": "2500000"
+                }
+              },
+              {
+                "components": [
+                  "dataProviders/mediacorp-tv",
+                  "dataProviders/socialbuzz"
+                ],
+                "cumulative": {
+                  "reach": "1900000"
+                },
+                "nonCumulative": {
+                  "reach": "1900000"
+                }
+              },
+              {
+                "components": [
+                  "dataProviders/videostream",
+                  "dataProviders/socialbuzz"
+                ],
+                "cumulative": {
+                  "reach": "1500000"
+                },
+                "nonCumulative": {
+                  "reach": "1500000"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}
