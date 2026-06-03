@@ -1,6 +1,6 @@
 {
   "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
-  "name": "halo_skills",
+  "name": "agent-toolkit",
   "description": "AI agent skills for consumers of the Halo cross-media measurement API",
   "owner": {
     "name": "World Federation of Advertisers",

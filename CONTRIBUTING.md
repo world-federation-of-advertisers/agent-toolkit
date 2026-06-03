@@ -70,7 +70,7 @@ halo_skills/
 
 ```
 /plugin marketplace add /absolute/path/to/halo_skills
-/plugin install halo@halo_skills    # MCP server (dashboards + PPTX export) and skills
+/plugin install halo@agent-toolkit    # MCP server (dashboards + PPTX export) and skills
 ```
 
 **Cross-agent:** point your loader at `plugins/halo-mcp/skills/`.
