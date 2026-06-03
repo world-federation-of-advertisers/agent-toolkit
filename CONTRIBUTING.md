@@ -31,20 +31,23 @@ halo_skills/
 ├── AGENTS.md                                # Agent-facing guide (CLAUDE.md is a pointer to this)
 ├── CLAUDE.md                                # @AGENTS.md
 ├── .claude-plugin/marketplace.json          # Claude Code marketplace catalog
-├── plugins/halo-skills/
-│   ├── .claude-plugin/plugin.json           # Plugin manifest
-│   ├── README.md
-│   ├── SKILL_TEMPLATE.md                    # Copy this when adding a skill
-│   └── skills/
-│       └── <skill-name>/
-│           └── SKILL.md                     # Auto-discovered
+├── plugins/
+│   └── halo-mcp/                            # the `halo` plugin (MCP server + skills)
+│       ├── .claude-plugin/plugin.json       # Registers MCP server + auto-loads skills/
+│       ├── manifest.json                    # MCPB manifest for Claude Desktop
+│       ├── main.ts · server.ts · lib/ · src/
+│       ├── scripts/build-mcpb.sh
+│       ├── SKILL_TEMPLATE.md                # Copy this when adding a skill
+│       └── skills/
+│           └── <skill-name>/
+│               └── SKILL.md                 # Auto-discovered
 ├── scripts/lint-skills.py                   # Validates every SKILL.md
 └── .github/workflows/lint-skills.yml        # Runs the linter in CI
 ```
 
 ## Adding a skill
 
-1. Copy [`plugins/halo-skills/SKILL_TEMPLATE.md`](./plugins/halo-skills/SKILL_TEMPLATE.md) to `plugins/halo-skills/skills/<skill-name>/SKILL.md`.
+1. Copy [`plugins/halo-mcp/SKILL_TEMPLATE.md`](./plugins/halo-mcp/SKILL_TEMPLATE.md) to `plugins/halo-mcp/skills/<skill-name>/SKILL.md`.
 2. Fill in `name` (must match the directory), `description` (start with "Use when…"), and the body.
 3. Run the linter locally:
    ```bash
@@ -67,10 +70,10 @@ halo_skills/
 
 ```
 /plugin marketplace add /absolute/path/to/halo_skills
-/plugin install halo-skills@halo_skills
+/plugin install halo@halo_skills    # MCP server (dashboards + PPTX export) and skills
 ```
 
-**Cross-agent:** point your loader at `plugins/halo-skills/skills/`.
+**Cross-agent:** point your loader at `plugins/halo-mcp/skills/`.
 
 ## License
 

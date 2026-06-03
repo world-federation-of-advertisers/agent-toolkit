@@ -1,0 +1,79 @@
+{
+  "manifest_version": "0.2",
+  "name": "halo",
+  "display_name": "Halo Cross-Media Measurement",
+  "version": "0.1.0",
+  "description": "Browse Halo Basic Reports, event groups, and reporting sets with interactive React dashboards. Export any report as PowerPoint.",
+  "long_description": "A read-only MCP server for the Halo Cross-Media Measurement API. Renders interactive React dashboards inline in the chat (KPI cards, ECharts visualizations, publisher breakdowns, weekly trends) and exports any report as a native PowerPoint deck.",
+  "author": {
+    "name": "World Federation of Advertisers",
+    "url": "https://github.com/world-federation-of-advertisers"
+  },
+  "homepage": "https://github.com/world-federation-of-advertisers/cross-media-measurement",
+  "license": "Apache-2.0",
+  "keywords": ["halo", "cross-media-measurement", "reporting", "wfa", "advertising"],
+  "server": {
+    "type": "node",
+    "entry_point": "dist/server/main.mjs",
+    "mcp_config": {
+      "command": "node",
+      "args": [
+        "${__dirname}/dist/server/main.mjs",
+        "--stdio"
+      ],
+      "env": {
+        "HALO_BASE_URL": "${user_config.halo_base_url}",
+        "HALO_MC_ID": "${user_config.halo_mc_id}",
+        "HALO_AUTH0_URL": "${user_config.halo_auth0_url}",
+        "HALO_AUTH0_AUDIENCE": "${user_config.halo_auth0_audience}",
+        "HALO_CLIENT_ID": "${user_config.halo_client_id}",
+        "HALO_CLIENT_SECRET": "${user_config.halo_client_secret}"
+      }
+    }
+  },
+  "user_config": {
+    "halo_base_url": {
+      "type": "string",
+      "title": "Halo API Base URL",
+      "description": "Public base URL of your Halo Kingdom's reporting API, e.g. https://api.example-halo.org",
+      "required": true
+    },
+    "halo_mc_id": {
+      "type": "string",
+      "title": "Measurement Consumer Resource Name",
+      "description": "Your MC resource name, e.g. measurementConsumers/abc123",
+      "required": true
+    },
+    "halo_auth0_url": {
+      "type": "string",
+      "title": "Auth0 Tenant URL",
+      "description": "Your Auth0 tenant base URL, e.g. https://example.auth0.com",
+      "required": true
+    },
+    "halo_auth0_audience": {
+      "type": "string",
+      "title": "Auth0 API Audience",
+      "description": "Auth0 audience identifier configured for the Halo API",
+      "required": true
+    },
+    "halo_client_id": {
+      "type": "string",
+      "title": "Auth0 Client ID",
+      "description": "Machine-to-machine application client id",
+      "sensitive": true,
+      "required": true
+    },
+    "halo_client_secret": {
+      "type": "string",
+      "title": "Auth0 Client Secret",
+      "description": "Machine-to-machine application client secret",
+      "sensitive": true,
+      "required": true
+    }
+  },
+  "compatibility": {
+    "runtimes": {
+      "node": ">=20"
+    }
+  }
+}
