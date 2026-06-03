@@ -455,7 +455,7 @@ Bad annotations:
 
 ### `custom_graphs` — always `[]`
 
-The presentation skill (`halo-report-presentation`) renders the full standard chart set (stacked incremental, frequency distribution, weekly delivery, Venn overlap, publisher table, demographics). The interpretation **annotates only** — it does not create new charts. Set `"custom_graphs": []` always.
+The Halo MCP server renders the full standard chart set (stacked incremental, frequency distribution, weekly delivery, Venn overlap, publisher table, demographics) via its `show_*` tools and `export_basic_report`. The interpretation **annotates only** — it does not create new charts. Set `"custom_graphs": []` always.
 
 ### Per-goal supplementary guidance
 
