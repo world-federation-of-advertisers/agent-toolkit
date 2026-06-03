@@ -7,7 +7,7 @@ This repository packages AI agent skills for consumers of the [Halo cross-media 
 A Claude Code marketplace (via `.claude-plugin/marketplace.json`) shipping a single plugin, **`halo`** (source: `plugins/halo-mcp/`), that bundles both:
 
 - **An MCP server** that exposes the Halo Reporting API as tools, renders interactive React dashboards inline in chat, and exports reports as PowerPoint (.pptx) via in-app download. Also distributable as a Claude Desktop `.mcpb` extension (see `plugins/halo-mcp/manifest.json`).
-- **Skills** — `SKILL.md` files under `plugins/halo-mcp/skills/` that any agent (Claude Code, Codex, Claude Agent SDK, etc.) can load. Currently ships one skill: `halo-workflow` (how to drive the MCP tools). Also published as per-skill `.zip` bundles for non-Claude agents.
+- **Skills** — `SKILL.md` files under `plugins/halo-mcp/skills/` that any agent (Claude Code, Codex, Claude Agent SDK, etc.) can load. Ships two skills: `halo-workflow` (how to drive the MCP tools) and `report-interpretation` (what the metrics mean). Also published as per-skill `.zip` bundles for non-Claude agents.
 
 ```
 agent-toolkit/
