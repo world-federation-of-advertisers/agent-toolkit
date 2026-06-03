@@ -73,6 +73,7 @@ halo_skills/
 ```
 /plugin marketplace add /absolute/path/to/halo_skills
 /plugin install halo-skills@halo_skills
+/plugin install halo-mcp@halo_skills    # interactive dashboards + PPTX export
 ```
 
 **Cross-agent:** point your loader at `plugins/halo-skills/skills/`.

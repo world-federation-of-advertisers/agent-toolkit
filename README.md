@@ -54,16 +54,24 @@ Download the latest `halo-skills.zip` from the [Releases](https://github.com/wor
 
 ### Coding agents (Claude Code, Cursor, Windsurf, etc.)
 
-Any coding agent that supports MCP servers can use `halo-mcp` via `npx` — no clone or build step required. Download `halo-mcp-0.1.0.tgz` from the [Releases](https://github.com/world-federation-of-advertisers/halo_skills/releases) page, then add it to your agent's MCP configuration.
+Any coding agent that speaks MCP can run `halo-mcp` via `npx` — no clone, build, or manual download. `npx` fetches the package tarball straight from the GitHub release URL and runs it. Replace `<version>` with the [latest release](https://github.com/world-federation-of-advertisers/halo_skills/releases) tag (e.g. `0.1.0`).
 
-For example, in Claude Code's `.claude/settings.json`, Cursor's MCP config, or any agent that reads `mcp.json`:
+**Claude Code** — one command:
+
+```bash
+claude mcp add halo -- npx -y https://github.com/world-federation-of-advertisers/halo_skills/releases/download/v<version>/halo-mcp-<version>.tgz --stdio
+```
+
+Then set the six `HALO_*` variables (below) in the server's `env`, or export them in your shell before launching Claude Code.
+
+**Cursor, Windsurf, or any agent that reads an `mcp.json`** — add this block:
 
 ```json
 {
   "mcpServers": {
     "halo": {
       "command": "npx",
-      "args": ["-y", "/path/to/halo-mcp-0.1.0.tgz", "--stdio"],
+      "args": ["-y", "https://github.com/world-federation-of-advertisers/halo_skills/releases/download/v<version>/halo-mcp-<version>.tgz", "--stdio"],
       "env": {
         "HALO_BASE_URL": "https://api.example-halo.org",
         "HALO_MC_ID": "measurementConsumers/abc123",
@@ -77,7 +85,9 @@ For example, in Claude Code's `.claude/settings.json`, Cursor's MCP config, or a
 }
 ```
 
-The six `HALO_*` environment variables are required. Get these from your Halo Kingdom operator. See [`plugins/halo-mcp/.env.example`](./plugins/halo-mcp/.env.example) for descriptions and optional settings.
+All six `HALO_*` environment variables are required. Get them from your Halo Kingdom operator. See [`plugins/halo-mcp/.env.example`](./plugins/halo-mcp/.env.example) for descriptions and optional settings.
+
+> Working offline or behind a proxy? Download the `.tgz` from the [Releases](https://github.com/world-federation-of-advertisers/halo_skills/releases) page and swap the URL for a local path: `npx -y /path/to/halo-mcp-<version>.tgz --stdio`.
 
 ### Installing the skill (any agent)
 
@@ -89,7 +99,6 @@ Download `halo-skills.zip` from the [Releases](https://github.com/world-federati
 | Codex | `~/.codex/skills/` |
 | Cursor | `.cursor/rules/` |
 | Continue | `.continue/rules/` |
-| Any agent via [`npx skills`](https://github.com/vercel-labs/skills) | `npx skills add world-federation-of-advertisers/halo_skills` |
 
 The skills are agent-agnostic Markdown — no Claude-specific syntax. Any LLM that can follow Markdown instructions can use them.
 
