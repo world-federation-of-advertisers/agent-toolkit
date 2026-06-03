@@ -3,15 +3,15 @@
  *
  * Three fictional brands, three distinct narratives:
  *   • veliro      — healthy launch (no pitfalls)
- *   • pellura    — one publisher (Vega) over-saturates: 60% of impressions,
+ *   • pellura    — one publisher (Platform E) over-saturates: 60% of impressions,
  *                  9% of reach, 53× frequency
  *   • cobari      — two publishers heavily overlap (89% of one inside the other)
  *
  * Numbers are internally consistent (gross > net, stackedIncremental sums to
  * net reach, impressions = reach × freq, kPlusReach monotonically decreases).
  *
- * Publisher names are constellations (Orion, Vega, Lyra, Cygnus, Draco) so no
- * real platform is implicitly cast as a villain.
+ * Publisher names are generic (Platform A–E) so no real platform is implicitly
+ * cast as a villain.
  */
 
 import type { BasicReport } from "./halo-client.ts";
@@ -85,9 +85,9 @@ const VELIRO: BasicReport = {
           metadata: {
             reportingUnitSummary: {
               reportingUnitComponentSummary: [
-                { dataProvider: "dataProviders/orion", displayName: "Orion" },
-                { dataProvider: "dataProviders/cygnus", displayName: "Cygnus" },
-                { dataProvider: "dataProviders/lyra", displayName: "Lyra" },
+                { dataProvider: "dataProviders/orion", displayName: "Platform A" },
+                { dataProvider: "dataProviders/cygnus", displayName: "Platform B" },
+                { dataProvider: "dataProviders/lyra", displayName: "Platform C" },
               ],
             },
             metricFrequency: { total: true },
@@ -190,11 +190,11 @@ const PELLURA: BasicReport = {
           metadata: {
             reportingUnitSummary: {
               reportingUnitComponentSummary: [
-                { dataProvider: "dataProviders/orion", displayName: "Orion" },
-                { dataProvider: "dataProviders/vega", displayName: "Vega" },
-                { dataProvider: "dataProviders/lyra", displayName: "Lyra" },
-                { dataProvider: "dataProviders/cygnus", displayName: "Cygnus" },
-                { dataProvider: "dataProviders/draco", displayName: "Draco" },
+                { dataProvider: "dataProviders/orion", displayName: "Platform A" },
+                { dataProvider: "dataProviders/vega", displayName: "Platform E" },
+                { dataProvider: "dataProviders/lyra", displayName: "Platform C" },
+                { dataProvider: "dataProviders/cygnus", displayName: "Platform B" },
+                { dataProvider: "dataProviders/draco", displayName: "Platform D" },
               ],
             },
             metricFrequency: { total: true },
@@ -207,8 +207,8 @@ const PELLURA: BasicReport = {
                 impressions: PEL_TOTAL_IMP,
                 populationSize: PEL_POP,
               }),
-              // Anchor order: Orion → Cygnus → Lyra → Vega → Draco.
-              // Vega's stub (100K) is the visual punchline.
+              // Anchor order: Platform A → B → C → E → D.
+              // Platform E's stub (100K) is the visual punchline.
               stackedIncrementalReach: [
                 { dataProvider: "dataProviders/orion", reach: "7500000" },
                 { dataProvider: "dataProviders/cygnus", reach: "1700000" },
@@ -323,8 +323,8 @@ const COBARI: BasicReport = {
           metadata: {
             reportingUnitSummary: {
               reportingUnitComponentSummary: [
-                { dataProvider: "dataProviders/orion", displayName: "Orion" },
-                { dataProvider: "dataProviders/cygnus", displayName: "Cygnus" },
+                { dataProvider: "dataProviders/orion", displayName: "Platform A" },
+                { dataProvider: "dataProviders/cygnus", displayName: "Platform B" },
               ],
             },
             metricFrequency: { total: true },
@@ -337,7 +337,7 @@ const COBARI: BasicReport = {
                 impressions: COBARI_TOTAL_IMP,
                 populationSize: COBARI_POP,
               }),
-              // Anchor Orion. Cygnus is mostly inside Orion → tiny incremental.
+              // Anchor Platform A. Platform B is mostly inside Platform A → tiny incremental.
               stackedIncrementalReach: [
                 { dataProvider: "dataProviders/orion", reach: "20000000" },
                 { dataProvider: "dataProviders/cygnus", reach: "2000000" },

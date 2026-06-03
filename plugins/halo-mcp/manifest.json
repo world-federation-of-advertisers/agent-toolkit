@@ -27,8 +27,7 @@
         "HALO_AUTH0_URL": "${user_config.halo_auth0_url}",
         "HALO_AUTH0_AUDIENCE": "${user_config.halo_auth0_audience}",
         "HALO_CLIENT_ID": "${user_config.halo_client_id}",
-        "HALO_CLIENT_SECRET": "${user_config.halo_client_secret}",
-        "HALO_EXPORT_DIR": "${user_config.halo_export_dir}"
+        "HALO_CLIENT_SECRET": "${user_config.halo_client_secret}"
       }
     }
   },
@@ -70,13 +69,6 @@
       "description": "Machine-to-machine application client secret",
       "sensitive": true,
       "required": true
-    },
-    "halo_export_dir": {
-      "type": "directory",
-      "title": "Export Directory",
-      "description": "Where export_basic_report writes .pptx files",
-      "default": "${HOME}/Downloads",
-      "required": false
     }
   },
   "compatibility": {

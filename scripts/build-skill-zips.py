@@ -1,11 +1,10 @@
 #!/usr/bin/env python3
-"""Build one .zip per skill for upload to Claude Desktop's Skills feature.
+"""Build halo-skills.zip for GitHub Releases.
 
-Each zip contains a single top-level folder named after the skill, with
-SKILL.md at its root and any scripts/, references/, examples/ subfolders
-preserved. Junk files (.DS_Store, __pycache__, *.pyc, .gitkeep) are excluded.
+Produces a single zip containing the skills/ directory tree, ready for users
+to download from the Releases page and unzip into their agent's skill directory.
 
-Output: dist/<skill-name>.zip
+Output: dist/halo-skills.zip
 Run:    python3 scripts/build-skill-zips.py
 """
 
@@ -33,22 +32,6 @@ def should_include(path: Path) -> bool:
     return True
 
 
-def build_zip(skill_dir: Path, out_path: Path) -> int:
-    skill_name = skill_dir.name
-    file_count = 0
-    with zipfile.ZipFile(out_path, "w", zipfile.ZIP_DEFLATED) as zf:
-        for path in sorted(skill_dir.rglob("*")):
-            if not path.is_file():
-                continue
-            rel = path.relative_to(skill_dir)
-            if not should_include(rel):
-                continue
-            arcname = Path(skill_name) / rel
-            zf.write(path, arcname.as_posix())
-            file_count += 1
-    return file_count
-
-
 def main() -> int:
     if not SKILLS_DIR.is_dir():
         print(f"error: {SKILLS_DIR} does not exist", file=sys.stderr)
@@ -58,19 +41,26 @@ def main() -> int:
         shutil.rmtree(DIST_DIR)
     DIST_DIR.mkdir(parents=True)
 
-    skill_dirs = sorted(p for p in SKILLS_DIR.iterdir() if p.is_dir())
-    if not skill_dirs:
-        print("error: no skills found", file=sys.stderr)
+    out = DIST_DIR / "halo-skills.zip"
+    file_count = 0
+    with zipfile.ZipFile(out, "w", zipfile.ZIP_DEFLATED) as zf:
+        for path in sorted(SKILLS_DIR.rglob("*")):
+            if not path.is_file():
+                continue
+            rel = path.relative_to(SKILLS_DIR)
+            if not should_include(rel):
+                continue
+            arcname = Path("skills") / rel
+            zf.write(path, arcname.as_posix())
+            file_count += 1
+
+    if file_count == 0:
+        print("error: no skill files found", file=sys.stderr)
         return 1
 
-    for skill_dir in skill_dirs:
-        out = DIST_DIR / f"{skill_dir.name}.zip"
-        n = build_zip(skill_dir, out)
-        size_kb = out.stat().st_size / 1024
-        print(f"  {out.relative_to(REPO_ROOT)}  ({n} files, {size_kb:,.1f} KB)")
-
-    print(f"\nBuilt {len(skill_dirs)} skill zip(s) in {DIST_DIR.relative_to(REPO_ROOT)}/")
-    print("Upload each .zip to Claude Desktop via Settings -> Capabilities -> Skills.")
+    size_kb = out.stat().st_size / 1024
+    print(f"  {out.relative_to(REPO_ROOT)}  ({file_count} files, {size_kb:,.1f} KB)")
+    print(f"\nUpload dist/halo-skills.zip to the GitHub Releases page.")
     return 0
 
 

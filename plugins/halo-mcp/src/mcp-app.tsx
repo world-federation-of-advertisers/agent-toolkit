@@ -33,7 +33,8 @@ type ReportKind =
   | "publisher_table"
   | "weekly_trends";
 
-type ToolPayload = { kind: ReportKind; report: BasicReport };
+type PptxExportPayload = { kind: "pptx_export"; filename: string; title: string; blob: string };
+type ToolPayload = { kind: ReportKind; report: BasicReport } | PptxExportPayload;
 
 function extractPayload(result: CallToolResult): ToolPayload | { error: string } | null {
   if (result.isError) {
@@ -131,6 +132,9 @@ function HaloApp() {
   if ("error" in payload) {
     return <ErrorView error={payload.error} />;
   }
+  if (payload.kind === "pptx_export") {
+    return <PptxExportView payload={payload} app={app} />;
+  }
   return <Dispatch payload={payload} app={app} />;
 }
 
@@ -147,7 +151,53 @@ const VIZ_RENDERERS: Record<
   weekly_trends: WeeklyTrendsView,
 };
 
-function Dispatch({ payload, app }: { payload: ToolPayload; app: App }) {
+function PptxExportView({ payload, app }: { payload: PptxExportPayload; app: App }) {
+  const [status, setStatus] = useState<"idle" | "downloading" | "done" | "error">("idle");
+
+  const handleDownload = async () => {
+    setStatus("downloading");
+    try {
+      const result = await app.downloadFile({
+        contents: [{
+          type: "resource",
+          resource: {
+            uri: payload.filename,
+            mimeType: "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+            blob: payload.blob,
+          },
+        }],
+      });
+      setStatus(result.isError ? "error" : "done");
+    } catch {
+      setStatus("error");
+    }
+  };
+
+  const sizeKB = Math.round((payload.blob.length * 3) / 4 / 1024);
+  return (
+    <div style={{ padding: 32, fontFamily: "system-ui, sans-serif", textAlign: "center" }}>
+      <div style={{ fontSize: 48, marginBottom: 16 }}>📊</div>
+      <h2 style={{ margin: "0 0 8px" }}>{payload.title}</h2>
+      <p style={{ color: "#666", margin: "0 0 24px" }}>{payload.filename} · {sizeKB} KB</p>
+      <button
+        onClick={handleDownload}
+        disabled={status === "downloading"}
+        style={{
+          padding: "12px 32px", fontSize: 16, fontWeight: 600,
+          background: status === "done" ? "#16a34a" : status === "error" ? "#dc2626" : "#2563eb",
+          color: "#fff", border: "none", borderRadius: 8, cursor: status === "downloading" ? "wait" : "pointer",
+        }}
+      >
+        {status === "idle" && "Download .pptx"}
+        {status === "downloading" && "Preparing…"}
+        {status === "done" && "Downloaded ✓"}
+        {status === "error" && "Download failed — retry?"}
+      </button>
+    </div>
+  );
+}
+
+function Dispatch({ payload, app }: { payload: ToolPayload & { kind: ReportKind; report: BasicReport }; app: App }) {
   const Render = VIZ_RENDERERS[payload.kind];
   if (!Render) {
     return <ErrorView error={`Unknown payload kind: ${JSON.stringify(payload)}`} />;

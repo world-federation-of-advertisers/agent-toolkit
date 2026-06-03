@@ -5,18 +5,24 @@
   "scripts": {
     "typecheck": "tsc --noEmit",
     "build:ui": "cross-env INPUT=mcp-app.html vite build",
-    "build:server": "esbuild main.ts --bundle --platform=node --target=node20 --format=esm --packages=external --outfile=dist/server/main.mjs",
+    "build:server": "esbuild main.ts --bundle --platform=node --target=node20 --format=esm --packages=external --banner:js='#!/usr/bin/env node' --outfile=dist/server/main.mjs",
     "build": "npm run typecheck && npm run build:ui && npm run build:server",
     "serve": "tsx main.ts",
     "serve:stdio": "tsx main.ts --stdio",
     "test": "tsx --test test/*.test.ts",
     "dev": "cross-env NODE_ENV=development concurrently 'cross-env INPUT=mcp-app.html vite build --watch' 'tsx --watch main.ts'",
     "start": "npm run build && npm run serve",
-    "build:mcpb": "npm run build && bash scripts/build-mcpb.sh"
+    "build:mcpb": "npm run build && bash scripts/build-mcpb.sh",
+    "pack": "npm run build && npm pack"
   },
-  "license": "MIT",
+  "license": "Apache-2.0",
   "type": "module",
-  "private": "true",
+  "bin": {
+    "halo-mcp": "dist/server/main.mjs"
+  },
+  "files": [
+    "dist/"
+  ],
   "dependencies": {
     "@modelcontextprotocol/ext-apps": "^1.7.2",
     "@modelcontextprotocol/sdk": "^1.29.0",

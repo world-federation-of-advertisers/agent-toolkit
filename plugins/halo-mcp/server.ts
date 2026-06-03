@@ -6,7 +6,6 @@ import {
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import type { CallToolResult, ReadResourceResult } from "@modelcontextprotocol/sdk/types.js";
 import fs from "node:fs/promises";
-import os from "node:os";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { z } from "zod";
@@ -20,7 +19,7 @@ import {
   listReportingSets,
   loadHaloConfig,
 } from "./lib/halo-client.ts";
-import { writePptx } from "./lib/halo-export-pptx.ts";
+import { generatePptxBuffer } from "./lib/halo-export-pptx.ts";
 
 // Resolve mcp-app.html regardless of whether this runs from source (tsx) or
 // compiled. The depths differ: source runs as <root>/server.ts (UI at
@@ -173,10 +172,6 @@ function formatReportingSetsMarkdown(sets: ReportingSet[]): string {
   ].join("\n");
 }
 
-// Default export location. Override with HALO_EXPORT_DIR.
-// `||` (not `??`) so a host that passes an empty string for an optional
-// user_config field still falls back to ~/Downloads.
-const EXPORT_DIR = process.env.HALO_EXPORT_DIR || path.join(os.homedir(), "Downloads");
 
 function safeIdSegment(s: string): string {
   return s.replace(/^basicReports\//, "").replace(/[^A-Za-z0-9_-]/g, "_");
@@ -353,30 +348,34 @@ export function createServer(): McpServer {
     {
       title: "Export Halo Basic Report",
       description:
-        "Export a Halo Basic Report as a native PowerPoint deck (.pptx). Generated deterministically in-process from the BasicReport JSON. Saves to HALO_EXPORT_DIR (default ~/Downloads) and returns the path. Charts are native PowerPoint objects.",
+        "Export a Halo Basic Report as a native PowerPoint deck (.pptx). Returns the file as an embedded binary resource. Charts are native PowerPoint objects.",
       inputSchema: {
         reportId: z.string().min(1).describe("Basic report ID, e.g. 'abc123' or 'basicReports/abc123'"),
-        outputPath: z.string().optional().describe("Override the output file path (absolute). When omitted, writes to the export dir."),
       },
+      _meta: { ui: { resourceUri: RESOURCE_URI } },
     },
-    async ({ reportId, outputPath }): Promise<CallToolResult> => {
+    async ({ reportId }): Promise<CallToolResult> => {
       try {
         const cfg = loadHaloConfig();
         const report = await getBasicReport(cfg, reportId);
-        let outPath: string;
-        if (outputPath && path.isAbsolute(outputPath)) {
-          outPath = outputPath;
-        } else {
-          await fs.mkdir(EXPORT_DIR, { recursive: true });
-          outPath = path.join(EXPORT_DIR, `halo_${safeIdSegment(reportId)}.pptx`);
-        }
-        await writePptx(report, outPath);
         const title = (report.title as string | undefined) ?? report.name;
+        const buffer = await generatePptxBuffer(report);
+        const filename = `halo_${safeIdSegment(reportId)}.pptx`;
+        const blob = buffer.toString("base64");
+        const meta = { kind: "pptx_export", filename, title };
         return {
           content: [
-            { type: "text", text: `Exported "${title}" to ${outPath}` },
+            { type: "text", text: `Generated PowerPoint deck "${title}" (${Math.round(buffer.length / 1024)} KB). The file is ready for download in the Halo Reports UI.` },
+            {
+              type: "resource",
+              resource: {
+                uri: `data:application/json,${encodeURIComponent(JSON.stringify(meta))}`,
+                mimeType: "application/json",
+                text: JSON.stringify(meta),
+              },
+            },
           ],
-          structuredContent: { path: outPath, format: "pptx", title },
+          structuredContent: { ...meta, blob } as Record<string, unknown>,
         };
       } catch (e) {
         return errorResult(e instanceof Error ? e.message : String(e));

@@ -31,13 +31,18 @@ halo_skills/
 ├── AGENTS.md                                # Agent-facing guide (CLAUDE.md is a pointer to this)
 ├── CLAUDE.md                                # @AGENTS.md
 ├── .claude-plugin/marketplace.json          # Claude Code marketplace catalog
-├── plugins/halo-skills/
-│   ├── .claude-plugin/plugin.json           # Plugin manifest
-│   ├── README.md
-│   ├── SKILL_TEMPLATE.md                    # Copy this when adding a skill
-│   └── skills/
-│       └── <skill-name>/
-│           └── SKILL.md                     # Auto-discovered
+├── plugins/
+│   ├── halo-skills/
+│   │   ├── .claude-plugin/plugin.json       # Plugin manifest
+│   │   ├── SKILL_TEMPLATE.md                # Copy this when adding a skill
+│   │   └── skills/
+│   │       └── <skill-name>/
+│   │           └── SKILL.md                 # Auto-discovered
+│   └── halo-mcp/
+│       ├── .claude-plugin/plugin.json       # Claude Code plugin manifest
+│       ├── manifest.json                    # MCPB manifest for Claude Desktop
+│       ├── main.ts · server.ts · lib/ · src/
+│       └── scripts/build-mcpb.sh
 ├── scripts/lint-skills.py                   # Validates every SKILL.md
 └── .github/workflows/lint-skills.yml        # Runs the linter in CI
 ```
