@@ -1,4 +1,4 @@
-# halo_skills
+# agent-toolkit
 
 AI agent skills for consumers of the [Halo cross-media measurement](https://github.com/world-federation-of-advertisers/cross-media-measurement) API.
 
@@ -28,13 +28,13 @@ An MCP server that exposes the Halo Reporting API as tools, renders interactive 
 
 A standalone `SKILL.md` that teaches any LLM agent how to drive the Halo MCP tools: which tool to call for a given question, the discovery sequence (list → summary → drill down → export), and common interpretation pitfalls.
 
-Download the latest `halo-skills.zip` from the [Releases](https://github.com/world-federation-of-advertisers/halo_skills/releases) page.
+Download the latest `halo-skills.zip` from the [Releases](https://github.com/world-federation-of-advertisers/agent-toolkit/releases) page.
 
 ## Installation
 
 ### Claude Desktop
 
-1. Download `halo-mcp.mcpb` from the [Releases](https://github.com/world-federation-of-advertisers/halo_skills/releases) page.
+1. Download `halo-mcp.mcpb` from the [Releases](https://github.com/world-federation-of-advertisers/agent-toolkit/releases) page.
 2. Open Claude Desktop and go to **Settings → Extensions**.
 3. Click **Advanced settings**.
 4. Click **Install Extension** and select the downloaded `.mcpb` file.
@@ -54,12 +54,12 @@ Download the latest `halo-skills.zip` from the [Releases](https://github.com/wor
 
 ### Coding agents (Claude Code, Cursor, Windsurf, etc.)
 
-Any coding agent that speaks MCP can run `halo-mcp` via `npx` — no clone, build, or manual download. `npx` fetches the package tarball straight from the GitHub release URL and runs it. Replace `<version>` with the [latest release](https://github.com/world-federation-of-advertisers/halo_skills/releases) tag (e.g. `0.1.0`).
+Any coding agent that speaks MCP can run `halo-mcp` via `npx` — no clone, build, or manual download. `npx` fetches the package tarball straight from the GitHub release URL and runs it. Replace `<version>` with the [latest release](https://github.com/world-federation-of-advertisers/agent-toolkit/releases) tag (e.g. `0.1.0`).
 
 **Claude Code** — one command:
 
 ```bash
-claude mcp add halo -- npx -y https://github.com/world-federation-of-advertisers/halo_skills/releases/download/v<version>/halo-mcp-<version>.tgz --stdio
+claude mcp add halo -- npx -y https://github.com/world-federation-of-advertisers/agent-toolkit/releases/download/v<version>/halo-mcp-<version>.tgz --stdio
 ```
 
 Then set the six `HALO_*` variables (below) in the server's `env`, or export them in your shell before launching Claude Code.
@@ -71,7 +71,7 @@ Then set the six `HALO_*` variables (below) in the server's `env`, or export the
   "mcpServers": {
     "halo": {
       "command": "npx",
-      "args": ["-y", "https://github.com/world-federation-of-advertisers/halo_skills/releases/download/v<version>/halo-mcp-<version>.tgz", "--stdio"],
+      "args": ["-y", "https://github.com/world-federation-of-advertisers/agent-toolkit/releases/download/v<version>/halo-mcp-<version>.tgz", "--stdio"],
       "env": {
         "HALO_BASE_URL": "https://api.example-halo.org",
         "HALO_MC_ID": "measurementConsumers/abc123",
@@ -87,11 +87,11 @@ Then set the six `HALO_*` variables (below) in the server's `env`, or export the
 
 All six `HALO_*` environment variables are required. Get them from your Halo Kingdom operator. See [`plugins/halo-mcp/.env.example`](./plugins/halo-mcp/.env.example) for descriptions and optional settings.
 
-> Working offline or behind a proxy? Download the `.tgz` from the [Releases](https://github.com/world-federation-of-advertisers/halo_skills/releases) page and swap the URL for a local path: `npx -y /path/to/halo-mcp-<version>.tgz --stdio`.
+> Working offline or behind a proxy? Download the `.tgz` from the [Releases](https://github.com/world-federation-of-advertisers/agent-toolkit/releases) page and swap the URL for a local path: `npx -y /path/to/halo-mcp-<version>.tgz --stdio`.
 
 ### Installing the skill (any agent)
 
-Download `halo-skills.zip` from the [Releases](https://github.com/world-federation-of-advertisers/halo_skills/releases) page and unzip it. Each skill is a self-contained `SKILL.md` file you can drop into your agent's skill/rules directory.
+Download `halo-skills.zip` from the [Releases](https://github.com/world-federation-of-advertisers/agent-toolkit/releases) page and unzip it. Each skill is a self-contained `SKILL.md` file you can drop into your agent's skill/rules directory.
 
 | Agent | Destination |
 |-------|-------------|
@@ -105,7 +105,7 @@ The skills are agent-agnostic Markdown — no Claude-specific syntax. Any LLM th
 ## Repository layout
 
 ```
-halo_skills/
+agent-toolkit/
 ├── .claude-plugin/marketplace.json        ← declares the single `halo` plugin
 └── plugins/
     └── halo-mcp/                           ← the `halo` plugin (MCP server + skills)
