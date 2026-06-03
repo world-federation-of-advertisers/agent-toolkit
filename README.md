@@ -32,6 +32,28 @@ Download the latest `halo-skills.zip` from the [Releases](https://github.com/wor
 
 ## Installation
 
+### Claude Code
+
+Install the whole `halo` plugin — MCP server **and** the bundled skills — directly from this marketplace. No clone or build step.
+
+1. **Add the marketplace** (one time):
+
+   ```
+   /plugin marketplace add world-federation-of-advertisers/agent-toolkit
+   ```
+
+2. **Install the plugin:**
+
+   ```
+   /plugin install halo@agent-toolkit
+   ```
+
+3. **Provide credentials.** The MCP server needs six `HALO_*` values (get them from your Halo Kingdom operator). Set them as environment variables before launching Claude Code — export them in your shell, or add an `env` block to the `halo` server in your `.claude/settings.json`. See [`plugins/halo-mcp/.env.example`](./plugins/halo-mcp/.env.example) for the full list.
+
+4. **Restart Claude Code** so the server starts. On first launch the server is fetched via `npx` from the release tarball and cached, so that run needs network access.
+
+Use `/plugin` at any time to enable, disable, or uninstall it. To pick up a new release later, run `/plugin marketplace update agent-toolkit`, then reinstall.
+
 ### Claude Desktop
 
 1. Download `halo-mcp.mcpb` from the [Releases](https://github.com/world-federation-of-advertisers/agent-toolkit/releases) page.
@@ -52,19 +74,11 @@ Download the latest `halo-skills.zip` from the [Releases](https://github.com/wor
 
 7. Click **Save**. The Halo tools are now available in your conversations.
 
-### Coding agents (Claude Code, Cursor, Windsurf, etc.)
+### Other coding agents (Cursor, Windsurf, etc.)
 
-Any coding agent that speaks MCP can run `halo-mcp` via `npx` — no clone, build, or manual download. `npx` fetches the package tarball straight from the GitHub release URL and runs it. Replace `<version>` with the [latest release](https://github.com/world-federation-of-advertisers/agent-toolkit/releases) tag (e.g. `0.1.0`).
+Any other coding agent that speaks MCP can run `halo-mcp` via `npx` — no clone, build, or manual download. `npx` fetches the package tarball straight from the GitHub release URL and runs it. Replace `<version>` with the [latest release](https://github.com/world-federation-of-advertisers/agent-toolkit/releases) tag (e.g. `0.1.0`).
 
-**Claude Code** — one command:
-
-```bash
-claude mcp add halo -- npx -y https://github.com/world-federation-of-advertisers/agent-toolkit/releases/download/v<version>/halo-mcp-<version>.tgz --stdio
-```
-
-Then set the six `HALO_*` variables (below) in the server's `env`, or export them in your shell before launching Claude Code.
-
-**Cursor, Windsurf, or any agent that reads an `mcp.json`** — add this block:
+In **Cursor**, **Windsurf**, or any agent that reads an `mcp.json`, add this block:
 
 ```json
 {

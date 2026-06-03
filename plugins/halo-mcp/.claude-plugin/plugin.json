@@ -18,9 +18,10 @@
   ],
   "mcpServers": {
     "halo": {
-      "command": "node",
+      "command": "npx",
       "args": [
-        "${CLAUDE_PLUGIN_ROOT}/dist/server/main.mjs",
+        "-y",
+        "https://github.com/world-federation-of-advertisers/agent-toolkit/releases/download/v0.1.0/halo-mcp-0.1.0.tgz",
         "--stdio"
       ],
       "env": {

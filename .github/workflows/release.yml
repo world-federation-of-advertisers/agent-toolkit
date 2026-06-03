@@ -53,6 +53,20 @@ jobs:
             echo "::error::Tag v$tag_ver does not match package.json ($pkg_ver) / manifest.json ($manifest_ver). Bump versions to match the tag." >&2
             exit 1
           fi
+          # The plugin's MCP server is fetched via npx from the release tarball,
+          # with the version pinned in .claude-plugin/plugin.json. That URL must
+          # point at this tag's tarball, or a marketplace install would fetch the
+          # wrong (or a nonexistent) release.
+          plugin_args="$(node -p "require('./.claude-plugin/plugin.json').mcpServers.halo.args.join(' ')")"
+          expected_url="releases/download/v${tag_ver}/halo-mcp-${tag_ver}.tgz"
+          echo "plugin.json server args: $plugin_args"
+          case "$plugin_args" in
+            *"$expected_url"*) ;;
+            *)
+              echo "::error::plugin.json MCP server URL does not reference v$tag_ver ($expected_url). Update .claude-plugin/plugin.json to match the tag." >&2
+              exit 1
+              ;;
+          esac
 
       - name: Install dependencies
         run: npm ci
