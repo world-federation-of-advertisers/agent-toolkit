@@ -8,16 +8,8 @@
   },
   "plugins": [
     {
-      "name": "halo-skills",
-      "description": "Skill library for consumers of the Halo cross-media measurement API",
-      "version": "0.1.0",
-      "source": "./plugins/halo-skills",
-      "category": "productivity",
-      "strict": false
-    },
-    {
-      "name": "halo-mcp",
-      "description": "MCP server + interactive React UI for the Halo cross-media measurement API",
+      "name": "halo",
+      "description": "Halo cross-media measurement: MCP server with interactive React dashboards plus report-interpretation skills",
       "version": "0.1.0",
       "source": "./plugins/halo-mcp",
       "category": "productivity",

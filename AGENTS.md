@@ -4,31 +4,30 @@ This repository packages AI agent skills for consumers of the [Halo cross-media 
 
 ## What's here
 
-A Claude Code marketplace (via `.claude-plugin/marketplace.json`) bundling two plugins:
+A Claude Code marketplace (via `.claude-plugin/marketplace.json`) shipping a single plugin, **`halo`** (source: `plugins/halo-mcp/`), that bundles both:
 
-- **`halo-skills`** — `SKILL.md` files under `plugins/halo-skills/skills/` that any agent (Claude Code, Codex, Claude Agent SDK, etc.) can load. Currently ships one skill: `report-interpretation`.
-- **`halo-mcp`** — an MCP server that exposes the Halo Reporting API as tools, renders interactive React dashboards inline in chat, and exports reports as PowerPoint (.pptx) via in-app download. Distributable as a Claude Code plugin or as a Claude Desktop `.mcpb` extension (see `plugins/halo-mcp/manifest.json`).
+- **An MCP server** that exposes the Halo Reporting API as tools, renders interactive React dashboards inline in chat, and exports reports as PowerPoint (.pptx) via in-app download. Also distributable as a Claude Desktop `.mcpb` extension (see `plugins/halo-mcp/manifest.json`).
+- **Skills** — `SKILL.md` files under `plugins/halo-mcp/skills/` that any agent (Claude Code, Codex, Claude Agent SDK, etc.) can load. Currently ships one skill: `report-interpretation`. Also published as a standalone `halo-skills.zip` for non-Claude agents.
 
 ```
 halo_skills/
-├── .claude-plugin/marketplace.json
+├── .claude-plugin/marketplace.json        ← declares the single `halo` plugin
 └── plugins/
-    ├── halo-skills/
-    │   ├── .claude-plugin/plugin.json
-    │   └── skills/report-interpretation/SKILL.md
-    └── halo-mcp/
-        ├── .claude-plugin/plugin.json     ← Claude Code plugin (registers MCP server)
-        ├── manifest.json                  ← MCPB manifest for Claude Desktop
+    └── halo-mcp/                           ← the `halo` plugin
+        ├── .claude-plugin/plugin.json      ← registers MCP server + auto-loads skills/
+        ├── manifest.json                   ← MCPB manifest for Claude Desktop
         ├── main.ts · server.ts · lib/ · src/
-        └── scripts/build-mcpb.sh
+        ├── scripts/build-mcpb.sh
+        ├── SKILL_TEMPLATE.md               ← outside skills/ so it does not auto-load
+        └── skills/report-interpretation/SKILL.md
 ```
 
 ## For agents working in this repo
 
 When asked to author or modify a skill:
 
-1. Skills live only under `plugins/halo-skills/skills/<skill-name>/SKILL.md`. Do not create `SKILL.md` files anywhere else — they will pollute users' agents at install time.
-2. Start from [`plugins/halo-skills/SKILL_TEMPLATE.md`](./plugins/halo-skills/SKILL_TEMPLATE.md). The template lives outside `skills/` deliberately so it does not auto-load.
+1. Skills live only under `plugins/halo-mcp/skills/<skill-name>/SKILL.md`. Do not create `SKILL.md` files anywhere else — they will pollute users' agents at install time.
+2. Start from [`plugins/halo-mcp/SKILL_TEMPLATE.md`](./plugins/halo-mcp/SKILL_TEMPLATE.md). The template lives outside `skills/` deliberately so it does not auto-load.
 3. Follow the authoring rules in [`CONTRIBUTING.md`](./CONTRIBUTING.md):
    - `name` is lowercase letters, digits, hyphens only, and matches the directory.
    - `description` begins with "Use when…" and describes **triggering conditions only** — never a workflow summary. (A description that summarizes the workflow causes agents to skip the body.)

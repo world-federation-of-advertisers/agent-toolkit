@@ -16,7 +16,7 @@ import zipfile
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
-SKILLS_DIR = REPO_ROOT / "plugins" / "halo-skills" / "skills"
+SKILLS_DIR = REPO_ROOT / "plugins" / "halo-mcp" / "skills"
 DIST_DIR = REPO_ROOT / "dist"
 
 EXCLUDE_NAMES = {".DS_Store", ".gitkeep", ".gitignore", "__pycache__"}

@@ -106,21 +106,20 @@ The skills are agent-agnostic Markdown — no Claude-specific syntax. Any LLM th
 
 ```
 halo_skills/
-├── .claude-plugin/marketplace.json
+├── .claude-plugin/marketplace.json        ← declares the single `halo` plugin
 └── plugins/
-    ├── halo-skills/
-    │   ├── .claude-plugin/plugin.json
-    │   └── skills/report-interpretation/SKILL.md
-    └── halo-mcp/
-        ├── .claude-plugin/plugin.json     ← Claude Code plugin manifest
+    └── halo-mcp/                           ← the `halo` plugin (MCP server + skills)
+        ├── .claude-plugin/plugin.json     ← registers MCP server + auto-loads skills/
         ├── manifest.json                  ← MCPB manifest for Claude Desktop
         ├── main.ts · server.ts · lib/ · src/
-        └── scripts/build-mcpb.sh
+        ├── scripts/build-mcpb.sh
+        ├── SKILL_TEMPLATE.md
+        └── skills/report-interpretation/SKILL.md
 ```
 
 ## Contributing
 
-See [CONTRIBUTING.md](./CONTRIBUTING.md). New skills start by copying [`plugins/halo-skills/SKILL_TEMPLATE.md`](./plugins/halo-skills/SKILL_TEMPLATE.md).
+See [CONTRIBUTING.md](./CONTRIBUTING.md). New skills start by copying [`plugins/halo-mcp/SKILL_TEMPLATE.md`](./plugins/halo-mcp/SKILL_TEMPLATE.md).
 
 Every PR runs [`scripts/lint-skills.py`](./scripts/lint-skills.py) in CI. Run it locally before pushing:
 

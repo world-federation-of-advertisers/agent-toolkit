@@ -1,7 +1,7 @@
 {
-  "name": "halo-mcp",
+  "name": "halo",
   "version": "0.1.0",
-  "description": "MCP server + interactive React UI for the Halo Cross-Media Measurement API",
+  "description": "Halo cross-media measurement: MCP server with interactive React dashboards plus report-interpretation skills",
   "author": {
     "name": "World Federation of Advertisers",
     "url": "https://github.com/world-federation-of-advertisers"
@@ -13,6 +13,7 @@
     "cross-media-measurement",
     "mcp",
     "reporting",
+    "skills",
     "wfa"
   ],
   "mcpServers": {

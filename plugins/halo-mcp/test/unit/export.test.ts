@@ -1,5 +1,7 @@
 /**
- * End-to-end tests for the PPTX exporter against every fixture in test/fixtures/.
+ * Unit tests for the PPTX exporter library (parseReport + generatePptxBuffer),
+ * exercised directly against every fixture in test/fixtures/. The MCP tool that
+ * wraps this library is covered separately in test/e2e/export-tool.test.ts.
  *
  * Two layers of assertions:
  *
@@ -24,12 +26,12 @@ import fs from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { test } from "node:test";
-import { generatePptxBuffer } from "../lib/halo-export-pptx.ts";
-import type { BasicReport, ResultGroupResult } from "../src/halo-types.ts";
-import { parseReport } from "../src/halo-types.ts";
+import { generatePptxBuffer } from "../../lib/halo-export-pptx.ts";
+import type { BasicReport, ResultGroupResult } from "../../src/halo-types.ts";
+import { parseReport } from "../../src/halo-types.ts";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const FIXTURE_DIR = path.join(__dirname, "fixtures");
+const FIXTURE_DIR = path.join(__dirname, "..", "fixtures");
 
 function expectedSlideCount(report: BasicReport): number {
   const parsed = parseReport(report);
