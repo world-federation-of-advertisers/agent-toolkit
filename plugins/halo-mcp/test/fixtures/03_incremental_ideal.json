@@ -141,7 +141,16 @@
                 "reach": "28500000",
                 "percentReach": 0.5182,
                 "averageFrequency": 3.85,
-                "impressions": "109725000"
+                "impressions": "109725000",
+                "kPlusReach": [
+                  "28500000",
+                  "13578177",
+                  "6469014",
+                  "3082014",
+                  "1468356",
+                  "699565",
+                  "333292"
+                ]
               },
               "stackedIncrementalReach": [
                 "18000000",

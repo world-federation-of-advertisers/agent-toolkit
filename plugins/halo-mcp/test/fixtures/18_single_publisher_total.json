@@ -114,7 +114,16 @@
                 "percentReach": 0.3364,
                 "averageFrequency": 5.4,
                 "impressions": "99900000",
-                "grps": 181.6
+                "grps": 181.6,
+                "kPlusReach": [
+                  "18500000",
+                  "7317372",
+                  "2894267",
+                  "1144780",
+                  "452799",
+                  "179097",
+                  "70839"
+                ]
               }
             },
             "components": [
@@ -126,6 +135,9 @@
                     "percentReach": 0.3364,
                     "averageFrequency": 5.4,
                     "impressions": "99900000"
+                  },
+                  "cumulativeUnique": {
+                    "reach": "18500000"
                   }
                 }
               }

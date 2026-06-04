@@ -142,7 +142,12 @@
                   "2880000",
                   "1280000"
                 ]
-              }
+              },
+              "stackedIncrementalReach": [
+                "15939622",
+                "8807304",
+                "7253074"
+              ]
             },
             "components": [
               {
@@ -152,6 +157,9 @@
                     "reach": "22000000",
                     "averageFrequency": 4.0,
                     "impressions": "88000000"
+                  },
+                  "cumulativeUnique": {
+                    "reach": "6432610"
                   }
                 }
               },
@@ -162,6 +170,9 @@
                     "reach": "17000000",
                     "averageFrequency": 3.5,
                     "impressions": "59500000"
+                  },
+                  "cumulativeUnique": {
+                    "reach": "3030434"
                   }
                 }
               },
@@ -172,7 +183,39 @@
                     "reach": "14000000",
                     "averageFrequency": 2.04,
                     "impressions": "28500000"
+                  },
+                  "cumulativeUnique": {
+                    "reach": "1536956"
                   }
+                }
+              }
+            ],
+            "componentIntersections": [
+              {
+                "components": [
+                  "dataProviders/tv_broadcaster_alpha",
+                  "dataProviders/digital_platform_beta"
+                ],
+                "cumulative": {
+                  "reach": "8536956"
+                }
+              },
+              {
+                "components": [
+                  "dataProviders/tv_broadcaster_alpha",
+                  "dataProviders/social_platform_gamma"
+                ],
+                "cumulative": {
+                  "reach": "7030434"
+                }
+              },
+              {
+                "components": [
+                  "dataProviders/digital_platform_beta",
+                  "dataProviders/social_platform_gamma"
+                ],
+                "cumulative": {
+                  "reach": "5432610"
                 }
               }
             ]

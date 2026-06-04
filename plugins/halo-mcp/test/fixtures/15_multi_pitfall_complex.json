@@ -222,6 +222,9 @@
                     "reach": "15000000",
                     "averageFrequency": 3.8,
                     "impressions": "57000000"
+                  },
+                  "cumulativeUnique": {
+                    "reach": "7752632"
                   }
                 }
               },
@@ -232,6 +235,9 @@
                     "reach": "10000000",
                     "averageFrequency": 14.0,
                     "impressions": "105000000"
+                  },
+                  "cumulativeUnique": {
+                    "reach": "3378947"
                   }
                 }
               },
@@ -242,7 +248,39 @@
                     "reach": "3500000",
                     "averageFrequency": 2.29,
                     "impressions": "8000000"
+                  },
+                  "cumulativeUnique": {
+                    "reach": "368421"
                   }
+                }
+              }
+            ],
+            "componentIntersections": [
+              {
+                "components": [
+                  "dataProviders/tv_broadcaster_alpha",
+                  "dataProviders/digital_platform_beta"
+                ],
+                "cumulative": {
+                  "reach": "5368421"
+                }
+              },
+              {
+                "components": [
+                  "dataProviders/tv_broadcaster_alpha",
+                  "dataProviders/social_platform_gamma"
+                ],
+                "cumulative": {
+                  "reach": "1878947"
+                }
+              },
+              {
+                "components": [
+                  "dataProviders/digital_platform_beta",
+                  "dataProviders/social_platform_gamma"
+                ],
+                "cumulative": {
+                  "reach": "1252632"
                 }
               }
             ]
