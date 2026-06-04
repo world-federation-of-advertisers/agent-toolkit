@@ -35,7 +35,7 @@
     "halo_base_url": {
       "type": "string",
       "title": "Halo API Base URL",
-      "description": "Public base URL of your Halo Kingdom's reporting API, e.g. https://api.example-halo.org",
+      "description": "Public base URL of your CMMS Operator's reporting API, e.g. https://api.example-halo.org",
       "required": true
     },
     "halo_mc_id": {

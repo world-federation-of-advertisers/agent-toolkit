@@ -1,8 +1,0 @@
-node_modules/
-dist/
-*.mcpb
-.env
-.env.development.local
-.env.local
-*.log
-.DS_Store

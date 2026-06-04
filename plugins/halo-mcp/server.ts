@@ -183,6 +183,11 @@ export function createServer(): McpServer {
     version: "0.1.0",
   });
 
+  // Config (env-derived) is static for the session — load it once on first use
+  // and reuse it across tool invocations instead of rebuilding it every call.
+  let configCache: ReturnType<typeof loadHaloConfig> | undefined;
+  const getConfig = () => (configCache ??= loadHaloConfig());
+
   server.registerTool(
     "list_basic_reports",
     {
@@ -196,7 +201,7 @@ export function createServer(): McpServer {
     },
     async ({ pageSize, maxPages }): Promise<CallToolResult> => {
       try {
-        const cfg = loadHaloConfig();
+        const cfg = getConfig();
         const reports = await listBasicReports(cfg, { pageSize, maxPages });
         return textTableResult(formatBasicReportsMarkdown(reports), { reports });
       } catch (e) {
@@ -284,7 +289,7 @@ export function createServer(): McpServer {
       },
       async ({ reportId }): Promise<CallToolResult> => {
         try {
-          const cfg = loadHaloConfig();
+          const cfg = getConfig();
           const report = await getBasicReport(cfg, reportId);
           const title = (report.title as string | undefined) ?? report.name;
           return jsonResult(
@@ -336,7 +341,7 @@ export function createServer(): McpServer {
       },
       async (): Promise<CallToolResult> => {
         try {
-          const cfg = loadHaloConfig();
+          const cfg = getConfig();
           const summaries = await listBasicReports(cfg, {});
           const succeeded = summaries.filter((s) => s.state === "SUCCEEDED");
           if (succeeded.length === 0) {
@@ -373,7 +378,7 @@ export function createServer(): McpServer {
     },
     async ({ search, pageSize, maxPages }): Promise<CallToolResult> => {
       try {
-        const cfg = loadHaloConfig();
+        const cfg = getConfig();
         const groups = await listEventGroups(cfg, { search, pageSize, maxPages });
         return textTableResult(formatEventGroupsMarkdown(groups), { eventGroups: groups });
       } catch (e) {
@@ -395,7 +400,7 @@ export function createServer(): McpServer {
     },
     async ({ pageSize, maxPages }): Promise<CallToolResult> => {
       try {
-        const cfg = loadHaloConfig();
+        const cfg = getConfig();
         const sets = await listReportingSets(cfg, { pageSize, maxPages });
         return textTableResult(formatReportingSetsMarkdown(sets), { reportingSets: sets });
       } catch (e) {
@@ -417,7 +422,7 @@ export function createServer(): McpServer {
     },
     async ({ reportId }): Promise<CallToolResult> => {
       try {
-        const cfg = loadHaloConfig();
+        const cfg = getConfig();
         const report = await getBasicReport(cfg, reportId);
         const title = (report.title as string | undefined) ?? report.name;
         const buffer = await generatePptxBuffer(report);

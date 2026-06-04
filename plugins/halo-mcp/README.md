@@ -15,7 +15,7 @@ This package can be consumed three ways:
 | `get_basic_report` | Render a full report dashboard: KPIs, stacked incremental reach, k+ frequency distribution, per-publisher reach chart + table, weekly trends. |
 | `list_event_groups` | Browse event groups (campaigns) with optional metadata search. |
 | `list_reporting_sets` | Browse reporting sets; flags which are usable as campaign groups. |
-| `export_basic_report` | Export a report as a native PowerPoint deck (`.pptx`). Generated deterministically in-process via `pptxgenjs` — no Python, no external skill. Saves to `HALO_EXPORT_DIR` (default `~/Downloads`). |
+| `export_basic_report` | Export a report as a native PowerPoint deck (`.pptx`). Generated deterministically in-process via `pptxgenjs` — no Python, no external skill. Returned as an embedded binary resource the host offers for download. |
 
 This server is **read-only**. It does not create reports, event groups, or reporting sets — use your Halo deployment's authoring tools for writes.
 
@@ -25,13 +25,12 @@ The server reads six required environment variables, plus a few optional ones:
 
 | Var | Example | Purpose |
 |---|---|---|
-| `HALO_BASE_URL` | `https://api.example-halo.org` | Base URL of your Halo Kingdom's public API |
+| `HALO_BASE_URL` | `https://api.example-halo.org` | Base URL of your CMMS Operator's public API |
 | `HALO_MC_ID` | `measurementConsumers/abc123` | Your Measurement Consumer resource name |
 | `HALO_AUTH0_URL` | `https://example.auth0.com` | Your Auth0 tenant URL |
 | `HALO_AUTH0_AUDIENCE` | `https://api.example-halo.org` | Auth0 API audience |
 | `HALO_CLIENT_ID` | _(secret)_ | Auth0 machine-to-machine client id |
 | `HALO_CLIENT_SECRET` | _(secret)_ | Auth0 machine-to-machine client secret |
-| `HALO_EXPORT_DIR` | `~/Downloads` | (optional) Output directory for `.pptx` exports |
 | `HALO_TOKEN_FILE` | `~/.halo_token` | (optional) Auth0 token cache path (mode `600`) |
 | `HTTPS_PROXY` | `http://proxy:8080` | (optional) Outbound proxy, if your network requires one |
 | `PORT` | `3001` | (optional) HTTP transport port; ignored under `--stdio` |
@@ -157,7 +156,8 @@ src/halo-types.ts        ─ Narrow types + parseReport() (string-encoded ints, 
 
 ## Security notes
 
-- Secrets are never logged or echoed. Token cache (`~/.halo_token`) is `chmod 600`.
+- Secrets are never logged or echoed.
+- Two different things are stored in two different places: the **config secrets** (`HALO_CLIENT_ID`/`HALO_CLIENT_SECRET`) come from the host — the OS keychain when installed as a `.mcpb`, or your shell env / `mcp.json` otherwise; this server never persists them. Separately, the short-lived **Auth0 access token** it fetches is cached on disk at `HALO_TOKEN_FILE` (default `~/.halo_token`, `chmod 600`) to avoid re-authenticating on every call.
 - Halo response fields (titles, brand/campaign metadata) are treated as untrusted consortium-supplied strings. React's default JSX-escaping is the only output path — no raw HTML injection.
 
 ## License

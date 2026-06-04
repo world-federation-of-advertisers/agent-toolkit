@@ -48,7 +48,7 @@ Install the whole `halo` plugin — MCP server **and** the bundled skills — di
    /plugin install halo@agent-toolkit
    ```
 
-3. **Provide credentials.** The MCP server needs six `HALO_*` values (get them from your Halo Kingdom operator). Set them as environment variables before launching Claude Code — export them in your shell, or add an `env` block to the `halo` server in your `.claude/settings.json`. See the [server README](./plugins/halo-mcp/README.md#configuration) for the full list.
+3. **Provide credentials.** The MCP server needs six `HALO_*` values (get them from your CMMS Operator). Set them as environment variables before launching Claude Code — export them in your shell, or add an `env` block to the `halo` server in your `.claude/settings.json`. See the [server README](./plugins/halo-mcp/README.md#configuration) for the full list.
 
 4. **Restart Claude Code** so the server starts. On first launch the server is fetched via `npx` from the release tarball and cached, so that run needs network access.
 
@@ -63,11 +63,11 @@ Use `/plugin` at any time to enable, disable, or uninstall it. To pick up a new 
 3. Click **Advanced settings**.
 4. Click **Install Extension** and select the downloaded `.mcpb` file.
 5. Review the extension details and click **Install**.
-6. You'll be prompted to configure the following values (get these from your Halo Kingdom operator):
+6. You'll be prompted to configure the following values (get these from your CMMS Operator):
 
    | Field | Description | Example |
    |-------|-------------|---------|
-   | **Halo API Base URL** | Public base URL of your Kingdom's reporting API | `https://api.example-halo.org` |
+   | **Halo API Base URL** | Public base URL of your CMMS Operator's reporting API | `https://api.example-halo.org` |
    | **Measurement Consumer Resource Name** | Your MC resource name | `measurementConsumers/abc123` |
    | **Auth0 Tenant URL** | Your Auth0 tenant base URL | `https://example.auth0.com` |
    | **Auth0 API Audience** | Auth0 audience identifier for the Halo API | `https://your-api-identifier` |
@@ -101,7 +101,7 @@ In **Cursor**, **Windsurf**, or any agent that reads an `mcp.json`, add this blo
 }
 ```
 
-All six `HALO_*` environment variables are required. Get them from your Halo Kingdom operator. See the [server README](./plugins/halo-mcp/README.md#configuration) for descriptions and optional settings.
+All six `HALO_*` environment variables are required. Get them from your CMMS Operator. See the [server README](./plugins/halo-mcp/README.md#configuration) for descriptions and optional settings.
 
 > Working offline or behind a proxy? Download the `.tgz` from the [Releases](https://github.com/world-federation-of-advertisers/agent-toolkit/releases) page and swap the URL for a local path: `npx -y /path/to/halo-mcp-<version>.tgz --stdio`.
 

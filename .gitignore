@@ -1,7 +1,20 @@
 .DS_Store
+*.log
+
+# Local env / secrets
 .env
+.env.local
+.env.development.local
+
+# Python
 __pycache__/
 *.pyc
+
+# Node / build outputs (applies to plugins/* too)
+node_modules/
 dist/
+*.mcpb
+
+# Local scratch (demos, source textprotos for fixtures)
 demo/
 test-protos/
