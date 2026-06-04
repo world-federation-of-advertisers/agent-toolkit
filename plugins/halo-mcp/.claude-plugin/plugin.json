@@ -1,4 +1,5 @@
 {
+  "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
   "name": "halo",
   "version": "0.1.0",
   "description": "Halo cross-media measurement: MCP server with interactive React dashboards plus report-interpretation skills",
