@@ -35,7 +35,7 @@ function requiredEnv(name: string): string {
   const v = process.env[name];
   if (!v || v.trim() === "") {
     throw new Error(
-      `Missing required env var ${name}. Set it (or source .env) before starting the server. See .env.example.`,
+      `Missing required env var ${name}. Set it in the environment before starting the server (or use HALO_FAKE_DATA=1 for fixtures). See plugins/halo-mcp/README.md#configuration.`,
     );
   }
   return v;

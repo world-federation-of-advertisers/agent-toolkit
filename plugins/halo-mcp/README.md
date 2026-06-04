@@ -21,7 +21,7 @@ This server is **read-only**. It does not create reports, event groups, or repor
 
 ## Configuration
 
-The server reads four environment variables, all required:
+The server reads six required environment variables, plus a few optional ones:
 
 | Var | Example | Purpose |
 |---|---|---|
@@ -32,18 +32,23 @@ The server reads four environment variables, all required:
 | `HALO_CLIENT_ID` | _(secret)_ | Auth0 machine-to-machine client id |
 | `HALO_CLIENT_SECRET` | _(secret)_ | Auth0 machine-to-machine client secret |
 | `HALO_EXPORT_DIR` | `~/Downloads` | (optional) Output directory for `.pptx` exports |
+| `HALO_TOKEN_FILE` | `~/.halo_token` | (optional) Auth0 token cache path (mode `600`) |
+| `HTTPS_PROXY` | `http://proxy:8080` | (optional) Outbound proxy, if your network requires one |
+| `PORT` | `3001` | (optional) HTTP transport port; ignored under `--stdio` |
 
-See [`.env.example`](./.env.example) for a complete template.
+For demos and offline work, set `HALO_FAKE_DATA=1` instead — none of the above are required (see [Fake-data mode](#fake-data-mode)).
 
 ## Run standalone
 
 ```bash
 npm install
-cp .env.example .env  # then fill in HALO_CLIENT_ID / HALO_CLIENT_SECRET and the four HALO_* vars
-npm run build         # bundles UI into dist/mcp-app.html
-npm run serve         # HTTP transport on http://localhost:3001/mcp
+npm run build                         # bundles UI into dist/mcp-app.html
+export HALO_BASE_URL=… HALO_MC_ID=… HALO_AUTH0_URL=… HALO_AUTH0_AUDIENCE=… HALO_CLIENT_ID=… HALO_CLIENT_SECRET=…
+npm run serve                         # HTTP transport on http://localhost:3001/mcp
 # or:
-npm run serve:stdio   # stdio transport
+npm run serve:stdio                   # stdio transport
+# or, with no credentials, against built-in fixtures:
+HALO_FAKE_DATA=1 npm run serve:stdio
 ```
 
 ## Fake-data mode
@@ -95,8 +100,37 @@ If any are missing, the server fails fast with a `Missing required env var …` 
 ## Develop
 
 ```bash
+npm install
 npm run dev   # rebuild UI on change + restart server on .ts change
 ```
+
+### Run from source in Claude Desktop
+
+To exercise your local working copy inside Claude Desktop (no build, no `.mcpb`), point the server at `main.ts` through the repo's `tsx`. Add this to your `claude_desktop_config.json` (macOS: `~/Library/Application Support/Claude/claude_desktop_config.json`), using **absolute paths** to your checkout, then restart Claude Desktop:
+
+```json
+{
+  "mcpServers": {
+    "xmm-halo": {
+      "command": "/absolute/path/to/agent-toolkit/plugins/halo-mcp/node_modules/.bin/tsx",
+      "args": [
+        "/absolute/path/to/agent-toolkit/plugins/halo-mcp/main.ts",
+        "--stdio"
+      ],
+      "env": {
+        "HALO_BASE_URL": "https://api.example-halo.org",
+        "HALO_MC_ID": "measurementConsumers/abc123",
+        "HALO_AUTH0_URL": "https://example.auth0.com",
+        "HALO_AUTH0_AUDIENCE": "https://your-api-identifier",
+        "HALO_CLIENT_ID": "your-client-id",
+        "HALO_CLIENT_SECRET": "your-client-secret"
+      }
+    }
+  }
+}
+```
+
+Run `npm install` first so `node_modules/.bin/tsx` exists. `tsx` runs the TypeScript directly, so edits to `main.ts`, `server.ts`, or `lib/` take effect on the next Claude Desktop restart — no build step. To work offline against the bundled fixtures, drop the six `HALO_*` entries and use `"env": { "HALO_FAKE_DATA": "1" }` instead.
 
 ## Test with basic-host
 

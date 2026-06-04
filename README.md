@@ -48,7 +48,7 @@ Install the whole `halo` plugin — MCP server **and** the bundled skills — di
    /plugin install halo@agent-toolkit
    ```
 
-3. **Provide credentials.** The MCP server needs six `HALO_*` values (get them from your Halo Kingdom operator). Set them as environment variables before launching Claude Code — export them in your shell, or add an `env` block to the `halo` server in your `.claude/settings.json`. See [`plugins/halo-mcp/.env.example`](./plugins/halo-mcp/.env.example) for the full list.
+3. **Provide credentials.** The MCP server needs six `HALO_*` values (get them from your Halo Kingdom operator). Set them as environment variables before launching Claude Code — export them in your shell, or add an `env` block to the `halo` server in your `.claude/settings.json`. See the [server README](./plugins/halo-mcp/README.md#configuration) for the full list.
 
 4. **Restart Claude Code** so the server starts. On first launch the server is fetched via `npx` from the release tarball and cached, so that run needs network access.
 
@@ -99,7 +99,7 @@ In **Cursor**, **Windsurf**, or any agent that reads an `mcp.json`, add this blo
 }
 ```
 
-All six `HALO_*` environment variables are required. Get them from your Halo Kingdom operator. See [`plugins/halo-mcp/.env.example`](./plugins/halo-mcp/.env.example) for descriptions and optional settings.
+All six `HALO_*` environment variables are required. Get them from your Halo Kingdom operator. See the [server README](./plugins/halo-mcp/README.md#configuration) for descriptions and optional settings.
 
 > Working offline or behind a proxy? Download the `.tgz` from the [Releases](https://github.com/world-federation-of-advertisers/agent-toolkit/releases) page and swap the URL for a local path: `npx -y /path/to/halo-mcp-<version>.tgz --stdio`.
 
