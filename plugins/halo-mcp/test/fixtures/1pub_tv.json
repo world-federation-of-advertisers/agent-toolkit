@@ -1,6 +1,6 @@
 {
   "name": "measurementConsumers/example-mc/basicReports/example-1pub-tv",
-  "title": "MediaCorp Always-On Linear TV \u2014 Mar 2026",
+  "title": "MediaCorp Always-On Linear TV — Mar 2026",
   "campaignGroup": "measurementConsumers/example-mc/reportingSets/mediacorp-mar",
   "campaignGroupDisplayName": "MediaCorp Always-On Mar 2026",
   "createTime": "2026-05-27T13:48:58.196643Z",
@@ -302,7 +302,9 @@
                       6.6
                     ]
                   },
-                  "cumulativeUnique": null,
+                  "cumulativeUnique": {
+                    "reach": "32971000"
+                  },
                   "nonCumulativeUnique": null
                 }
               }

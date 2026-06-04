@@ -220,7 +220,16 @@
                 "reach": "25200000",
                 "percentReach": 0.4582,
                 "averageFrequency": 4.22,
-                "impressions": "106344000"
+                "impressions": "106344000",
+                "kPlusReach": [
+                  "25200000",
+                  "11415073",
+                  "5170789",
+                  "2342259",
+                  "1060995",
+                  "480608",
+                  "217706"
+                ]
               },
               "stackedIncrementalReach": [
                 "20000000",
@@ -266,6 +275,35 @@
                   "cumulativeUnique": {
                     "reach": "150000"
                   }
+                }
+              }
+            ],
+            "componentIntersections": [
+              {
+                "components": [
+                  "dataProviders/tv_broadcaster_alpha",
+                  "dataProviders/digital_platform_beta"
+                ],
+                "cumulative": {
+                  "reach": "8668493"
+                }
+              },
+              {
+                "components": [
+                  "dataProviders/tv_broadcaster_alpha",
+                  "dataProviders/social_platform_gamma"
+                ],
+                "cumulative": {
+                  "reach": "1547945"
+                }
+              },
+              {
+                "components": [
+                  "dataProviders/digital_platform_beta",
+                  "dataProviders/social_platform_gamma"
+                ],
+                "cumulative": {
+                  "reach": "1083562"
                 }
               }
             ]

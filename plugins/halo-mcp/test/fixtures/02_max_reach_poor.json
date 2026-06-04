@@ -469,6 +469,20 @@
                   "key": "dataProviders/social_platform_gamma",
                   "displayName": "Social Platform Gamma"
                 }
+              ],
+              "reportingUnitComponentSummary": [
+                {
+                  "dataProvider": "dataProviders/tv_broadcaster_alpha",
+                  "displayName": "Tv Broadcaster Alpha"
+                },
+                {
+                  "dataProvider": "dataProviders/digital_platform_beta",
+                  "displayName": "Digital Platform Beta"
+                },
+                {
+                  "dataProvider": "dataProviders/social_platform_gamma",
+                  "displayName": "Social Platform Gamma"
+                }
               ]
             },
             "metricFrequency": {
@@ -492,9 +506,96 @@
                 "reach": "15000000",
                 "percentReach": 27.3,
                 "averageFrequency": 9.4,
-                "impressions": "141870000"
+                "impressions": "141870000",
+                "kPlusReach": [
+                  "15000000",
+                  "4500000",
+                  "1350000",
+                  "405000",
+                  "121500",
+                  "36450",
+                  "10935"
+                ]
+              },
+              "stackedIncrementalReach": [
+                "8100000",
+                "3763636",
+                "3136364"
+              ]
+            },
+            "components": [
+              {
+                "key": "dataProviders/tv_broadcaster_alpha",
+                "value": {
+                  "cumulative": {
+                    "reach": "8775000",
+                    "percentReach": 0.159545,
+                    "averageFrequency": 9.4,
+                    "impressions": "82485000"
+                  },
+                  "cumulativeUnique": {
+                    "reach": "5321513"
+                  }
+                }
+              },
+              {
+                "key": "dataProviders/digital_platform_beta",
+                "value": {
+                  "cumulative": {
+                    "reach": "5850000",
+                    "percentReach": 0.106364,
+                    "averageFrequency": 12.22,
+                    "impressions": "71487000"
+                  },
+                  "cumulativeUnique": {
+                    "reach": "2919767"
+                  }
+                }
+              },
+              {
+                "key": "dataProviders/social_platform_gamma",
+                "value": {
+                  "cumulative": {
+                    "reach": "4875000",
+                    "percentReach": 0.088636,
+                    "averageFrequency": 7.52,
+                    "impressions": "36660000"
+                  },
+                  "cumulativeUnique": {
+                    "reach": "2258720"
+                  }
+                }
               }
-            }
+            ],
+            "componentIntersections": [
+              {
+                "components": [
+                  "dataProviders/tv_broadcaster_alpha",
+                  "dataProviders/digital_platform_beta"
+                ],
+                "cumulative": {
+                  "reach": "1883720"
+                }
+              },
+              {
+                "components": [
+                  "dataProviders/tv_broadcaster_alpha",
+                  "dataProviders/social_platform_gamma"
+                ],
+                "cumulative": {
+                  "reach": "1569767"
+                }
+              },
+              {
+                "components": [
+                  "dataProviders/digital_platform_beta",
+                  "dataProviders/social_platform_gamma"
+                ],
+                "cumulative": {
+                  "reach": "1046513"
+                }
+              }
+            ]
           }
         },
         {

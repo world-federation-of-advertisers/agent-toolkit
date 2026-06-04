@@ -159,7 +159,11 @@
                   0.0273,
                   0.0218
                 ]
-              }
+              },
+              "stackedIncrementalReach": [
+                "11675675",
+                "3324325"
+              ]
             },
             "components": [
               {
@@ -169,6 +173,9 @@
                     "reach": "12000000",
                     "averageFrequency": 4.2,
                     "impressions": "50400000"
+                  },
+                  "cumulativeUnique": {
+                    "reach": "8500000"
                   }
                 }
               },
@@ -179,7 +186,21 @@
                     "reach": "6500000",
                     "averageFrequency": 18.32,
                     "impressions": "119100000"
+                  },
+                  "cumulativeUnique": {
+                    "reach": "3000000"
                   }
+                }
+              }
+            ],
+            "componentIntersections": [
+              {
+                "components": [
+                  "dataProviders/tv_broadcaster_alpha",
+                  "dataProviders/digital_platform_beta"
+                ],
+                "cumulative": {
+                  "reach": "3500000"
                 }
               }
             ]

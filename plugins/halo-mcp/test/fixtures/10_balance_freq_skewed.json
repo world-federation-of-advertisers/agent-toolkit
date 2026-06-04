@@ -129,8 +129,22 @@
                 "reach": "22000000",
                 "percentReach": 0.4,
                 "averageFrequency": 7.5,
-                "impressions": "165000000"
-              }
+                "impressions": "165000000",
+                "kPlusReach": [
+                  "22000000",
+                  "7263384",
+                  "2398034",
+                  "791720",
+                  "261389",
+                  "86299",
+                  "28492"
+                ]
+              },
+              "stackedIncrementalReach": [
+                "17454545",
+                "4434590",
+                "110865"
+              ]
             },
             "components": [
               {
@@ -141,6 +155,9 @@
                     "percentReach": 0.2909,
                     "averageFrequency": 2.8,
                     "impressions": "44800000"
+                  },
+                  "cumulativeUnique": {
+                    "reach": "13826507"
                   }
                 }
               },
@@ -152,6 +169,9 @@
                     "percentReach": 0.1455,
                     "averageFrequency": 15.0,
                     "impressions": "120000000"
+                  },
+                  "cumulativeUnique": {
+                    "reach": "5853012"
                   }
                 }
               },
@@ -163,7 +183,39 @@
                     "percentReach": 0.0036,
                     "averageFrequency": 1.0,
                     "impressions": "200000"
+                  },
+                  "cumulativeUnique": {
+                    "reach": "120481"
                   }
+                }
+              }
+            ],
+            "componentIntersections": [
+              {
+                "components": [
+                  "dataProviders/tv_broadcaster_alpha",
+                  "dataProviders/digital_platform_beta"
+                ],
+                "cumulative": {
+                  "reach": "2120481"
+                }
+              },
+              {
+                "components": [
+                  "dataProviders/tv_broadcaster_alpha",
+                  "dataProviders/social_platform_gamma"
+                ],
+                "cumulative": {
+                  "reach": "53012"
+                }
+              },
+              {
+                "components": [
+                  "dataProviders/digital_platform_beta",
+                  "dataProviders/social_platform_gamma"
+                ],
+                "cumulative": {
+                  "reach": "26507"
                 }
               }
             ]

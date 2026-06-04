@@ -417,6 +417,16 @@
                   "key": "dataProviders/digital_platform_beta",
                   "displayName": "Digital Platform Beta"
                 }
+              ],
+              "reportingUnitComponentSummary": [
+                {
+                  "dataProvider": "dataProviders/tv_broadcaster_alpha",
+                  "displayName": "Tv Broadcaster Alpha"
+                },
+                {
+                  "dataProvider": "dataProviders/digital_platform_beta",
+                  "displayName": "Digital Platform Beta"
+                }
               ]
             },
             "metricFrequency": {
@@ -440,9 +450,63 @@
                 "reach": "18000000",
                 "percentReach": 32.7,
                 "averageFrequency": 5.58,
-                "impressions": "100500000"
+                "impressions": "100500000",
+                "kPlusReach": [
+                  "18000000",
+                  "6992359",
+                  "2716282",
+                  "1055179",
+                  "409899",
+                  "159231",
+                  "61856"
+                ]
+              },
+              "stackedIncrementalReach": [
+                "12960000",
+                "5040000"
+              ]
+            },
+            "components": [
+              {
+                "key": "dataProviders/tv_broadcaster_alpha",
+                "value": {
+                  "cumulative": {
+                    "reach": "14040000",
+                    "percentReach": 0.255273,
+                    "averageFrequency": 5.58,
+                    "impressions": "78343200"
+                  },
+                  "cumulativeUnique": {
+                    "reach": "8640000"
+                  }
+                }
+              },
+              {
+                "key": "dataProviders/digital_platform_beta",
+                "value": {
+                  "cumulative": {
+                    "reach": "9360000",
+                    "percentReach": 0.170182,
+                    "averageFrequency": 6.7,
+                    "impressions": "62674560"
+                  },
+                  "cumulativeUnique": {
+                    "reach": "3960000"
+                  }
+                }
               }
-            }
+            ],
+            "componentIntersections": [
+              {
+                "components": [
+                  "dataProviders/tv_broadcaster_alpha",
+                  "dataProviders/digital_platform_beta"
+                ],
+                "cumulative": {
+                  "reach": "5400000"
+                }
+              }
+            ]
           }
         },
         {

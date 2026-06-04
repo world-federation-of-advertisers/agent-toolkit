@@ -180,6 +180,9 @@
                     "percentReach": 0.3091,
                     "averageFrequency": 3.2,
                     "impressions": "54400000"
+                  },
+                  "cumulativeUnique": {
+                    "reach": "5850051"
                   }
                 }
               },
@@ -191,6 +194,9 @@
                     "percentReach": 0.2364,
                     "averageFrequency": 2.1,
                     "impressions": "27300000"
+                  },
+                  "cumulativeUnique": {
+                    "reach": "2957756"
                   }
                 }
               },
@@ -202,7 +208,39 @@
                     "percentReach": 0.1727,
                     "averageFrequency": 1.75,
                     "impressions": "16625000"
+                  },
+                  "cumulativeUnique": {
+                    "reach": "1192193"
                   }
+                }
+              }
+            ],
+            "componentIntersections": [
+              {
+                "components": [
+                  "dataProviders/tv_broadcaster_alpha",
+                  "dataProviders/digital_platform_beta"
+                ],
+                "cumulative": {
+                  "reach": "6442193"
+                }
+              },
+              {
+                "components": [
+                  "dataProviders/tv_broadcaster_alpha",
+                  "dataProviders/social_platform_gamma"
+                ],
+                "cumulative": {
+                  "reach": "4707756"
+                }
+              },
+              {
+                "components": [
+                  "dataProviders/digital_platform_beta",
+                  "dataProviders/social_platform_gamma"
+                ],
+                "cumulative": {
+                  "reach": "3600051"
                 }
               }
             ]
