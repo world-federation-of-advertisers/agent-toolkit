@@ -298,6 +298,67 @@ export function createServer(): McpServer {
     );
   }
 
+  // ------------------------------------------------------------------------
+  // Cross-campaign visualization tools — operate on ALL succeeded reports.
+  // ------------------------------------------------------------------------
+
+  const CROSS_TOOLS: ReadonlyArray<{
+    name: string;
+    title: string;
+    description: string;
+    kind: string;
+  }> = [
+    {
+      name: "show_cross_campaign_frequency",
+      title: "Compare Frequency Distributions Across Campaigns",
+      kind: "cross_campaign_frequency",
+      description:
+        "Overlay the k+ reach frequency distributions from all SUCCEEDED campaigns on a single chart. Use when the user asks whether frequency patterns are consistent across campaigns, or wants to compare frequency distributions side-by-side.",
+    },
+    {
+      name: "show_cross_campaign_reach",
+      title: "Compare Publisher Reach Across Campaigns",
+      kind: "cross_campaign_reach",
+      description:
+        "Show per-publisher reach across all SUCCEEDED campaigns as a grouped bar chart. Use when the user asks which publishers deliver the most reach across their account, or wants to compare publisher performance across campaigns.",
+    },
+  ];
+
+  for (const t of CROSS_TOOLS) {
+    registerAppTool(
+      server,
+      t.name,
+      {
+        title: t.title,
+        description: t.description,
+        inputSchema: {},
+        _meta: { ui: { resourceUri: RESOURCE_URI } },
+      },
+      async (): Promise<CallToolResult> => {
+        try {
+          const cfg = loadHaloConfig();
+          const summaries = await listBasicReports(cfg, {});
+          const succeeded = summaries.filter((s) => s.state === "SUCCEEDED");
+          if (succeeded.length === 0) {
+            return errorResult("No SUCCEEDED reports found.");
+          }
+          const reports = await Promise.all(
+            succeeded.map((s) => {
+              const id = (s.name as string).split("/").pop() ?? s.name;
+              return getBasicReport(cfg, id);
+            }),
+          );
+          return jsonResult(
+            { kind: t.kind, reports },
+            `Rendered ${t.kind.replace(/_/g, " ")} across ${reports.length} campaign(s).`,
+          );
+        } catch (e) {
+          return errorResult(e instanceof Error ? e.message : String(e));
+        }
+      },
+    );
+  }
+
   server.registerTool(
     "list_event_groups",
     {

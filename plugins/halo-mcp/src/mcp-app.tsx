@@ -13,6 +13,8 @@ import { createRoot } from "react-dom/client";
 import type { BasicReport } from "./halo-types.ts";
 import { parseReport } from "./halo-types.ts";
 import {
+  CrossCampaignFrequencyView,
+  CrossCampaignReachView,
   EmptyState,
   ErrorView,
   FrequencyDistributionView,
@@ -33,8 +35,11 @@ type ReportKind =
   | "publisher_table"
   | "weekly_trends";
 
+type CrossKind = "cross_campaign_frequency" | "cross_campaign_reach";
+
 type PptxExportPayload = { kind: "pptx_export"; filename: string; title: string; blob: string };
-type ToolPayload = { kind: ReportKind; report: BasicReport } | PptxExportPayload;
+type CrossPayload = { kind: CrossKind; reports: BasicReport[] };
+type ToolPayload = { kind: ReportKind; report: BasicReport } | CrossPayload | PptxExportPayload;
 
 function extractPayload(result: CallToolResult): ToolPayload | { error: string } | null {
   if (result.isError) {
@@ -133,9 +138,12 @@ function HaloApp() {
     return <ErrorView error={payload.error} />;
   }
   if (payload.kind === "pptx_export") {
-    return <PptxExportView payload={payload} app={app} />;
+    return <PptxExportView payload={payload as PptxExportPayload} app={app} />;
   }
-  return <Dispatch payload={payload} app={app} />;
+  if (payload.kind === "cross_campaign_frequency" || payload.kind === "cross_campaign_reach") {
+    return <CrossDispatch payload={payload as CrossPayload} />;
+  }
+  return <Dispatch payload={payload as ToolPayload & { kind: ReportKind; report: BasicReport }} app={app} />;
 }
 
 const VIZ_RENDERERS: Record<
@@ -195,6 +203,18 @@ function PptxExportView({ payload, app }: { payload: PptxExportPayload; app: App
       </button>
     </div>
   );
+}
+
+const CROSS_RENDERERS: Record<CrossKind, (p: { reports: ReturnType<typeof parseReport>[] }) => ReactElement> = {
+  cross_campaign_frequency: CrossCampaignFrequencyView,
+  cross_campaign_reach: CrossCampaignReachView,
+};
+
+function CrossDispatch({ payload }: { payload: CrossPayload }) {
+  const Render = CROSS_RENDERERS[payload.kind];
+  if (!Render) return <ErrorView error={`Unknown cross kind: ${payload.kind}`} />;
+  const parsed = payload.reports.map(parseReport);
+  return <Render reports={parsed} />;
 }
 
 function Dispatch({ payload, app }: { payload: ToolPayload & { kind: ReportKind; report: BasicReport }; app: App }) {

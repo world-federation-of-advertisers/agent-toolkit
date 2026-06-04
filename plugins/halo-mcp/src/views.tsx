@@ -2,6 +2,8 @@ import type { App } from "@modelcontextprotocol/ext-apps";
 import type { ParsedReport } from "./halo-types.ts";
 import { fmtFreq, fmtInt, fmtPct } from "./halo-types.ts";
 import {
+  CrossCampaignFrequencyChart,
+  CrossCampaignReachChart,
   FrequencyDistributionChart,
   PUBLISHER_PALETTE,
   PublisherReachChart,
@@ -207,6 +209,64 @@ export function WeeklyTrendsView({ report, app }: { report: ParsedReport; app: A
         )}
       </div>
     </ReportShell>
+  );
+}
+
+// ============================================================================
+// Multi-report views (cross-campaign analysis). These take an array of parsed
+// reports and render comparison charts without the single-report Hero/Footer.
+// ============================================================================
+
+function MultiReportShell({ reports, children }: { reports: ParsedReport[]; children: React.ReactNode }) {
+  return (
+    <div style={{ background: T.slate50, color: T.navy, minHeight: "100vh", padding: "32px 24px 80px" }}>
+      <div style={{ maxWidth: 960, margin: "0 auto" }}>
+        <header style={{ marginBottom: 32, paddingBottom: 24, borderBottom: `1px solid ${T.slate200}` }}>
+          <div style={{ fontSize: 10, letterSpacing: "2.5px", textTransform: "uppercase", color: T.blue, fontWeight: 600, marginBottom: 10 }}>
+            Cross-Campaign Analysis
+          </div>
+          <h1 style={{ fontSize: 26, fontWeight: 800, color: T.navy, lineHeight: 1.15, letterSpacing: "-0.025em", margin: 0 }}>
+            {reports.length} Campaign{reports.length !== 1 ? "s" : ""} Compared
+          </h1>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginTop: 14, fontSize: 12, color: T.slate500 }}>
+            {reports.map((r, i) => (
+              <span key={i}>
+                <strong style={{ color: T.slate700, fontWeight: 600 }}>{r.title}</strong>
+                {i < reports.length - 1 && <span style={{ color: T.slate300, margin: "0 4px" }}>/</span>}
+              </span>
+            ))}
+          </div>
+        </header>
+        {children}
+        <footer style={{ marginTop: 24, paddingTop: 16, borderTop: `1px solid ${T.slate200}`, fontSize: 11, color: T.slate400 }}>
+          Halo · Cross-Media Measurement
+        </footer>
+      </div>
+    </div>
+  );
+}
+
+export function CrossCampaignFrequencyView({ reports }: { reports: ParsedReport[] }) {
+  return (
+    <MultiReportShell reports={reports}>
+      <div style={S.card}>
+        <div style={S.cardTitle}>Frequency Distribution — All Campaigns</div>
+        <div style={S.cardSub}>k+ reach curves for each campaign, overlaid for comparison.</div>
+        <CrossCampaignFrequencyChart reports={reports} />
+      </div>
+    </MultiReportShell>
+  );
+}
+
+export function CrossCampaignReachView({ reports }: { reports: ParsedReport[] }) {
+  return (
+    <MultiReportShell reports={reports}>
+      <div style={S.card}>
+        <div style={S.cardTitle}>Publisher Reach — All Campaigns</div>
+        <div style={S.cardSub}>Per-publisher reach across campaigns, grouped for comparison.</div>
+        <CrossCampaignReachChart reports={reports} />
+      </div>
+    </MultiReportShell>
   );
 }
 

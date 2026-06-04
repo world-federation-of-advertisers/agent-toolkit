@@ -7,7 +7,7 @@ description: Use when the user wants to analyze cross-media measurement campaign
 
 ## Overview
 
-Walk users through cross-media campaign analysis using the Halo MCP tools. Each tool renders an interactive visualization inline. Start broad (list → summary), go deep (publisher reach → incremental → overlap → frequency → trends), then export.
+Walk users through cross-media campaign analysis with the Halo MCP tools. Each tool renders an inline visualization. Start broad (list → summary), go deep (reach → incremental → overlap → frequency → trends), then export.
 
 ## Quick Reference
 
@@ -21,6 +21,8 @@ Walk users through cross-media campaign analysis using the Halo MCP tools. Each 
 | `show_frequency_distribution` | "What's the frequency distribution?" | k+ reach histogram (1+, 2+, 3+…) |
 | `show_weekly_trends` | "How did reach build over time?" | Cumulative reach line + weekly impression bars |
 | `show_publisher_table` | "Give me exact numbers" | Full per-publisher metrics table |
+| `show_cross_campaign_frequency` | "Same frequency pattern across campaigns?" | k+ curves overlaid for all campaigns |
+| `show_cross_campaign_reach` | "Which publishers deliver most reach overall?" | Grouped bars: publisher reach × campaign |
 | `export_basic_report` | "Export this as a deck" | PowerPoint download with native charts |
 | `list_event_groups` | "What campaigns/event groups exist?" | Table of campaigns by publisher |
 | `list_reporting_sets` | "What reporting sets are available?" | Table of reporting sets |
@@ -50,10 +52,10 @@ Follow the user's questions. Typical progression:
 
 ### 5. Export
 
-`export_basic_report` generates a native PowerPoint deck with all key charts. Downloadable from the inline widget.
+`export_basic_report` generates a native PowerPoint deck, downloadable from the inline widget.
 
 ## Common Mistakes
 
 - Calling visualization tools on a report that isn't `SUCCEEDED` — always check state first.
-- Comparing publishers without accounting for universe size — a publisher reaching 1M in a 10M universe is proportionally larger than 5M in a 100M universe.
-- Interpreting high impressions as high reach — impressions ÷ reach = frequency. High impressions with low reach means repetition, not scale.
+- Comparing publishers without accounting for universe size — 1M in a 10M universe outweighs 5M in a 100M universe, proportionally.
+- Interpreting high impressions as high reach — impressions ÷ reach = frequency. High impressions, low reach means repetition, not scale.

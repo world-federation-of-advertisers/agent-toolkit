@@ -182,6 +182,106 @@ export function PublisherReachChart({ publishers }: { publishers: PublisherMetri
   return <ReactECharts option={option} style={CHART_STYLE} />;
 }
 
+export function CrossCampaignFrequencyChart({ reports }: { reports: ParsedReport[] }) {
+  const COLORS = [C.blue, C.amber, C.purple, C.teal, C.green];
+  const maxLen = Math.max(...reports.map((r) => r.total.kPlusReach?.length ?? 0));
+  if (maxLen === 0) return <p style={{ color: C.slate500, fontSize: 13 }}>No k+ reach data.</p>;
+  const cats = Array.from({ length: maxLen }, (_, i) => `${i + 1}+`);
+  const option = {
+    ...BASE_OPTS,
+    tooltip: { trigger: "axis", valueFormatter: (v: number) => fmtInt(v) },
+    legend: {
+      data: reports.map((r) => r.title.split("—")[0].trim()),
+      top: 0,
+      right: 0,
+      textStyle: { color: C.slate500, fontSize: 11 },
+    },
+    xAxis: {
+      type: "category",
+      data: cats,
+      name: "Frequency Threshold",
+      nameLocation: "center",
+      nameGap: 36,
+      nameTextStyle: { color: C.slate500, fontSize: 11, fontWeight: 600 },
+      axisLine: AXIS_LINE,
+      axisTick: { show: false },
+      axisLabel: AXIS_LABEL,
+    },
+    yAxis: {
+      type: "value",
+      axisLine: { show: false },
+      axisTick: { show: false },
+      splitLine: SPLIT_LINE,
+      axisLabel: { ...AXIS_LABEL, formatter: (v: number) => fmtInt(v) },
+    },
+    series: reports.map((r, i) => ({
+      name: r.title.split("—")[0].trim(),
+      type: "line",
+      smooth: true,
+      data: r.total.kPlusReach ?? [],
+      lineStyle: { color: COLORS[i % COLORS.length], width: 2.5 },
+      itemStyle: { color: COLORS[i % COLORS.length] },
+      symbol: "circle",
+      symbolSize: 5,
+    })),
+  };
+  return <ReactECharts option={option} style={CHART_STYLE} />;
+}
+
+export function CrossCampaignReachChart({ reports }: { reports: ParsedReport[] }) {
+  const pubMap = new Map<string, number[]>();
+  for (const r of reports) {
+    for (const p of r.publishers) {
+      const arr = pubMap.get(p.displayName) ?? [];
+      arr.push(p.metrics.reach);
+      pubMap.set(p.displayName, arr);
+    }
+  }
+  if (pubMap.size === 0) return <p style={{ color: C.slate500, fontSize: 13 }}>No publisher data.</p>;
+  const pubs = [...pubMap.entries()].sort((a, b) => {
+    const avgA = a[1].reduce((s, v) => s + v, 0) / a[1].length;
+    const avgB = b[1].reduce((s, v) => s + v, 0) / b[1].length;
+    return avgB - avgA;
+  });
+  const cats = pubs.map(([name]) => name);
+  const COLORS = [C.blue, C.teal, C.purple, C.amber, C.green];
+  const option = {
+    ...BASE_OPTS,
+    tooltip: { trigger: "axis", valueFormatter: (v: number) => fmtInt(v) },
+    legend: {
+      data: reports.map((r) => r.title.split("—")[0].trim()),
+      top: 0,
+      right: 0,
+      textStyle: { color: C.slate500, fontSize: 11 },
+    },
+    xAxis: {
+      type: "category",
+      data: cats,
+      axisLine: AXIS_LINE,
+      axisTick: { show: false },
+      axisLabel: { ...AXIS_LABEL, interval: 0 },
+    },
+    yAxis: {
+      type: "value",
+      axisLine: { show: false },
+      axisTick: { show: false },
+      splitLine: SPLIT_LINE,
+      axisLabel: { ...AXIS_LABEL, formatter: (v: number) => fmtInt(v) },
+    },
+    series: reports.map((r, ri) => ({
+      name: r.title.split("—")[0].trim(),
+      type: "bar",
+      data: cats.map((name) => {
+        const pub = r.publishers.find((p) => p.displayName === name);
+        return pub?.metrics.reach ?? 0;
+      }),
+      itemStyle: { color: COLORS[ri % COLORS.length], borderRadius: [4, 4, 0, 0] },
+      barMaxWidth: 32,
+    })),
+  };
+  return <ReactECharts option={option} style={CHART_STYLE} />;
+}
+
 export function WeeklyTrendsChart({ report }: { report: ParsedReport }) {
   const weekly = report.weekly;
   if (!weekly?.length) return null;
