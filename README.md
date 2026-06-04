@@ -54,6 +54,8 @@ Install the whole `halo` plugin — MCP server **and** the bundled skills — di
 
 Use `/plugin` at any time to enable, disable, or uninstall it. To pick up a new release later, run `/plugin marketplace update agent-toolkit`, then reinstall.
 
+> **Just want to try it?** Skip the credentials and set `"HALO_FAKE_DATA": "1"` in the server's `env` instead. The server then serves three built-in demo reports (no Halo account or Auth0 needed) so you can explore the tools and dashboards offline.
+
 ### Claude Desktop
 
 1. Download `halo-mcp.mcpb` from the [Releases](https://github.com/world-federation-of-advertisers/agent-toolkit/releases) page.
