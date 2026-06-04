@@ -22,6 +22,8 @@ An MCP server that exposes the Halo Reporting API as tools, renders interactive 
 | `show_publisher_reach_chart` | Per-publisher reach chart |
 | `show_publisher_table` | Publisher comparison table |
 | `show_weekly_trends` | Weekly reach trends over time |
+| `show_cross_campaign_reach` | Compare per-publisher reach across all campaigns (grouped bars) |
+| `show_cross_campaign_frequency` | Overlay k+ frequency distributions across all campaigns |
 | `export_basic_report` | Export report as PowerPoint (.pptx) via in-app download |
 
 ### `halo-workflow` — Agent skill
