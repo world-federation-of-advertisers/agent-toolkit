@@ -596,8 +596,3 @@ export async function generatePptxBuffer(reportJson: BasicReport): Promise<Buffe
   // Blob fallback (browser path — not expected on Node, but harmless).
   return Buffer.from(await (out as Blob).arrayBuffer());
 }
-
-export async function writePptx(reportJson: BasicReport, outPath: string): Promise<string> {
-  const pres = buildPresentation(reportJson);
-  return pres.writeFile({ fileName: outPath, compression: true });
-}
