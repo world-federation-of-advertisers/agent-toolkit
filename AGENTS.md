@@ -1,4 +1,4 @@
-# halo_skills — Agent Guide
+# agent-toolkit — Agent Guide
 
 This repository packages AI agent skills for consumers of the [Halo cross-media measurement](https://github.com/world-federation-of-advertisers/cross-media-measurement) API.
 
@@ -10,7 +10,7 @@ A Claude Code marketplace (via `.claude-plugin/marketplace.json`) shipping a sin
 - **Skills** — `SKILL.md` files under `plugins/halo-mcp/skills/` that any agent (Claude Code, Codex, Claude Agent SDK, etc.) can load. Currently ships one skill: `halo-workflow` (how to drive the MCP tools). Also published as a standalone `halo-skills.zip` for non-Claude agents.
 
 ```
-halo_skills/
+agent-toolkit/
 ├── .claude-plugin/marketplace.json        ← declares the single `halo` plugin
 └── plugins/
     └── halo-mcp/                           ← the `halo` plugin
@@ -40,7 +40,7 @@ When asked to author or modify a skill:
 
 ## Releases
 
-The `halo-skills.zip` artifact on the [Releases](https://github.com/world-federation-of-advertisers/halo_skills/releases) page contains the `skills/` directory tree. Users download and unzip it into their agent's skill directory.
+The `halo-skills.zip` artifact on the [Releases](https://github.com/world-federation-of-advertisers/agent-toolkit/releases) page contains the `skills/` directory tree. Users download and unzip it into their agent's skill directory.
 
 ## License
 

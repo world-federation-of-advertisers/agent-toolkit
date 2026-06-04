@@ -14,10 +14,23 @@ import { createServer } from "./server.ts";
 
 async function startStreamableHTTPServer(factory: () => McpServer): Promise<void> {
   const port = parseInt(process.env.PORT ?? "3001", 10);
-  const app = createMcpExpressApp({ host: "0.0.0.0" });
+  // Bind to loopback by default. createMcpExpressApp enables DNS-rebinding
+  // protection automatically for localhost hosts; binding to a non-loopback
+  // host (e.g. HOST=0.0.0.0) leaves the server open to DNS-rebinding attacks
+  // unless an explicit ALLOWED_HOSTS list is supplied.
+  const host = process.env.HOST ?? "127.0.0.1";
+  const allowedHosts = process.env.ALLOWED_HOSTS?.split(",")
+    .map((h) => h.trim())
+    .filter(Boolean);
+  const app = createMcpExpressApp(
+    allowedHosts?.length ? { host, allowedHosts } : { host },
+  );
   app.use(cors());
 
-  app.all("/mcp", async (req: Request, res: Response) => {
+  // Stateless transport: a fresh server + transport per request. The JSON-RPC
+  // message arrives via POST; GET/DELETE are only meaningful for session-based
+  // transports, so reject them with 405 (matches the SDK stateless example).
+  app.post("/mcp", async (req: Request, res: Response) => {
     const server = factory();
     const transport = new StreamableHTTPServerTransport({ sessionIdGenerator: undefined });
     res.on("close", () => {
@@ -39,12 +52,22 @@ async function startStreamableHTTPServer(factory: () => McpServer): Promise<void
     }
   });
 
-  const httpServer = app.listen(port, (err?: Error) => {
-    if (err) {
-      console.error("Failed to start server:", err);
-      process.exit(1);
-    }
-    console.log(`Halo MCP server listening on http://localhost:${port}/mcp`);
+  const methodNotAllowed = (_req: Request, res: Response) => {
+    res.status(405).json({
+      jsonrpc: "2.0",
+      error: { code: -32000, message: "Method not allowed." },
+      id: null,
+    });
+  };
+  app.get("/mcp", methodNotAllowed);
+  app.delete("/mcp", methodNotAllowed);
+
+  const httpServer = app.listen(port, host, () => {
+    console.log(`Halo MCP server listening on http://${host}:${port}/mcp`);
+  });
+  httpServer.on("error", (err) => {
+    console.error("Failed to start server:", err);
+    process.exit(1);
   });
 
   const shutdown = () => {

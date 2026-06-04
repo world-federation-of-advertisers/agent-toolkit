@@ -177,6 +177,11 @@ function safeIdSegment(s: string): string {
   return s.replace(/^basicReports\//, "").replace(/[^A-Za-z0-9_-]/g, "_");
 }
 
+// Cross-campaign tools fetch each SUCCEEDED report individually and overlay them
+// on one chart, so the fan-out (and chart legibility) must be bounded. Take only
+// the most recent page of reports.
+const CROSS_CAMPAIGN_MAX = 10;
+
 export function createServer(): McpServer {
   const server = new McpServer({
     name: "Halo Reports",
@@ -342,7 +347,13 @@ export function createServer(): McpServer {
       async (): Promise<CallToolResult> => {
         try {
           const cfg = getConfig();
-          const summaries = await listBasicReports(cfg, {});
+          // Only the first page — bounds the per-report fan-out below. See
+          // CROSS_CAMPAIGN_MAX. TODO(#8): add a date-range filter so users can
+          // scope which campaigns are compared instead of taking the latest N.
+          const summaries = await listBasicReports(cfg, {
+            pageSize: CROSS_CAMPAIGN_MAX,
+            maxPages: 1,
+          });
           const succeeded = summaries.filter((s) => s.state === "SUCCEEDED");
           if (succeeded.length === 0) {
             return errorResult("No SUCCEEDED reports found.");
@@ -353,9 +364,14 @@ export function createServer(): McpServer {
               return getBasicReport(cfg, id);
             }),
           );
+          // A full page implies the account may have more reports than shown.
+          const note =
+            summaries.length >= CROSS_CAMPAIGN_MAX
+              ? ` Showing the ${reports.length} most recent SUCCEEDED campaign(s); the account may have more.`
+              : "";
           return jsonResult(
             { kind: t.kind, reports },
-            `Rendered ${t.kind.replace(/_/g, " ")} across ${reports.length} campaign(s).`,
+            `Rendered ${t.kind.replace(/_/g, " ")} across ${reports.length} campaign(s).${note}`,
           );
         } catch (e) {
           return errorResult(e instanceof Error ? e.message : String(e));

@@ -11,6 +11,8 @@ import { findFixtureReport } from "../lib/halo-fixtures.ts";
 import { generatePptxBuffer } from "../lib/halo-export-pptx.ts";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
+// Writes under demo/, which is git-ignored — these are local build artifacts
+// (the .pptx and rendered PNGs), not committed to the repo.
 const SLIDES_DIR = join(HERE, "../../../demo/remotion/public/slides");
 const PPTX_PATH = join(SLIDES_DIR, "pellura.pptx");
 

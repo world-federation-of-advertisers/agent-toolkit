@@ -116,6 +116,14 @@ export interface PublisherMetrics {
   uniqueReach?: number;
 }
 
+// A reported audience intersection (deduplicated reach shared by every data
+// provider in `components`). The API returns these as componentIntersections;
+// for two providers it is the pairwise overlap the Venn diagram needs.
+export interface PublisherIntersection {
+  components: string[]; // normalized data-provider ids, matching PublisherMetrics.dataProvider
+  reach: number;
+}
+
 export interface Demographic {
   segmentLabel: string;
   rgTitle: string;
@@ -135,6 +143,7 @@ export interface ParsedReport {
   populationSize: number;
   total: Metrics;
   publishers: PublisherMetrics[];
+  intersections: PublisherIntersection[];
   stackedIncremental: Array<{ dataProvider: string; reach: number }>;
   metricFrequency: "weekly" | "total" | "unknown";
   weekly?: Array<{
@@ -338,6 +347,13 @@ export function parseReport(report: BasicReport): ParsedReport {
     };
   });
 
+  // Pairwise / k-way audience intersections, normalized to bare data-provider
+  // ids so consumers can match them against `publishers[].dataProvider`.
+  const intersections: PublisherIntersection[] = (headlineMetricSet?.componentIntersections ?? []).map((ix) => ({
+    components: (ix.components ?? []).map((c) => c.replace(/^dataProviders\//, "")),
+    reach: toInt(ix.metricSet?.reach),
+  }));
+
   const stackedIncremental = (headlineMetricSet?.reportingUnit?.stackedIncrementalReach ?? []).map((s) => {
     const dp = s.dataProvider?.replace(/^dataProviders\//, "") ?? "";
     return {
@@ -420,6 +436,7 @@ export function parseReport(report: BasicReport): ParsedReport {
     populationSize,
     total: totalMetrics,
     publishers,
+    intersections,
     stackedIncremental,
     metricFrequency,
     weekly,

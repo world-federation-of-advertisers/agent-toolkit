@@ -1,4 +1,4 @@
-# Contributing to halo_skills
+# Contributing to agent-toolkit
 
 This repo packages agent skills for the Halo cross-media measurement ecosystem. Skills are auto-discovered by agents (Claude Code, Codex, Agent SDK) — small structural mistakes cause silent load failures, so please follow the conventions.
 
@@ -27,7 +27,7 @@ Common types for this repo: `feat`, `fix`, `docs`, `chore`, `refactor`.
 ## Repository layout
 
 ```
-halo_skills/
+agent-toolkit/
 ├── AGENTS.md                                # Agent-facing guide (CLAUDE.md is a pointer to this)
 ├── CLAUDE.md                                # @AGENTS.md
 ├── .claude-plugin/marketplace.json          # Claude Code marketplace catalog
@@ -69,7 +69,7 @@ halo_skills/
 **Claude Code:**
 
 ```
-/plugin marketplace add /absolute/path/to/halo_skills
+/plugin marketplace add /absolute/path/to/agent-toolkit
 /plugin install halo@agent-toolkit    # MCP server (dashboards + PPTX export) and skills
 ```
 

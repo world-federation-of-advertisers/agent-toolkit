@@ -688,6 +688,9 @@ function Footer({ report, app }: { report: ParsedReport; app: App }) {
 
 // ============================================================================
 // VennDiagram — proportional-area two-publisher overlap visualization.
+//
+// TODO(#7): support N-publisher overlap (3-circle Venn / UpSet plot) using the
+// k-way entries in report.intersections.
 // ============================================================================
 
 function VennDiagram({ report }: { report: ParsedReport }) {
@@ -700,9 +703,20 @@ function VennDiagram({ report }: { report: ParsedReport }) {
     );
   }
   const pop = report.populationSize;
-  const netReach = report.total.reach;
   const grossR = a.reach + b.reach;
-  const overlapR = Math.max(0, grossR - netReach);
+  // Use the API's reported intersection for this exact pair. Fall back to
+  // gross − total-net only when it's absent — that identity is exact solely for
+  // a two-publisher report; with 3+ publishers, total net reach spans every
+  // publisher and would overstate this pair's overlap. Clamp to the smaller
+  // circle as a final guard.
+  const reportedOverlap = pairwiseOverlap(report, a.dataProvider, b.dataProvider);
+  const overlapR = Math.min(
+    a.reach,
+    b.reach,
+    Math.max(0, reportedOverlap ?? grossR - report.total.reach),
+  );
+  // Deduplicated union of *these two* publishers (their net reach).
+  const netReach = Math.max(0, grossR - overlapR);
 
   // Proportional circle radii (area ~ reach)
   const maxR = 145;
@@ -737,8 +751,11 @@ function VennDiagram({ report }: { report: ParsedReport }) {
 
   const overlapPct = pop > 0 ? ((overlapR / pop) * 100).toFixed(1) : "—";
   const netPct = pop > 0 ? ((netReach / pop) * 100).toFixed(1) : "—";
-  const a1Unique = a.uniqueReach ?? Math.max(0, a.reach - overlapR);
-  const a2Unique = b.uniqueReach ?? Math.max(0, b.reach - overlapR);
+  // "Only" regions are relative to the other publisher in the pair, so subtract
+  // this pair's overlap — not the campaign-wide uniqueReach, which also nets out
+  // every other publisher.
+  const a1Unique = Math.max(0, a.reach - overlapR);
+  const a2Unique = Math.max(0, b.reach - overlapR);
   const a1OnlyPct = pop > 0 ? ((a1Unique / pop) * 100).toFixed(1) : "—";
   const a2OnlyPct = pop > 0 ? ((a2Unique / pop) * 100).toFixed(1) : "—";
 
@@ -807,7 +824,7 @@ function VennDiagram({ report }: { report: ParsedReport }) {
         {/* Net Reach box */}
         <rect x={W / 2 - 145} y={netBoxY - 18} width={290} height={36} rx={8} fill={T.greenBg} stroke={T.greenBorder} strokeWidth={1.5} />
         <text x={W / 2 - 76} y={netBoxY + 5} fontSize={11} fontWeight={600} fill={T.greenDark} textAnchor="middle">
-          Net Campaign Reach:
+          Combined Net Reach:
         </text>
         <text x={W / 2 + 48} y={netBoxY + 5} fontSize={14} fontWeight={800} fill={T.greenDark} fontFamily={FONT_M} textAnchor="middle">
           {fmtInt(netReach)}
@@ -898,9 +915,9 @@ function VennEquation({
 
 // Flat shape for VennDiagram (publisher.metrics.reach hoisted to .reach).
 interface VennPub {
+  dataProvider: string;
   reach: number;
   displayName: string;
-  uniqueReach?: number;
 }
 
 // Pick the top-2 publishers by reach for the Venn pair.
@@ -909,11 +926,21 @@ function pickVennPair(report: ParsedReport): [VennPub | undefined, VennPub | und
     .filter((p) => p.metrics.reach > 0)
     .sort((a, b) => b.metrics.reach - a.metrics.reach)
     .map<VennPub>((p) => ({
+      dataProvider: p.dataProvider,
       reach: p.metrics.reach,
       displayName: p.displayName,
-      uniqueReach: p.uniqueReach,
     }));
   return [sorted[0], sorted[1]];
+}
+
+// Deduplicated reach shared by exactly these two publishers, taken from the
+// report's reported intersections. Undefined when the pair has no reported
+// intersection (e.g. older reports) so callers can fall back.
+function pairwiseOverlap(report: ParsedReport, dpA: string, dpB: string): number | undefined {
+  const hit = report.intersections.find(
+    (ix) => ix.components.length === 2 && ix.components.includes(dpA) && ix.components.includes(dpB),
+  );
+  return hit?.reach;
 }
 
 function circleIntersectionArea(ra: number, rb: number, d: number): number {
