@@ -50,7 +50,7 @@ Install the whole `halo` plugin — MCP server **and** the bundled skills — di
    /plugin install halo@agent-toolkit
    ```
 
-3. **Provide credentials.** The MCP server needs six `HALO_*` values (get them from your CMMS Operator). Set them as environment variables before launching Claude Code — export them in your shell, or add an `env` block to the `halo` server in your `.claude/settings.json`. See the [server README](./plugins/halo-mcp/README.md#configuration) for the full list.
+3. **Provide credentials.** The MCP server needs six `HALO_*` values (get them from your CMMS Operator). Set them as environment variables before launching Claude Code — export them in your shell, or add an `env` block to the `halo` server in your `.claude/settings.json`. See [Configuration](#configuration) for the full list.
 
 4. **Restart Claude Code** so the server starts. On first launch the server is fetched via `npx` from the release tarball and cached, so that run needs network access.
 
@@ -103,7 +103,7 @@ In **Cursor**, **Windsurf**, or any agent that reads an `mcp.json`, add this blo
 }
 ```
 
-All six `HALO_*` environment variables are required. Get them from your CMMS Operator. See the [server README](./plugins/halo-mcp/README.md#configuration) for descriptions and optional settings.
+All six `HALO_*` environment variables are required — see [Configuration](#configuration) below for the full list.
 
 > Working offline or behind a proxy? Download the `.tgz` from the [Releases](https://github.com/world-federation-of-advertisers/agent-toolkit/releases) page and swap the URL for a local path: `npx -y /path/to/halo-mcp-<version>.tgz --stdio`.
 
@@ -119,6 +119,60 @@ Download `halo-skills.zip` from the [Releases](https://github.com/world-federati
 | Continue | `.continue/rules/` |
 
 The skills are agent-agnostic Markdown — no Claude-specific syntax. Any LLM that can follow Markdown instructions can use them.
+
+## Configuration
+
+The MCP server reads these environment variables:
+
+| Variable | Required | Example | Purpose |
+|---|---|---|---|
+| `HALO_BASE_URL` | Yes | `https://api.example-halo.org` | Base URL of your CMMS Operator's public API |
+| `HALO_MC_ID` | Yes | `measurementConsumers/abc123` | Your Measurement Consumer resource name |
+| `HALO_AUTH0_URL` | Yes | `https://example.auth0.com` | Your Auth0 tenant URL |
+| `HALO_AUTH0_AUDIENCE` | Yes | `https://api.example-halo.org` | Auth0 API audience identifier |
+| `HALO_CLIENT_ID` | Yes | *(from Auth0)* | Machine-to-machine application client ID |
+| `HALO_CLIENT_SECRET` | Yes | *(from Auth0)* | Machine-to-machine application client secret |
+| `HALO_TOKEN_FILE` | No | `~/.halo_token` | Auth0 token cache path (mode `0600`) |
+| `HTTPS_PROXY` | No | `http://proxy:8080` | Outbound proxy, if your network requires one |
+| `HALO_FAKE_DATA` | No | `1` | Serve built-in demo fixtures (no credentials needed) |
+
+### Fake-data mode
+
+Set `HALO_FAKE_DATA=1` to bypass Auth0 and the Halo API entirely. The server returns three built-in fixture reports — no other env vars are required. Useful for demos, offline development, and evaluating the tools before connecting to a live Halo deployment.
+
+## Development
+
+```bash
+cd plugins/halo-mcp
+npm install
+npm run dev          # rebuild UI on change + restart server on .ts change
+npm run build        # production build (dist/mcp-app.html + dist/server/main.mjs)
+npm run build:mcpb   # package as Claude Desktop Extension (.mcpb)
+```
+
+### Run from source in Claude Desktop
+
+Add this to your `claude_desktop_config.json` (macOS: `~/Library/Application Support/Claude/claude_desktop_config.json`), using absolute paths to your checkout:
+
+```json
+{
+  "mcpServers": {
+    "xmm-halo": {
+      "command": "/path/to/agent-toolkit/plugins/halo-mcp/node_modules/.bin/tsx",
+      "args": ["/path/to/agent-toolkit/plugins/halo-mcp/main.ts", "--stdio"],
+      "env": { "HALO_FAKE_DATA": "1" }
+    }
+  }
+}
+```
+
+`tsx` runs TypeScript directly — edits take effect on restart, no build step needed.
+
+### Security notes
+
+- Secrets are never logged or echoed.
+- Config secrets (`HALO_CLIENT_ID`/`HALO_CLIENT_SECRET`) come from the host (OS keychain for `.mcpb`, shell env otherwise) — the server never persists them. The short-lived Auth0 access token is cached at `HALO_TOKEN_FILE` (default `~/.halo_token`, `chmod 600`).
+- Halo response fields (titles, brand/campaign metadata) are treated as untrusted consortium-supplied strings. React's default JSX-escaping handles output — no raw HTML injection.
 
 ## Repository layout
 
