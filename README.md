@@ -30,7 +30,7 @@ An MCP server that exposes the Halo Reporting API as tools, renders interactive 
 
 A standalone `SKILL.md` that teaches any LLM agent how to drive the Halo MCP tools: which tool to call for a given question, the discovery sequence (list → summary → drill down → export), and common interpretation pitfalls.
 
-Download the latest `halo-skills.zip` from the [Releases](https://github.com/world-federation-of-advertisers/agent-toolkit/releases) page.
+Download the per-skill `.zip` bundles from the [Releases](https://github.com/world-federation-of-advertisers/agent-toolkit/releases) page.
 
 ## Installation
 
@@ -109,7 +109,7 @@ All six `HALO_*` environment variables are required — see [Configuration](#con
 
 ### Installing the skill (any agent)
 
-Download `halo-skills.zip` from the [Releases](https://github.com/world-federation-of-advertisers/agent-toolkit/releases) page and unzip it. Each skill is a self-contained `SKILL.md` file you can drop into your agent's skill/rules directory.
+Download the skill bundle(s) — one `<skill-name>.zip` per skill — from the [Releases](https://github.com/world-federation-of-advertisers/agent-toolkit/releases) page and unzip. Each unzips to a self-contained `<skill-name>/` directory you can drop into your agent's skill/rules directory.
 
 | Agent | Destination |
 |-------|-------------|

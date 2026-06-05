@@ -85,8 +85,8 @@ jobs:
       - name: Build .mcpb bundle
         run: bash scripts/build-mcpb.sh
 
-      # --- Artifact 3: agent skill bundle (.zip) ---
-      - name: Build skills zip
+      # --- Artifact 3: agent skill bundles (one .zip per skill) ---
+      - name: Build skill zips
         working-directory: ${{ github.workspace }}
         run: python3 scripts/build-skill-zips.py
 
@@ -97,7 +97,7 @@ jobs:
           mkdir -p artifacts
           cp plugins/halo-mcp/*.tgz         artifacts/
           cp plugins/halo-mcp/halo-mcp.mcpb artifacts/
-          cp dist/halo-skills.zip           artifacts/
+          cp dist/*.zip                     artifacts/
           ls -lh artifacts/
 
       - name: Upload build artifacts

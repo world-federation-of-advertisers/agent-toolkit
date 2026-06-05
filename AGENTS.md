@@ -7,7 +7,7 @@ This repository packages AI agent skills for consumers of the [Halo cross-media 
 A Claude Code marketplace (via `.claude-plugin/marketplace.json`) shipping a single plugin, **`halo`** (source: `plugins/halo-mcp/`), that bundles both:
 
 - **An MCP server** that exposes the Halo Reporting API as tools, renders interactive React dashboards inline in chat, and exports reports as PowerPoint (.pptx) via in-app download. Also distributable as a Claude Desktop `.mcpb` extension (see `plugins/halo-mcp/manifest.json`).
-- **Skills** — `SKILL.md` files under `plugins/halo-mcp/skills/` that any agent (Claude Code, Codex, Claude Agent SDK, etc.) can load. Currently ships one skill: `halo-workflow` (how to drive the MCP tools). Also published as a standalone `halo-skills.zip` for non-Claude agents.
+- **Skills** — `SKILL.md` files under `plugins/halo-mcp/skills/` that any agent (Claude Code, Codex, Claude Agent SDK, etc.) can load. Currently ships one skill: `halo-workflow` (how to drive the MCP tools). Also published as per-skill `.zip` bundles for non-Claude agents.
 
 ```
 agent-toolkit/
@@ -40,7 +40,7 @@ When asked to author or modify a skill:
 
 ## Releases
 
-The `halo-skills.zip` artifact on the [Releases](https://github.com/world-federation-of-advertisers/agent-toolkit/releases) page contains the `skills/` directory tree. Users download and unzip it into their agent's skill directory.
+Each skill is published as its own `<skill-name>.zip` on the [Releases](https://github.com/world-federation-of-advertisers/agent-toolkit/releases) page. An archive unzips to a single `<skill-name>/` directory (`SKILL.md` plus any `scripts/`, `references/`, `assets/`); download the ones you want and drop them into your agent's skill directory.
 
 ## License
 
