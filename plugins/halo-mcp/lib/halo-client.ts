@@ -275,8 +275,8 @@ export async function listBasicReports(
       reportingInterval: r.reportingInterval as BasicReportSummary["reportingInterval"],
     }));
   }
-  const pageSize = opts.pageSize ?? 25;
-  const maxPages = opts.maxPages ?? 4;
+  const pageSize = opts.pageSize ?? 5;
+  const maxPages = opts.maxPages ?? 10;
   return paginate<
     { basicReports?: BasicReport[]; nextPageToken?: string },
     "basicReports"

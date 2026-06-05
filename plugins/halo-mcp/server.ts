@@ -200,8 +200,8 @@ export function createServer(): McpServer {
       description:
         "List recent Halo Basic Reports in the configured measurement consumer. Returns a markdown table of id, title, campaign group, period, state, created date.",
       inputSchema: {
-        pageSize: z.number().int().min(1).max(100).optional().describe("Per-page size, default 25"),
-        maxPages: z.number().int().min(1).max(20).optional().describe("Max pages to walk, default 4"),
+        pageSize: z.number().int().min(1).max(100).optional().describe("Per-page size, default 5"),
+        maxPages: z.number().int().min(1).max(20).optional().describe("Max pages to walk, default 10"),
       },
     },
     async ({ pageSize, maxPages }): Promise<CallToolResult> => {
