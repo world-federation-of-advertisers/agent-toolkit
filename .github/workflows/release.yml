@@ -1,0 +1,117 @@
+name: release
+
+# Builds and publishes the three distributable artifacts on a version tag:
+#   - halo-mcp.mcpb          → Claude Desktop extension
+#   - halo-mcp-<ver>.tgz     → npm package for MCP server config (npx)
+#   - halo-skills.zip        → agent-agnostic SKILL.md bundle
+#
+# Push a tag like `v0.1.0` to cut a release, or run manually via the Actions
+# tab (workflow_dispatch) to produce the artifacts without a GitHub Release.
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: plugins/halo-mcp
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+          cache-dependency-path: plugins/halo-mcp/package-lock.json
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      # On a tag build, the `vX.Y.Z` tag must match the versions baked into
+      # package.json and manifest.json (they are bumped by hand). Fail fast
+      # before spending time on the build if they have drifted.
+      - name: Verify tag matches package versions
+        if: startsWith(github.ref, 'refs/tags/v')
+        env:
+          REF_NAME: ${{ github.ref_name }}
+        run: |
+          set -euo pipefail
+          tag_ver="${REF_NAME#v}"
+          pkg_ver="$(node -p "require('./package.json').version")"
+          manifest_ver="$(node -p "require('./manifest.json').version")"
+          echo "tag=$tag_ver package.json=$pkg_ver manifest.json=$manifest_ver"
+          if [ "$tag_ver" != "$pkg_ver" ] || [ "$tag_ver" != "$manifest_ver" ]; then
+            echo "::error::Tag v$tag_ver does not match package.json ($pkg_ver) / manifest.json ($manifest_ver). Bump versions to match the tag." >&2
+            exit 1
+          fi
+          # The plugin's MCP server is fetched via npx from the release tarball,
+          # with the version pinned in .claude-plugin/plugin.json. That URL must
+          # point at this tag's tarball, or a marketplace install would fetch the
+          # wrong (or a nonexistent) release.
+          plugin_args="$(node -p "require('./.claude-plugin/plugin.json').mcpServers.halo.args.join(' ')")"
+          expected_url="releases/download/v${tag_ver}/halo-mcp-${tag_ver}.tgz"
+          echo "plugin.json server args: $plugin_args"
+          case "$plugin_args" in
+            *"$expected_url"*) ;;
+            *)
+              echo "::error::plugin.json MCP server URL does not reference v$tag_ver ($expected_url). Update .claude-plugin/plugin.json to match the tag." >&2
+              exit 1
+              ;;
+          esac
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build server + UI
+        run: npm run build
+
+      - name: Run tests
+        run: npm test
+
+      # --- Artifact 1: npm package (consumed via `npx halo-mcp-<ver>.tgz`) ---
+      - name: Pack npm tarball
+        run: npm pack
+
+      # --- Artifact 2: Claude Desktop extension (.mcpb) ---
+      - name: Build .mcpb bundle
+        run: bash scripts/build-mcpb.sh
+
+      # --- Artifact 3: agent skill bundles (one .zip per skill) ---
+      - name: Build skill zips
+        working-directory: ${{ github.workspace }}
+        run: python3 scripts/build-skill-zips.py
+
+      - name: Collect release artifacts
+        working-directory: ${{ github.workspace }}
+        run: |
+          set -euo pipefail
+          mkdir -p artifacts
+          cp plugins/halo-mcp/*.tgz         artifacts/
+          cp plugins/halo-mcp/halo-mcp.mcpb artifacts/
+          cp dist/*.zip                     artifacts/
+          ls -lh artifacts/
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-artifacts
+          path: artifacts/*
+          if-no-files-found: error
+          retention-days: 14
+
+      - name: Create GitHub Release
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: artifacts/*
+          generate_release_notes: true
+          fail_on_unmatched_files: true

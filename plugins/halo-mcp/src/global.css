@@ -1,0 +1,65 @@
+:root {
+  color-scheme: light dark;
+
+  --color-text-primary: light-dark(#1f2937, #f3f4f6);
+  --color-text-secondary: light-dark(#475569, #94a3b8);
+  --color-text-muted: light-dark(#64748b, #64748b);
+  --color-text-inverse: light-dark(#f3f4f6, #1f2937);
+  --color-background-primary: light-dark(#ffffff, #0f172a);
+  --color-background-secondary: light-dark(#f8fafc, #1e293b);
+  --color-background-tertiary: light-dark(#f1f5f9, #334155);
+  --color-border: light-dark(#e2e8f0, #334155);
+  --color-divider: light-dark(#e5e7eb, #334155);
+
+  /* Halo palette: blue=reach, green=incremental, violet=frequency, slate=impressions */
+  --color-reach: #2C5CE1;
+  --color-incremental: #0D8A5E;
+  --color-frequency: #6D3BD1;
+  --color-impressions: #475169;
+  --color-danger: #dc2626;
+  --color-warning: #d97706;
+
+  --border-radius-sm: 4px;
+  --border-radius-md: 6px;
+  --border-radius-lg: 10px;
+  --font-sans: ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 12px;
+  --spacing-lg: 16px;
+  --spacing-xl: 24px;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--color-text-primary);
+  background: var(--color-background-primary);
+}
+
+code, pre, kbd { font-family: var(--font-mono); font-size: 0.9em; }
+b, strong { font-weight: 600; }
+
+a {
+  color: var(--color-reach);
+  text-decoration: none;
+}
+a:hover { text-decoration: underline; }
+
+button {
+  font: inherit;
+  cursor: pointer;
+  padding: 6px 12px;
+  border-radius: var(--border-radius-md);
+  border: 1px solid var(--color-border);
+  background: var(--color-background-secondary);
+  color: var(--color-text-primary);
+}
+button:hover { background: var(--color-background-tertiary); }
+button:disabled { opacity: 0.5; cursor: not-allowed; }

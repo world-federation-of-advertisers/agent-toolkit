@@ -1,6 +1,6 @@
 {
   "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
-  "name": "halo_skills",
+  "name": "agent-toolkit",
   "description": "AI agent skills for consumers of the Halo cross-media measurement API",
   "owner": {
     "name": "World Federation of Advertisers",
@@ -8,10 +8,10 @@
   },
   "plugins": [
     {
-      "name": "halo-skills",
-      "description": "Skill library for consumers of the Halo cross-media measurement API",
+      "name": "halo",
+      "description": "Halo cross-media measurement: MCP server with interactive React dashboards plus report-interpretation skills",
       "version": "0.1.0",
-      "source": "./plugins/halo-skills",
+      "source": "./plugins/halo-mcp",
       "category": "productivity",
       "strict": false
     }

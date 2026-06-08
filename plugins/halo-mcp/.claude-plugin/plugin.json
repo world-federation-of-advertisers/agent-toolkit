@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
+  "name": "halo",
+  "version": "0.1.0",
+  "description": "Halo cross-media measurement: MCP server with interactive React dashboards plus report-interpretation skills",
+  "author": {
+    "name": "World Federation of Advertisers",
+    "url": "https://github.com/world-federation-of-advertisers"
+  },
+  "homepage": "https://github.com/world-federation-of-advertisers/cross-media-measurement",
+  "license": "Apache-2.0",
+  "keywords": [
+    "halo",
+    "cross-media-measurement",
+    "mcp",
+    "reporting",
+    "skills",
+    "wfa"
+  ],
+  "mcpServers": {
+    "halo": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "https://github.com/world-federation-of-advertisers/agent-toolkit/releases/download/v0.1.0/halo-mcp-0.1.0.tgz",
+        "--stdio"
+      ],
+      "env": {
+        "HALO_BASE_URL": "${HALO_BASE_URL}",
+        "HALO_MC_ID": "${HALO_MC_ID}",
+        "HALO_AUTH0_URL": "${HALO_AUTH0_URL}",
+        "HALO_AUTH0_AUDIENCE": "${HALO_AUTH0_AUDIENCE}",
+        "HALO_CLIENT_ID": "${HALO_CLIENT_ID}",
+        "HALO_CLIENT_SECRET": "${HALO_CLIENT_SECRET}"
+      }
+    }
+  }
+}
