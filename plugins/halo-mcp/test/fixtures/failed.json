@@ -1,0 +1,41 @@
+{
+  "name": "measurementConsumers/example-mc/basicReports/example-failed",
+  "title": "Q2 Brand Awareness \u2014 Diagnostic",
+  "campaignGroup": "measurementConsumers/example-mc/reportingSets/q2-brand",
+  "campaignGroupDisplayName": "Q2 Brand Awareness 2026",
+  "createTime": "2026-05-27T13:48:58.199807Z",
+  "modelLine": "",
+  "effectiveModelLine": "",
+  "state": "FAILED",
+  "reportingInterval": {
+    "reportStart": {
+      "year": 2026,
+      "month": 4,
+      "day": 1,
+      "hours": 0,
+      "minutes": 0,
+      "seconds": 0,
+      "nanos": 0,
+      "utcOffset": "0s"
+    },
+    "effectiveReportStart": {
+      "year": 2026,
+      "month": 4,
+      "day": 1,
+      "hours": 0,
+      "minutes": 0,
+      "seconds": 0,
+      "nanos": 0,
+      "utcOffset": "0s"
+    },
+    "reportEnd": {
+      "year": 2026,
+      "month": 4,
+      "day": 30
+    }
+  },
+  "impressionQualificationFilters": [],
+  "effectiveImpressionQualificationFilters": [],
+  "resultGroupSpecs": [],
+  "resultGroups": []
+}

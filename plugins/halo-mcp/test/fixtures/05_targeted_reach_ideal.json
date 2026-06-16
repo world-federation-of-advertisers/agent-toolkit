@@ -1,0 +1,445 @@
+{
+  "name": "measurementConsumers/synthmc001/basicReports/br_005",
+  "title": "Brand A Beauty Launch - Female 18-34 Target",
+  "campaignGroup": "measurementConsumers/synthmc001/reportingSets/branda_beauty_launch",
+  "campaignGroupDisplayName": "Brand A Beauty Launch",
+  "reportingInterval": {
+    "reportStart": {
+      "year": 2025,
+      "month": 5,
+      "day": 1,
+      "hours": 5,
+      "timeOffset": {
+        "id": "America/New_York"
+      }
+    },
+    "reportEnd": {
+      "year": 2025,
+      "month": 5,
+      "day": 29
+    }
+  },
+  "impressionQualificationFilters": [
+    {
+      "impressionQualificationFilter": "impressionQualificationFilters/ami_standard"
+    }
+  ],
+  "effectiveImpressionQualificationFilters": [
+    {
+      "impressionQualificationFilter": "impressionQualificationFilters/ami_standard"
+    }
+  ],
+  "state": "SUCCEEDED",
+  "modelLine": "modelProviders/synthetic_provider/modelLines/synth_model_v1",
+  "effectiveModelLine": "modelProviders/synthetic_provider/modelLines/synth_model_v1",
+  "createTime": {
+    "seconds": 1748563200
+  },
+  "resultGroupSpecs": [
+    {
+      "title": "Female 18-34",
+      "reportingUnit": {
+        "components": [
+          "dataProviders/tv_broadcaster_alpha",
+          "dataProviders/social_platform_gamma"
+        ]
+      },
+      "metricFrequency": {
+        "total": true
+      },
+      "dimensionSpec": {
+        "grouping": {
+          "eventTemplateFields": [
+            "common.age_group",
+            "common.gender"
+          ]
+        },
+        "filters": [
+          {
+            "terms": {
+              "path": "common.gender",
+              "value": {
+                "enumValue": "FEMALE"
+              }
+            }
+          },
+          {
+            "terms": {
+              "path": "common.age_group",
+              "value": {
+                "stringValue": "18-34"
+              }
+            }
+          }
+        ]
+      },
+      "resultGroupMetricSpec": {
+        "reportingUnit": {
+          "cumulative": {
+            "reach": "1",
+            "percentReach": true,
+            "averageFrequency": true,
+            "impressions": "1"
+          }
+        },
+        "component": {
+          "cumulative": {
+            "reach": "1",
+            "percentReach": true,
+            "averageFrequency": true
+          }
+        }
+      }
+    },
+    {
+      "title": "All Demographics",
+      "reportingUnit": {
+        "components": [
+          "dataProviders/tv_broadcaster_alpha",
+          "dataProviders/social_platform_gamma"
+        ]
+      },
+      "metricFrequency": {
+        "total": true
+      },
+      "dimensionSpec": {
+        "grouping": {
+          "eventTemplateFields": [
+            "common.age_group",
+            "common.gender"
+          ]
+        }
+      },
+      "resultGroupMetricSpec": {
+        "reportingUnit": {
+          "cumulative": {
+            "reach": "1",
+            "percentReach": true,
+            "averageFrequency": true
+          }
+        }
+      }
+    }
+  ],
+  "resultGroups": [
+    {
+      "title": "Demographic Breakdown",
+      "results": [
+        {
+          "metadata": {
+            "reportingUnitSummary": {
+              "components": [
+                {
+                  "key": "dataProviders/tv_broadcaster_alpha",
+                  "displayName": "TV Broadcaster Alpha"
+                },
+                {
+                  "key": "dataProviders/social_platform_gamma",
+                  "displayName": "Social Platform Gamma"
+                }
+              ],
+              "reportingUnitComponentSummary": [
+                {
+                  "dataProvider": "dataProviders/tv_broadcaster_alpha",
+                  "displayName": "Tv Broadcaster Alpha"
+                },
+                {
+                  "dataProvider": "dataProviders/social_platform_gamma",
+                  "displayName": "Social Platform Gamma"
+                }
+              ]
+            },
+            "metricFrequency": {
+              "total": true
+            },
+            "dimensionSpecSummary": {
+              "groupings": [
+                {
+                  "eventTemplateFields": [
+                    "common.gender",
+                    "common.age_group"
+                  ]
+                }
+              ]
+            }
+          },
+          "metricSet": {
+            "populationSize": "75000000",
+            "reportingUnit": {
+              "cumulative": {
+                "reach": "24550000",
+                "impressions": "102112500",
+                "averageFrequency": 4.16,
+                "percentReach": 0.327333,
+                "kPlusReach": [
+                  "24550000",
+                  "11208569",
+                  "5117394",
+                  "2336402",
+                  "1066710",
+                  "487018",
+                  "222353"
+                ]
+              },
+              "stackedIncrementalReach": [
+                "17676000",
+                "6874000"
+              ]
+            },
+            "components": [
+              {
+                "key": "dataProviders/tv_broadcaster_alpha",
+                "value": {
+                  "cumulative": {
+                    "reach": "19149000",
+                    "percentReach": 0.25532,
+                    "averageFrequency": 4.16,
+                    "impressions": "79659840"
+                  },
+                  "cumulativeUnique": {
+                    "reach": "11784000"
+                  }
+                }
+              },
+              {
+                "key": "dataProviders/social_platform_gamma",
+                "value": {
+                  "cumulative": {
+                    "reach": "12766000",
+                    "percentReach": 0.170213,
+                    "averageFrequency": 4.99,
+                    "impressions": "63727872"
+                  },
+                  "cumulativeUnique": {
+                    "reach": "5401000"
+                  }
+                }
+              }
+            ],
+            "componentIntersections": [
+              {
+                "components": [
+                  "dataProviders/tv_broadcaster_alpha",
+                  "dataProviders/social_platform_gamma"
+                ],
+                "cumulative": {
+                  "reach": "7365000"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "metadata": {
+            "dimensionSpecSummary": {
+              "groupings": [
+                {
+                  "eventTemplateFields": [
+                    "common.gender",
+                    "common.age_group"
+                  ]
+                }
+              ],
+              "filters": [
+                {
+                  "key": "common.gender",
+                  "value": "Female"
+                },
+                {
+                  "key": "common.age_group",
+                  "value": "18-34"
+                }
+              ]
+            }
+          },
+          "metricSet": {
+            "populationSize": "12500000",
+            "reportingUnit": {
+              "cumulative": {
+                "reach": "9375000",
+                "percentReach": 75.0,
+                "averageFrequency": 4.8,
+                "impressions": "45000000"
+              }
+            }
+          }
+        },
+        {
+          "metadata": {
+            "dimensionSpecSummary": {
+              "groupings": [
+                {
+                  "eventTemplateFields": [
+                    "common.gender",
+                    "common.age_group"
+                  ]
+                }
+              ],
+              "filters": [
+                {
+                  "key": "common.gender",
+                  "value": "Female"
+                },
+                {
+                  "key": "common.age_group",
+                  "value": "35-54"
+                }
+              ]
+            }
+          },
+          "metricSet": {
+            "populationSize": "14000000",
+            "reportingUnit": {
+              "cumulative": {
+                "reach": "5600000",
+                "percentReach": 40.0,
+                "averageFrequency": 3.5,
+                "impressions": "19600000"
+              }
+            }
+          }
+        },
+        {
+          "metadata": {
+            "dimensionSpecSummary": {
+              "groupings": [
+                {
+                  "eventTemplateFields": [
+                    "common.gender",
+                    "common.age_group"
+                  ]
+                }
+              ],
+              "filters": [
+                {
+                  "key": "common.gender",
+                  "value": "Female"
+                },
+                {
+                  "key": "common.age_group",
+                  "value": "55+"
+                }
+              ]
+            }
+          },
+          "metricSet": {
+            "populationSize": "10000000",
+            "reportingUnit": {
+              "cumulative": {
+                "reach": "2500000",
+                "percentReach": 25.0,
+                "averageFrequency": 3.8,
+                "impressions": "9500000"
+              }
+            }
+          }
+        },
+        {
+          "metadata": {
+            "dimensionSpecSummary": {
+              "groupings": [
+                {
+                  "eventTemplateFields": [
+                    "common.gender",
+                    "common.age_group"
+                  ]
+                }
+              ],
+              "filters": [
+                {
+                  "key": "common.gender",
+                  "value": "Male"
+                },
+                {
+                  "key": "common.age_group",
+                  "value": "18-34"
+                }
+              ]
+            }
+          },
+          "metricSet": {
+            "populationSize": "13000000",
+            "reportingUnit": {
+              "cumulative": {
+                "reach": "3250000",
+                "percentReach": 25.0,
+                "averageFrequency": 4.5,
+                "impressions": "14625000"
+              }
+            }
+          }
+        },
+        {
+          "metadata": {
+            "dimensionSpecSummary": {
+              "groupings": [
+                {
+                  "eventTemplateFields": [
+                    "common.gender",
+                    "common.age_group"
+                  ]
+                }
+              ],
+              "filters": [
+                {
+                  "key": "common.gender",
+                  "value": "Male"
+                },
+                {
+                  "key": "common.age_group",
+                  "value": "35-54"
+                }
+              ]
+            }
+          },
+          "metricSet": {
+            "populationSize": "15500000",
+            "reportingUnit": {
+              "cumulative": {
+                "reach": "2325000",
+                "percentReach": 15.0,
+                "averageFrequency": 3.5,
+                "impressions": "8137500"
+              }
+            }
+          }
+        },
+        {
+          "metadata": {
+            "dimensionSpecSummary": {
+              "groupings": [
+                {
+                  "eventTemplateFields": [
+                    "common.gender",
+                    "common.age_group"
+                  ]
+                }
+              ],
+              "filters": [
+                {
+                  "key": "common.gender",
+                  "value": "Male"
+                },
+                {
+                  "key": "common.age_group",
+                  "value": "55+"
+                }
+              ]
+            }
+          },
+          "metricSet": {
+            "populationSize": "10000000",
+            "reportingUnit": {
+              "cumulative": {
+                "reach": "1500000",
+                "percentReach": 15.0,
+                "averageFrequency": 3.5,
+                "impressions": "5250000"
+              }
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

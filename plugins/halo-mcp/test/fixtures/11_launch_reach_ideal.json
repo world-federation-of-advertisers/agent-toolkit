@@ -1,0 +1,872 @@
+{
+  "name": "measurementConsumers/synthmc001/basicReports/br_011",
+  "title": "Brand G Product Launch - Fast Reach Build",
+  "campaignGroup": "measurementConsumers/synthmc001/reportingSets/brandg_launch",
+  "campaignGroupDisplayName": "Brand G New Product Launch",
+  "reportingInterval": {
+    "reportStart": {
+      "year": 2025,
+      "month": 4,
+      "day": 7,
+      "hours": 5,
+      "timeOffset": {
+        "id": "America/New_York"
+      }
+    },
+    "reportEnd": {
+      "year": 2025,
+      "month": 5,
+      "day": 5
+    }
+  },
+  "impressionQualificationFilters": [
+    {
+      "impressionQualificationFilter": "impressionQualificationFilters/ami_standard"
+    }
+  ],
+  "effectiveImpressionQualificationFilters": [
+    {
+      "impressionQualificationFilter": "impressionQualificationFilters/ami_standard"
+    }
+  ],
+  "state": "SUCCEEDED",
+  "modelLine": "modelProviders/synthetic_provider/modelLines/synth_model_v1",
+  "effectiveModelLine": "modelProviders/synthetic_provider/modelLines/synth_model_v1",
+  "createTime": {
+    "seconds": 1746489600
+  },
+  "resultGroupSpecs": [
+    {
+      "title": "Weekly Cumulative",
+      "reportingUnit": {
+        "components": [
+          "dataProviders/tv_broadcaster_alpha",
+          "dataProviders/digital_platform_beta",
+          "dataProviders/social_platform_gamma"
+        ]
+      },
+      "metricFrequency": {
+        "weekly": "MONDAY"
+      },
+      "dimensionSpec": {
+        "grouping": {}
+      },
+      "resultGroupMetricSpec": {
+        "reportingUnit": {
+          "cumulative": {
+            "reach": "1",
+            "percentReach": true,
+            "impressions": "1"
+          },
+          "nonCumulative": {
+            "reach": "1",
+            "impressions": "1"
+          }
+        },
+        "component": {
+          "cumulative": {
+            "reach": "1"
+          },
+          "nonCumulative": {
+            "reach": "1",
+            "impressions": "1"
+          }
+        }
+      }
+    }
+  ],
+  "resultGroups": [
+    {
+      "title": "Week 1 (Apr 7 - Apr 13)",
+      "results": [
+        {
+          "metadata": {
+            "reportingUnitSummary": {
+              "reportingUnitComponentSummary": [
+                {
+                  "component": "dataProviders/tv_broadcaster_alpha",
+                  "displayName": "TV Broadcaster Alpha",
+                  "eventGroupSummaries": [
+                    {
+                      "eventGroup": "dataProviders/tv_broadcaster_alpha/eventGroups/eg_launch_tv"
+                    }
+                  ]
+                },
+                {
+                  "component": "dataProviders/digital_platform_beta",
+                  "displayName": "Digital Platform Beta",
+                  "eventGroupSummaries": [
+                    {
+                      "eventGroup": "dataProviders/digital_platform_beta/eventGroups/eg_launch_digital"
+                    }
+                  ]
+                },
+                {
+                  "component": "dataProviders/social_platform_gamma",
+                  "displayName": "Social Platform Gamma",
+                  "eventGroupSummaries": [
+                    {
+                      "eventGroup": "dataProviders/social_platform_gamma/eventGroups/eg_launch_social"
+                    }
+                  ]
+                }
+              ]
+            },
+            "cumulativeMetricStartTime": {
+              "seconds": 1744002000
+            },
+            "nonCumulativeMetricStartTime": {
+              "seconds": 1744002000
+            },
+            "metricEndTime": {
+              "seconds": 1744606800
+            },
+            "metricFrequency": {
+              "weekly": "MONDAY"
+            },
+            "dimensionSpecSummary": {},
+            "filter": {
+              "impressionQualificationFilter": "impressionQualificationFilters/ami_standard"
+            }
+          },
+          "metricSet": {
+            "populationSize": "55000000",
+            "reportingUnit": {
+              "cumulative": {
+                "reach": "18000000",
+                "percentReach": 0.3273,
+                "impressions": "54000000"
+              },
+              "nonCumulative": {
+                "reach": "18000000",
+                "impressions": "54000000"
+              }
+            },
+            "components": [
+              {
+                "key": "dataProviders/tv_broadcaster_alpha",
+                "value": {
+                  "cumulative": {
+                    "reach": "10000000"
+                  },
+                  "nonCumulative": {
+                    "reach": "10000000",
+                    "impressions": "28000000"
+                  }
+                }
+              },
+              {
+                "key": "dataProviders/digital_platform_beta",
+                "value": {
+                  "cumulative": {
+                    "reach": "8000000"
+                  },
+                  "nonCumulative": {
+                    "reach": "8000000",
+                    "impressions": "18000000"
+                  }
+                }
+              },
+              {
+                "key": "dataProviders/social_platform_gamma",
+                "value": {
+                  "cumulative": {
+                    "reach": "6000000"
+                  },
+                  "nonCumulative": {
+                    "reach": "6000000",
+                    "impressions": "8000000"
+                  }
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "title": "Week 2 (Apr 14 - Apr 20)",
+      "results": [
+        {
+          "metadata": {
+            "reportingUnitSummary": {
+              "reportingUnitComponentSummary": [
+                {
+                  "component": "dataProviders/tv_broadcaster_alpha",
+                  "displayName": "TV Broadcaster Alpha",
+                  "eventGroupSummaries": [
+                    {
+                      "eventGroup": "dataProviders/tv_broadcaster_alpha/eventGroups/eg_launch_tv"
+                    }
+                  ]
+                },
+                {
+                  "component": "dataProviders/digital_platform_beta",
+                  "displayName": "Digital Platform Beta",
+                  "eventGroupSummaries": [
+                    {
+                      "eventGroup": "dataProviders/digital_platform_beta/eventGroups/eg_launch_digital"
+                    }
+                  ]
+                },
+                {
+                  "component": "dataProviders/social_platform_gamma",
+                  "displayName": "Social Platform Gamma",
+                  "eventGroupSummaries": [
+                    {
+                      "eventGroup": "dataProviders/social_platform_gamma/eventGroups/eg_launch_social"
+                    }
+                  ]
+                }
+              ]
+            },
+            "cumulativeMetricStartTime": {
+              "seconds": 1744002000
+            },
+            "nonCumulativeMetricStartTime": {
+              "seconds": 1744606800
+            },
+            "metricEndTime": {
+              "seconds": 1745211600
+            },
+            "metricFrequency": {
+              "weekly": "MONDAY"
+            },
+            "dimensionSpecSummary": {},
+            "filter": {
+              "impressionQualificationFilter": "impressionQualificationFilters/ami_standard"
+            }
+          },
+          "metricSet": {
+            "populationSize": "55000000",
+            "reportingUnit": {
+              "cumulative": {
+                "reach": "24000000",
+                "percentReach": 0.4364,
+                "impressions": "96000000"
+              },
+              "nonCumulative": {
+                "reach": "14000000",
+                "impressions": "42000000"
+              }
+            },
+            "components": [
+              {
+                "key": "dataProviders/tv_broadcaster_alpha",
+                "value": {
+                  "cumulative": {
+                    "reach": "14000000"
+                  },
+                  "nonCumulative": {
+                    "reach": "8000000",
+                    "impressions": "22000000"
+                  }
+                }
+              },
+              {
+                "key": "dataProviders/digital_platform_beta",
+                "value": {
+                  "cumulative": {
+                    "reach": "11000000"
+                  },
+                  "nonCumulative": {
+                    "reach": "6000000",
+                    "impressions": "13000000"
+                  }
+                }
+              },
+              {
+                "key": "dataProviders/social_platform_gamma",
+                "value": {
+                  "cumulative": {
+                    "reach": "8500000"
+                  },
+                  "nonCumulative": {
+                    "reach": "5000000",
+                    "impressions": "7000000"
+                  }
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "title": "Week 3 (Apr 21 - Apr 27)",
+      "results": [
+        {
+          "metadata": {
+            "reportingUnitSummary": {
+              "reportingUnitComponentSummary": [
+                {
+                  "component": "dataProviders/tv_broadcaster_alpha",
+                  "displayName": "TV Broadcaster Alpha",
+                  "eventGroupSummaries": [
+                    {
+                      "eventGroup": "dataProviders/tv_broadcaster_alpha/eventGroups/eg_launch_tv"
+                    }
+                  ]
+                },
+                {
+                  "component": "dataProviders/digital_platform_beta",
+                  "displayName": "Digital Platform Beta",
+                  "eventGroupSummaries": [
+                    {
+                      "eventGroup": "dataProviders/digital_platform_beta/eventGroups/eg_launch_digital"
+                    }
+                  ]
+                },
+                {
+                  "component": "dataProviders/social_platform_gamma",
+                  "displayName": "Social Platform Gamma",
+                  "eventGroupSummaries": [
+                    {
+                      "eventGroup": "dataProviders/social_platform_gamma/eventGroups/eg_launch_social"
+                    }
+                  ]
+                }
+              ]
+            },
+            "cumulativeMetricStartTime": {
+              "seconds": 1744002000
+            },
+            "nonCumulativeMetricStartTime": {
+              "seconds": 1745211600
+            },
+            "metricEndTime": {
+              "seconds": 1745816400
+            },
+            "metricFrequency": {
+              "weekly": "MONDAY"
+            },
+            "dimensionSpecSummary": {},
+            "filter": {
+              "impressionQualificationFilter": "impressionQualificationFilters/ami_standard"
+            }
+          },
+          "metricSet": {
+            "populationSize": "55000000",
+            "reportingUnit": {
+              "cumulative": {
+                "reach": "27000000",
+                "percentReach": 0.4909,
+                "impressions": "123000000"
+              },
+              "nonCumulative": {
+                "reach": "10000000",
+                "impressions": "27000000"
+              }
+            },
+            "components": [
+              {
+                "key": "dataProviders/tv_broadcaster_alpha",
+                "value": {
+                  "cumulative": {
+                    "reach": "16500000"
+                  },
+                  "nonCumulative": {
+                    "reach": "5500000",
+                    "impressions": "14000000"
+                  }
+                }
+              },
+              {
+                "key": "dataProviders/digital_platform_beta",
+                "value": {
+                  "cumulative": {
+                    "reach": "13000000"
+                  },
+                  "nonCumulative": {
+                    "reach": "4500000",
+                    "impressions": "9000000"
+                  }
+                }
+              },
+              {
+                "key": "dataProviders/social_platform_gamma",
+                "value": {
+                  "cumulative": {
+                    "reach": "10000000"
+                  },
+                  "nonCumulative": {
+                    "reach": "3500000",
+                    "impressions": "4000000"
+                  }
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "title": "Week 4 (Apr 28 - May 4)",
+      "results": [
+        {
+          "metadata": {
+            "reportingUnitSummary": {
+              "reportingUnitComponentSummary": [
+                {
+                  "component": "dataProviders/tv_broadcaster_alpha",
+                  "displayName": "TV Broadcaster Alpha",
+                  "eventGroupSummaries": [
+                    {
+                      "eventGroup": "dataProviders/tv_broadcaster_alpha/eventGroups/eg_launch_tv"
+                    }
+                  ]
+                },
+                {
+                  "component": "dataProviders/digital_platform_beta",
+                  "displayName": "Digital Platform Beta",
+                  "eventGroupSummaries": [
+                    {
+                      "eventGroup": "dataProviders/digital_platform_beta/eventGroups/eg_launch_digital"
+                    }
+                  ]
+                },
+                {
+                  "component": "dataProviders/social_platform_gamma",
+                  "displayName": "Social Platform Gamma",
+                  "eventGroupSummaries": [
+                    {
+                      "eventGroup": "dataProviders/social_platform_gamma/eventGroups/eg_launch_social"
+                    }
+                  ]
+                }
+              ]
+            },
+            "cumulativeMetricStartTime": {
+              "seconds": 1744002000
+            },
+            "nonCumulativeMetricStartTime": {
+              "seconds": 1745816400
+            },
+            "metricEndTime": {
+              "seconds": 1746421200
+            },
+            "metricFrequency": {
+              "weekly": "MONDAY"
+            },
+            "dimensionSpecSummary": {},
+            "filter": {
+              "impressionQualificationFilter": "impressionQualificationFilters/ami_standard"
+            }
+          },
+          "metricSet": {
+            "populationSize": "55000000",
+            "reportingUnit": {
+              "cumulative": {
+                "reach": "30000000",
+                "percentReach": 0.5455,
+                "impressions": "144000000"
+              },
+              "nonCumulative": {
+                "reach": "7000000",
+                "impressions": "21000000"
+              }
+            },
+            "components": [
+              {
+                "key": "dataProviders/tv_broadcaster_alpha",
+                "value": {
+                  "cumulative": {
+                    "reach": "18000000"
+                  },
+                  "nonCumulative": {
+                    "reach": "3500000",
+                    "impressions": "10000000"
+                  }
+                }
+              },
+              {
+                "key": "dataProviders/digital_platform_beta",
+                "value": {
+                  "cumulative": {
+                    "reach": "14500000"
+                  },
+                  "nonCumulative": {
+                    "reach": "3000000",
+                    "impressions": "8000000"
+                  }
+                }
+              },
+              {
+                "key": "dataProviders/social_platform_gamma",
+                "value": {
+                  "cumulative": {
+                    "reach": "11000000"
+                  },
+                  "nonCumulative": {
+                    "reach": "2500000",
+                    "impressions": "3000000"
+                  }
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "title": "Demographic Breakdown",
+      "results": [
+        {
+          "metadata": {
+            "reportingUnitSummary": {
+              "components": [
+                {
+                  "key": "dataProviders/tv_broadcaster_alpha",
+                  "displayName": "TV Broadcaster Alpha"
+                },
+                {
+                  "key": "dataProviders/digital_platform_beta",
+                  "displayName": "Digital Platform Beta"
+                },
+                {
+                  "key": "dataProviders/social_platform_gamma",
+                  "displayName": "Social Platform Gamma"
+                }
+              ],
+              "reportingUnitComponentSummary": [
+                {
+                  "dataProvider": "dataProviders/tv_broadcaster_alpha",
+                  "displayName": "Tv Broadcaster Alpha"
+                },
+                {
+                  "dataProvider": "dataProviders/digital_platform_beta",
+                  "displayName": "Digital Platform Beta"
+                },
+                {
+                  "dataProvider": "dataProviders/social_platform_gamma",
+                  "displayName": "Social Platform Gamma"
+                }
+              ]
+            },
+            "metricFrequency": {
+              "total": true
+            },
+            "dimensionSpecSummary": {
+              "groupings": [
+                {
+                  "eventTemplateFields": [
+                    "common.gender",
+                    "common.age_group"
+                  ]
+                }
+              ]
+            }
+          },
+          "metricSet": {
+            "populationSize": "55000000",
+            "reportingUnit": {
+              "cumulative": {
+                "reach": "30000000",
+                "percentReach": 54.5,
+                "averageFrequency": 4.8,
+                "impressions": "144000000",
+                "kPlusReach": [
+                  "30000000",
+                  "12660142",
+                  "5342640",
+                  "2254619",
+                  "951460",
+                  "401521",
+                  "169444"
+                ]
+              },
+              "stackedIncrementalReach": [
+                "16200000",
+                "7527272",
+                "6272728"
+              ]
+            },
+            "components": [
+              {
+                "key": "dataProviders/tv_broadcaster_alpha",
+                "value": {
+                  "cumulative": {
+                    "reach": "17550000",
+                    "percentReach": 0.319091,
+                    "averageFrequency": 4.8,
+                    "impressions": "84240000"
+                  },
+                  "cumulativeUnique": {
+                    "reach": "10643025"
+                  }
+                }
+              },
+              {
+                "key": "dataProviders/digital_platform_beta",
+                "value": {
+                  "cumulative": {
+                    "reach": "11700000",
+                    "percentReach": 0.212727,
+                    "averageFrequency": 6.24,
+                    "impressions": "73008000"
+                  },
+                  "cumulativeUnique": {
+                    "reach": "5839534"
+                  }
+                }
+              },
+              {
+                "key": "dataProviders/social_platform_gamma",
+                "value": {
+                  "cumulative": {
+                    "reach": "9750000",
+                    "percentReach": 0.177273,
+                    "averageFrequency": 3.84,
+                    "impressions": "37440000"
+                  },
+                  "cumulativeUnique": {
+                    "reach": "4517441"
+                  }
+                }
+              }
+            ],
+            "componentIntersections": [
+              {
+                "components": [
+                  "dataProviders/tv_broadcaster_alpha",
+                  "dataProviders/digital_platform_beta"
+                ],
+                "cumulative": {
+                  "reach": "3767441"
+                }
+              },
+              {
+                "components": [
+                  "dataProviders/tv_broadcaster_alpha",
+                  "dataProviders/social_platform_gamma"
+                ],
+                "cumulative": {
+                  "reach": "3139534"
+                }
+              },
+              {
+                "components": [
+                  "dataProviders/digital_platform_beta",
+                  "dataProviders/social_platform_gamma"
+                ],
+                "cumulative": {
+                  "reach": "2093025"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "metadata": {
+            "dimensionSpecSummary": {
+              "groupings": [
+                {
+                  "eventTemplateFields": [
+                    "common.gender",
+                    "common.age_group"
+                  ]
+                }
+              ],
+              "filters": [
+                {
+                  "key": "common.gender",
+                  "value": "Female"
+                },
+                {
+                  "key": "common.age_group",
+                  "value": "18-34"
+                }
+              ]
+            }
+          },
+          "metricSet": {
+            "populationSize": "9400000",
+            "reportingUnit": {
+              "cumulative": {
+                "reach": "5384000",
+                "percentReach": 57.3,
+                "averageFrequency": 5.04,
+                "impressions": "27135000"
+              }
+            }
+          }
+        },
+        {
+          "metadata": {
+            "dimensionSpecSummary": {
+              "groupings": [
+                {
+                  "eventTemplateFields": [
+                    "common.gender",
+                    "common.age_group"
+                  ]
+                }
+              ],
+              "filters": [
+                {
+                  "key": "common.gender",
+                  "value": "Female"
+                },
+                {
+                  "key": "common.age_group",
+                  "value": "35-54"
+                }
+              ]
+            }
+          },
+          "metricSet": {
+            "populationSize": "9400000",
+            "reportingUnit": {
+              "cumulative": {
+                "reach": "5025000",
+                "percentReach": 53.5,
+                "averageFrequency": 4.66,
+                "impressions": "23416000"
+              }
+            }
+          }
+        },
+        {
+          "metadata": {
+            "dimensionSpecSummary": {
+              "groupings": [
+                {
+                  "eventTemplateFields": [
+                    "common.gender",
+                    "common.age_group"
+                  ]
+                }
+              ],
+              "filters": [
+                {
+                  "key": "common.gender",
+                  "value": "Female"
+                },
+                {
+                  "key": "common.age_group",
+                  "value": "55+"
+                }
+              ]
+            }
+          },
+          "metricSet": {
+            "populationSize": "8800000",
+            "reportingUnit": {
+              "cumulative": {
+                "reach": "4416000",
+                "percentReach": 50.2,
+                "averageFrequency": 4.46,
+                "impressions": "19695000"
+              }
+            }
+          }
+        },
+        {
+          "metadata": {
+            "dimensionSpecSummary": {
+              "groupings": [
+                {
+                  "eventTemplateFields": [
+                    "common.gender",
+                    "common.age_group"
+                  ]
+                }
+              ],
+              "filters": [
+                {
+                  "key": "common.gender",
+                  "value": "Male"
+                },
+                {
+                  "key": "common.age_group",
+                  "value": "18-34"
+                }
+              ]
+            }
+          },
+          "metricSet": {
+            "populationSize": "9400000",
+            "reportingUnit": {
+              "cumulative": {
+                "reach": "5230000",
+                "percentReach": 55.6,
+                "averageFrequency": 5.18,
+                "impressions": "27091000"
+              }
+            }
+          }
+        },
+        {
+          "metadata": {
+            "dimensionSpecSummary": {
+              "groupings": [
+                {
+                  "eventTemplateFields": [
+                    "common.gender",
+                    "common.age_group"
+                  ]
+                }
+              ],
+              "filters": [
+                {
+                  "key": "common.gender",
+                  "value": "Male"
+                },
+                {
+                  "key": "common.age_group",
+                  "value": "35-54"
+                }
+              ]
+            }
+          },
+          "metricSet": {
+            "populationSize": "9400000",
+            "reportingUnit": {
+              "cumulative": {
+                "reach": "4871000",
+                "percentReach": 51.8,
+                "averageFrequency": 4.8,
+                "impressions": "23381000"
+              }
+            }
+          }
+        },
+        {
+          "metadata": {
+            "dimensionSpecSummary": {
+              "groupings": [
+                {
+                  "eventTemplateFields": [
+                    "common.gender",
+                    "common.age_group"
+                  ]
+                }
+              ],
+              "filters": [
+                {
+                  "key": "common.gender",
+                  "value": "Male"
+                },
+                {
+                  "key": "common.age_group",
+                  "value": "55+"
+                }
+              ]
+            }
+          },
+          "metricSet": {
+            "populationSize": "8800000",
+            "reportingUnit": {
+              "cumulative": {
+                "reach": "4224000",
+                "percentReach": 48.0,
+                "averageFrequency": 4.32,
+                "impressions": "18248000"
+              }
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
