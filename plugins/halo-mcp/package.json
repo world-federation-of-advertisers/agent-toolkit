@@ -1,6 +1,6 @@
 {
   "name": "halo-mcp",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "MCP server + interactive React UI for the Halo Cross-Media Measurement API (WFA)",
   "scripts": {
     "typecheck": "tsc --noEmit",
