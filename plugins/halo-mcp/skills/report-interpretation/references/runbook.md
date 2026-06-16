@@ -21,7 +21,7 @@ Top-level fields:
 | `name` | string | `measurementConsumers/{mc}/basicReports/{id}` |
 | `title` | string | Human-readable title |
 | `campaignGroup` / `campaignGroupDisplayName` | string | ReportingSet of EventGroups under measurement |
-| `reportingInterval` | object | `{ reportStart: { year, month, day, timeZone }, reportEnd: { ... } }` |
+| `reportingInterval` | object | `{ reportStart, reportEnd }` — ISO date strings (e.g. `"2026-01-13"`) |
 | `impressionQualificationFilters` | array | IQ filters — each is either `{ filter: "amiMrc" }` etc. (named) or `{ customFilters: [{ mediaType, filters }] }` |
 | `effectiveImpressionQualificationFilters` | array | System-augmented IQ filters actually applied |
 | `resultGroupSpecs` | array | What was requested |

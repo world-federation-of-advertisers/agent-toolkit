@@ -18,12 +18,12 @@ The skill is analytical, not mechanical — it consumes deterministic metrics (w
 - Auditing a generated deck against the source response.
 
 When NOT to use:
-- **Fetching** a report or **rendering** slides/HTML — install the `halo-mcp` plugin (or Desktop Extension) and call its `list_basic_reports` / `get_basic_report` / `export_basic_report` tools.
+- **Fetching** a report or **rendering** slides/HTML — install the `halo-mcp` plugin (or Desktop Extension) and call its `list_basic_reports` / `show_report_summary` / `export_basic_report` tools.
 - Reports not in state `SUCCEEDED` (halted in Step 2).
 
 ## Workflow
 
-1. **Parse + present a Report Summary Card.** Extract `title`, `campaignGroupDisplayName`, `reportingInterval` (`reportStart` → `reportEnd` + duration in days), `state`, `effectiveModelLine`, IQ filters (`impressionQualificationFilters` + `effectiveImpressionQualificationFilters`), publisher list (DataProvider `displayName`s from result-group metadata), result-group titles, metric frequency (`metricFrequencySpec.weekly` vs `total`), and the metrics actually present across `resultGroupSpecs`.
+1. **Parse + present a Report Summary Card.** Extract `title`, `campaignGroupDisplayName`, `reportingInterval` (`reportStart` → `reportEnd` + duration in days), `state`, `effectiveModelLine`, IQ filters (`impressionQualificationFilters` + `effectiveImpressionQualificationFilters`), publisher list (DataProvider `displayName`s from result-group metadata), result-group titles, metric frequency (`metadata.metricFrequency.weekly` vs `total`), and the metrics actually present across `resultGroupSpecs`.
 
 2. **State check — HALT if `state != SUCCEEDED`.** Surface the per-state message (`RUNNING` / `FAILED` / `INVALID` / `STATE_UNSPECIFIED`) and stop — do **not** run pitfall detection on incomplete data.
 
