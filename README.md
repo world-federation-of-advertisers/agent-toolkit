@@ -30,6 +30,10 @@ An MCP server that exposes the Halo Reporting API as tools, renders interactive 
 
 A standalone `SKILL.md` that teaches any LLM agent how to drive the Halo MCP tools: which tool to call for a given question, the discovery sequence (list → summary → drill down → export), and common interpretation pitfalls.
 
+### `report-interpretation` — Agent skill
+
+A standalone `SKILL.md` that teaches any LLM agent how to interpret Halo cross-media measurement reports: what the metrics mean, how to read cross-publisher reach, what constitutes a good frequency distribution, and how to narrate findings for a media planner audience.
+
 Download the per-skill `.zip` bundles from the [Releases](https://github.com/world-federation-of-advertisers/agent-toolkit/releases) page.
 
 ## Installation

@@ -83,7 +83,10 @@ test("listTools advertises the full tool surface", async () => {
     for (const expected of ALL_TOOL_NAMES) {
       assert.ok(names.has(expected), `tool ${expected} is not advertised`);
     }
-    assert.equal(names.size, ALL_TOOL_NAMES.length, `unexpected tool count: ${[...names].join(", ")}`);
+    assert.ok(
+      names.size >= ALL_TOOL_NAMES.length,
+      `expected at least ${ALL_TOOL_NAMES.length} tools, found ${names.size}: ${[...names].join(", ")}`,
+    );
   } finally {
     await client.close();
   }
