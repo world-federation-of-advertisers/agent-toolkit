@@ -1,6 +1,6 @@
 ---
 name: report-interpretation
-description: Use when the user wants to interpret, audit, or critique a Halo cross-media measurement `BasicReport` — goal alignment, pitfall detection, red-flag review, or an executive summary.
+description: Use when the user asks what a Halo cross-media measurement `BasicReport` means or wants an executive summary, audit, or critique of it.
 ---
 
 # Halo Report Interpretation
