@@ -1,6 +1,6 @@
 ---
 name: report-interpretation
-description: Use when interpreting, reviewing, critiquing, or auditing a Halo cross-media measurement `BasicReport` JSON response (from `GET /v2alpha/{mc}/basicReports/{id}`) — e.g. the user asks "what does this report mean?", "is this campaign performing well?", "are there any red flags?", wants an executive summary or goal-aligned analysis, or wants to score an already-generated deck against the source response.
+description: Use when the user wants to interpret, audit, or critique a Halo cross-media measurement `BasicReport` — goal alignment, pitfall detection, red-flag review, or an executive summary.
 ---
 
 # Halo Report Interpretation
@@ -34,13 +34,13 @@ When NOT to use:
    - Run **all 18 pitfall checks** and assign severities `HIGH` / `MEDIUM` / `LOW` / `INFO` (runbook § Pitfalls).
    - Flag any missing-but-expected data (runbook § Missing Data).
 
-5. **Emit the structured JSON.** Single source of truth for human reading and downstream rendering. Full schema, annotation-quality rules, and the rule that `custom_graphs` is always `[]` live in runbook § Output.
+5. **Emit the structured JSON.** Single source of truth for human reading and downstream rendering. Full schema and annotation-quality rules live in runbook § Output.
 
 ## Output Shape
 
 Top-level keys (full schema in runbook § Output):
 
-`executive_summary` · `goal_category` · `goal_number` · `scenario` · `key_metrics_summary` · `pitfalls[]` · `graph_annotations{}` · `custom_graphs` (always `[]`) · `recommendations[]` · `critic_assessment`
+`executive_summary` · `goal_category` · `goal_number` · `scenario` (`strong|adequate|concerning|poor`) · `key_metrics_summary` · `pitfalls[]` · `graph_annotations{}` · `recommendations[]`
 
 Every `HIGH` / `MEDIUM` pitfall MUST carry at least one `graph_annotations` entry pointing to the chart where the problem is visible — this drives warning callouts in the rendered deck/HTML.
 

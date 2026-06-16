@@ -8,7 +8,7 @@ Operational reference for the [`report-interpretation`](../SKILL.md) skill. All 
 - [Missing-Data Flags](#missing-data-flags) — expected-but-absent data per goal
 - [Goals](#goals) — the 13-option menu + goal-to-metric mapping
 - [Pitfalls](#pitfalls) — the 18 detection rules with severity thresholds
-- [Output](#output) — JSON schema, annotation quality, batch processing
+- [Output](#output) — JSON schema, annotation quality
 
 ---
 
@@ -390,7 +390,7 @@ The interpretation emits a single JSON object — the single source of truth for
   "executive_summary": "...",   // 2-3 sentences, ANALYTICAL — campaign overview with specific numbers, goal-alignment verdict, most critical issue (if any). Not a template.
   "goal_category": "Maximum Reach",
   "goal_number": 1,
-  "scenario": "ideal|poor|problematic|miss|too_high|skewed|slow|decay",
+  "scenario": "strong|adequate|concerning|poor",   // overall quality verdict; per-issue detail lives in pitfalls[]
   "key_metrics_summary": "Reach: 33.7M (61.3%) | Freq: 4.27 | GRPs: 261.74",
 
   "pitfalls": [
@@ -420,15 +420,11 @@ The interpretation emits a single JSON object — the single source of truth for
     "kpi_reach": null
   },
 
-  "custom_graphs": [],
-
   "recommendations": [
     "Cap Beta frequency at 5-7 per user to prevent audience saturation.",
     "Redistribute pacing for even weekly delivery — current 9:1 ratio wastes early budget.",
     "Request weekly frequency histograms by publisher for ongoing monitoring."
-  ],
-
-  "critic_assessment": "Both expected pitfalls (frequency + pacing) correctly identified with cross-referencing. Beta identified as root cause."
+  ]
 }
 ```
 
@@ -453,9 +449,7 @@ Bad annotations:
 
 **Every HIGH / MEDIUM pitfall MUST also carry at least one `graph_annotations` entry on the pitfall itself**, pointing to the chart where the problem is most visible. This drives the warning callout below that chart.
 
-### `custom_graphs` — always `[]`
-
-The Halo MCP server renders the full standard chart set (stacked incremental, frequency distribution, weekly delivery, Venn overlap, publisher table, demographics) via its `show_*` tools and `export_basic_report`. The interpretation **annotates only** — it does not create new charts. Set `"custom_graphs": []` always.
+The interpretation **annotates only** — it does not create new charts. The Halo MCP server renders the full standard chart set (stacked incremental, frequency distribution, weekly delivery, Venn overlap, publisher table, demographics) via its `show_*` tools and `export_basic_report`.
 
 ### Per-goal supplementary guidance
 
@@ -481,16 +475,5 @@ The Halo MCP server renders the full standard chart set (stacked incremental, fr
 - Present AMI vs. MRC side-by-side.
 - AMI reach is always ≥ MRC reach.
 - The gap indicates viewability performance. AMI > 2× MRC for any publisher = significant viewability issue.
-
-### Batch interpretation
-
-Running the skill across many reports (e.g., for a demo UI or a regression set):
-
-1. Run interpretations in parallel batches of 5–6 reports via subagents. Each agent reads the report JSON for its batch and applies the 5-step workflow, writing one interpretation JSON per report.
-2. After all batches complete, run a quality audit:
-   - `executive_summary` length > 200 chars
-   - Every `HIGH` / `MEDIUM` pitfall has a `graph_annotations` entry
-   - `custom_graphs` is `[]`
-3. If quality issues are found, re-run the affected batch with corrected instructions.
 
 Downstream rendering (HTML dashboards, PowerPoint export) is handled by the `halo-mcp` server, not by this skill.
