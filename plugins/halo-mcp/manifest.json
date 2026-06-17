@@ -2,7 +2,7 @@
   "manifest_version": "0.2",
   "name": "halo",
   "display_name": "Halo Cross-Media Measurement",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Browse Halo Basic Reports, event groups, and reporting sets with interactive React dashboards. Export any report as PowerPoint.",
   "long_description": "A read-only MCP server for the Halo Cross-Media Measurement API. Renders interactive React dashboards inline in the chat (KPI cards, ECharts visualizations, publisher breakdowns, weekly trends) and exports any report as a native PowerPoint deck.",
   "author": {

@@ -1,7 +1,7 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
   "name": "halo",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Halo cross-media measurement: MCP server with interactive React dashboards plus report-interpretation skills",
   "author": {
     "name": "World Federation of Advertisers",
@@ -22,7 +22,7 @@
       "command": "npx",
       "args": [
         "-y",
-        "https://github.com/world-federation-of-advertisers/agent-toolkit/releases/download/v0.1.0/halo-mcp-0.1.0.tgz",
+        "https://github.com/world-federation-of-advertisers/agent-toolkit/releases/download/v0.2.0/halo-mcp-0.2.0.tgz",
         "--stdio"
       ],
       "env": {
