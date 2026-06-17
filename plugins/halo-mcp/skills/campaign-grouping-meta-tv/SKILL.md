@@ -26,9 +26,9 @@ When NOT to use:
 
 ## Quick reference
 
-**Inputs:** `--meta-csv`, `--tv-csv`, `--out-dir` (required); optional `--config-dir`, `--advertiser`, `--no-config-write`.
+**Inputs:** `--meta-csv`, `--tv-csv`, `--out-dir` (required); optional `--config-dir`, `--advertiser`, `--output-format csv|json|both`, `--no-config-write`.
 
-**Output:** six CSVs to `--out-dir` — `groupings.csv` (the 3-level hierarchy: L1 advertiser keyed on MC ID, L2 product group, L3 campaign rows sorted by `end_date`, `ongoing` last) plus `pending_review.csv` and four `flags_*.csv`.
+**Output:** six artifacts to `--out-dir` — `groupings` (the 3-level hierarchy: L1 advertiser keyed on MC ID, L2 product group, L3 campaign rows sorted by `end_date`, `ongoing` last) plus `pending_review` and four `flags_*`. CSV by default; `json`/`both` also emit a nested `groupings_nested.json`.
 
 **Per-campaign match order (first match wins):**
 1. `confirmed_campaigns[]` → use its `target_group`.

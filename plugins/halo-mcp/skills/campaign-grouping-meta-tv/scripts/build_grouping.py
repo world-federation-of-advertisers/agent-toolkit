@@ -4,7 +4,8 @@
 
 Implements the algorithm described in the sibling SKILL.md: portfolio-scoped
 campaign grouping over enriched Meta + TV CSV exports, with optional read/write
-per-advertiser configs. Emits six CSVs to --out-dir:
+per-advertiser configs. Emits six artifacts to --out-dir — CSV by default, or
+JSON / both via --output-format (JSON adds a nested groupings_nested.json):
 
   groupings.csv          - the canonical 3-level hierarchy
   pending_review.csv     - assignments awaiting user confirmation
@@ -712,6 +713,55 @@ def write_csv(path: str, rows: Iterable[dict[str, object]], cols: list[str]) -> 
             w.writerow({c: r.get(c, "") for c in cols})
 
 
+def write_json(path: str, data: object) -> None:
+    with open(path, "w", encoding="utf-8") as f:
+        json.dump(data, f, indent=2, ensure_ascii=False)
+
+
+_CAMPAIGN_COLS: list[str] = [
+    "measured_entity",
+    "campaign_id",
+    "campaign_name",
+    "optimization_goal",
+    "objective",
+    "age_min",
+    "age_max",
+    "gender",
+    "start_date",
+    "end_date",
+]
+
+
+def build_nested(results: list[dict[str, object]]) -> list[dict[str, object]]:
+    """Nested advertiser → groups[] → campaigns[] view of the flat grouping rows
+    (the JSON hierarchy documented in references/algorithm.md). Preserves the
+    sorted order of `results`."""
+    by_adv: dict[tuple[str, str], dict[str, object]] = {}
+    order: list[tuple[str, str]] = []
+    for r in results:
+        akey = (str(r.get("advertiser_name", "")), str(r.get("mc_id", "")))
+        if akey not in by_adv:
+            by_adv[akey] = {"advertiser_name": akey[0], "mc_id": akey[1], "_groups": {}}
+            order.append(akey)
+        groups = by_adv[akey]["_groups"]
+        gname = str(r.get("group_name", ""))
+        groups.setdefault(gname, []).append({c: r.get(c, "") for c in _CAMPAIGN_COLS})
+    out: list[dict[str, object]] = []
+    for akey in order:
+        adv = by_adv[akey]
+        out.append(
+            {
+                "advertiser_name": adv["advertiser_name"],
+                "mc_id": adv["mc_id"],
+                "groups": [
+                    {"group_name": g, "campaigns": c}
+                    for g, c in adv["_groups"].items()
+                ],
+            }
+        )
+    return out
+
+
 # === Main pipeline =======================================================
 
 
@@ -748,7 +798,15 @@ def main() -> None:
         "pure-AI grouping with no config writes.",
     )
     parser.add_argument(
-        "--out-dir", required=True, help="Output directory for the four CSV artifacts"
+        "--out-dir", required=True, help="Output directory for the CSV/JSON artifacts"
+    )
+    parser.add_argument(
+        "--output-format",
+        choices=("csv", "json", "both"),
+        default="csv",
+        help="Emit CSVs (default), JSON, or both. JSON adds a nested "
+        "groupings_nested.json (advertiser → groups → campaigns) alongside the "
+        "flat per-artifact JSON files.",
     )
     parser.add_argument(
         "--advertiser", default=None, help="Filter to one advertiser by name or MC_ID"
@@ -1146,49 +1204,7 @@ def main() -> None:
         )
     )
 
-    write_csv(
-        os.path.join(args.out_dir, "groupings.csv"),
-        results,
-        [
-            "advertiser_name",
-            "mc_id",
-            "group_name",
-            "measured_entity",
-            "campaign_id",
-            "campaign_name",
-            "optimization_goal",
-            "objective",
-            "age_min",
-            "age_max",
-            "gender",
-            "start_date",
-            "end_date",
-        ],
-    )
-    write_csv(
-        os.path.join(args.out_dir, "pending_review.csv"),
-        pending_review,
-        [
-            "advertiser_name",
-            "mc_id",
-            "campaign_id",
-            "campaign_name",
-            "suggested_group",
-            "rationale",
-        ],
-    )
-    write_csv(
-        os.path.join(args.out_dir, "flags_unrecognized.csv"),
-        flags_unrecognized,
-        ["advertiser_name", "mc_id", "campaign_id", "campaign_name", "reason"],
-    )
-    write_csv(
-        os.path.join(args.out_dir, "flags_anomalies.csv"),
-        flags_anomalies,
-        ["advertiser_name", "mc_id", "campaign_id", "campaign_name", "reason"],
-    )
-
-    # Dedupe TV low-conf by (tv_adv, proposed_mc_id) for human review surface
+    # Dedupe TV low-conf by (tv_adv, proposed_mc_id) for the human-review surface.
     seen: dict[tuple[str, str], dict[str, object]] = {}
     for r in flags_tv_lowconf:
         k = (str(r["tv_advertiser_name"]), str(r["proposed_mc_id"]))
@@ -1196,45 +1212,105 @@ def main() -> None:
             seen[k] = {**r, "tv_row_count": 1}
         else:
             seen[k]["tv_row_count"] = int(seen[k]["tv_row_count"]) + 1
-    write_csv(
-        os.path.join(args.out_dir, "flags_tv_lowconf.csv"),
-        seen.values(),
-        [
-            "tv_advertiser_name",
-            "proposed_meta_advertiser",
-            "proposed_mc_id",
-            "confidence",
-            "tv_row_count",
-            "reason",
-        ],
-    )
-    write_csv(
-        os.path.join(args.out_dir, "flags_cluster_drift.csv"),
-        flags_cluster_drift,
-        [
-            "advertiser_name",
-            "mc_id",
-            "campaign_id",
-            "campaign_name",
-            "assigned_group",
-            "suggested_next_group",
-            "cosine_distance",
-            "group_mean_distance",
-            "group_stddev",
-            "next_distance",
-            "reason",
-        ],
-    )
+
+    artifacts: list[tuple[str, list[dict[str, object]], list[str]]] = [
+        (
+            "groupings",
+            results,
+            [
+                "advertiser_name",
+                "mc_id",
+                "group_name",
+                "measured_entity",
+                "campaign_id",
+                "campaign_name",
+                "optimization_goal",
+                "objective",
+                "age_min",
+                "age_max",
+                "gender",
+                "start_date",
+                "end_date",
+            ],
+        ),
+        (
+            "pending_review",
+            pending_review,
+            [
+                "advertiser_name",
+                "mc_id",
+                "campaign_id",
+                "campaign_name",
+                "suggested_group",
+                "rationale",
+            ],
+        ),
+        (
+            "flags_unrecognized",
+            flags_unrecognized,
+            ["advertiser_name", "mc_id", "campaign_id", "campaign_name", "reason"],
+        ),
+        (
+            "flags_anomalies",
+            flags_anomalies,
+            ["advertiser_name", "mc_id", "campaign_id", "campaign_name", "reason"],
+        ),
+        (
+            "flags_tv_lowconf",
+            list(seen.values()),
+            [
+                "tv_advertiser_name",
+                "proposed_meta_advertiser",
+                "proposed_mc_id",
+                "confidence",
+                "tv_row_count",
+                "reason",
+            ],
+        ),
+        (
+            "flags_cluster_drift",
+            flags_cluster_drift,
+            [
+                "advertiser_name",
+                "mc_id",
+                "campaign_id",
+                "campaign_name",
+                "assigned_group",
+                "suggested_next_group",
+                "cosine_distance",
+                "group_mean_distance",
+                "group_stddev",
+                "next_distance",
+                "reason",
+            ],
+        ),
+    ]
+
+    fmt = args.output_format
+    for name, rows, cols in artifacts:
+        if fmt in ("csv", "both"):
+            write_csv(os.path.join(args.out_dir, name + ".csv"), rows, cols)
+        if fmt in ("json", "both"):
+            write_json(
+                os.path.join(args.out_dir, name + ".json"),
+                [{c: r.get(c, "") for c in cols} for r in rows],
+            )
+    if fmt in ("json", "both"):
+        write_json(
+            os.path.join(args.out_dir, "groupings_nested.json"),
+            build_nested(results),
+        )
 
     logger.info(
         "Wrote %d grouping rows, %d pending review, %d unrecognized, "
-        "%d anomalies, %d TV low-conf, %d cluster drift",
+        "%d anomalies, %d TV low-conf, %d cluster drift (format=%s)",
         len(results),
         len(pending_review),
         len(flags_unrecognized),
         len(flags_anomalies),
         len(seen),
         len(flags_cluster_drift),
+        fmt,
     )
 
 

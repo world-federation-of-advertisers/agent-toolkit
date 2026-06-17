@@ -17,14 +17,17 @@
 3. **Per-advertiser config directory** (`--config-dir`) — one file per MCID, read/write. See [halo-config-schema.md](./halo-config-schema.md).
 
 ### Output / filters
-- `--out-dir <dir>` (required) — directory for the emitted CSVs (see below).
+- `--out-dir <dir>` (required) — directory for the emitted artifacts (see below).
+- `--output-format csv|json|both` (default `csv`).
 - `--advertiser <name-or-mcid>` — restrict to one advertiser (default: all).
 - `--no-config-write` — read config but skip writing back (config-side dry run).
 - `--log-level DEBUG|INFO|WARNING|ERROR` (default `INFO`).
 
-The reference `build_grouping.py` writes six CSVs to `--out-dir`: `groupings.csv`,
-`pending_review.csv`, `flags_unrecognized.csv`, `flags_anomalies.csv`,
-`flags_tv_lowconf.csv`, `flags_cluster_drift.csv`.
+The reference `build_grouping.py` writes six artifacts to `--out-dir`:
+`groupings`, `pending_review`, `flags_unrecognized`, `flags_anomalies`,
+`flags_tv_lowconf`, `flags_cluster_drift`. With `--output-format csv` (default)
+these are `.csv`; with `json` they are `.json` plus a nested
+`groupings_nested.json` (advertiser → groups → campaigns); `both` emits all.
 
 ## Output: 3-level hierarchy
 
