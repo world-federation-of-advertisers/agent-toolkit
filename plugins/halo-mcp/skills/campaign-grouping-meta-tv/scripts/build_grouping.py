@@ -883,10 +883,24 @@ def main() -> None:
     flags_cluster_drift: list[dict[str, object]] = []
     campaign_vectors: list[dict[str, object]] = []
 
+    # Pre-index TV rows by resolved MC_ID so per-advertiser brand dictionaries
+    # don't get polluted by unrelated advertisers' TV brands.
+    tv_rows_by_mcid: dict[str, list[dict[str, str]]] = defaultdict(list)
+    for tr in tv_rows:
+        brand = (tr.get("Brand") or "").strip()
+        parts = [p.strip() for p in brand.split(" - ")] if brand else []
+        if parts and parts[0]:
+            mc_match, conf, _ = lookup_mcid_by_name(parts[0], name_to_mcid)
+            if mc_match and conf >= 0.7:
+                tv_rows_by_mcid[mc_match].append(tr)
+
     for mc, rows in mcid_to_rows.items():
         canonical = mcid_to_canonical.get(mc, rows[0].get("Advertiser Name", ""))
-        if target_filter and target_filter not in (mc, canonical):
-            continue
+        if target_filter and target_filter != mc:
+            tf_norm = normalize_for_match(target_filter)
+            names = mcid_to_meta_names.get(mc, set())
+            if tf_norm not in {normalize_for_match(n) for n in (names | {canonical})}:
+                continue
         cfg = configs_by_mcid.get(mc)
         lifecycle = (cfg.get("lifecycle") if cfg else None) or {}
         phase = (
@@ -902,7 +916,8 @@ def main() -> None:
             if isinstance(c, dict) and "campaign_id" in c
         }
 
-        brand_dict = build_brand_dictionary(rows, tv_rows)
+        tv_rows_for_mc = tv_rows_by_mcid.get(mc, [])
+        brand_dict = build_brand_dictionary(rows, tv_rows_for_mc)
         tfidf_vecs = build_tfidf_vectors(rows, canonical, brand_dict)
 
         if cfg:
