@@ -1,6 +1,6 @@
 # Campaign Grouping (Meta + TV) — portfolio-level campaign bucketing
 
-A skill that takes cross-media campaign exports (a Meta-side enriched CSV and a TV-side deduplicated CSV) and emits a single **Advertiser → Product Group → Campaign** hierarchy as CSV or JSON. It is portfolio-scoped by default (all advertisers in the export; optional `--advertiser` filter) and can read/write an optional per-advertiser config that makes grouping deterministic and improves over use.
+A skill that takes cross-media campaign exports (a Meta-side enriched CSV and a TV-side deduplicated CSV) and emits an **Advertiser → Product Group → Campaign** hierarchy as CSV and/or JSON. It is portfolio-scoped by default (all advertisers in the export; optional `--advertiser` filter) and reads an optional per-advertiser config to make grouping deterministic. (The full read/write config that *evolves* across runs is part of the design — the bundled reference script reads configs but does not yet write them back; see [Reference-implementation scope](#reference-implementation-scope).)
 
 ## Summary
 
@@ -20,7 +20,7 @@ This skill is the **engine** for a human-in-the-loop campaign-grouping UI, not a
 3. **The UI surfaces the output for review:**
    - **Groupings** — the canonical 3-level hierarchy (the answer artifact).
    - **Pending Review** — assignments awaiting user confirmation. During `initial_setup` this is *every* non-confirmed assignment; in `steady_state` it shrinks to AI-suggested rows, lower-confidence TV merges, and net-new similarity suggestions.
-   - **Flags** — `cluster_drift`, `tv_reconciliation_low_confidence`, `unrecognized`, `metadata_anomalies`, `stale_activity`.
+   - **Flags** — `cluster_drift`, `tv_reconciliation_low_confidence`, `unrecognized`, `metadata_anomalies`, `stale_activity`. *(The reference script emits the first four; `stale_activity` is design-only — see [Reference-implementation scope](#reference-implementation-scope).)*
 4. **The UI captures user actions** and translates them into config writes the skill respects on the next run:
 
    | User action in UI | Skill writes to config |
@@ -37,6 +37,23 @@ This skill is the **engine** for a human-in-the-loop campaign-grouping UI, not a
 
 Input fetching is **not** this skill's job (it expects already-enriched, correctly-shaped CSVs). Config storage is **not** prescribed (`--config-dir` works against a local directory or a shared mount).
 
+## Reference-implementation scope
+
+`scripts/build_grouping.py` is a **deterministic, stdlib-only reference implementation**. It intentionally implements a subset of the full design above — enough to produce the groupings + review/flag artifacts with zero dependencies. The UI/integrator builds the write-back loop (turning user actions into config edits) around it.
+
+| Capability | Reference script | Full design (spec) |
+|---|---|---|
+| Read per-advertiser config (rules / confirmed / catch_all / aliases / `lifecycle.phase`) | ✅ **JSON only** | YAML or JSON |
+| Grouping: confirmed → rules → TF-IDF clustering | ✅ | ✅ |
+| TV → MC_ID reconciliation (tiers 1–4) | ✅ | ✅ |
+| Cluster-drift detection | ✅ **TF-IDF cosine** (stand-in) | neural embeddings |
+| Emit groupings + `pending_review` + `flags_{unrecognized,anomalies,tv_lowconf,cluster_drift}` | ✅ (CSV and/or JSON) | ✅ |
+| **Config write-back** (persist `pending_review` / `flags` / `lifecycle` into the config) | ❌ not implemented | ✅ |
+| `flags_stale_activity` | ❌ not emitted | ✅ |
+| Similar-campaign (embedding KNN) suggestions | ❌ not implemented | ✅ |
+
+The ❌ rows are documented in the references as the **intended design**, not current script behavior. So the script *reads* configs and *writes output artifacts* only — it does not mutate the config files.
+
 ## Prerequisite — inputs must already carry creative metadata (important)
 
 The skill's grouping quality depends on each campaign already having **creative titles, creative bodies, optimization goal, objective, and demographics** — not just a campaign name. Campaign names are frequently opaque management codes, so the creative fields are what make brand/product clustering work. **This skill makes no API calls; it assumes the inputs are already enriched.**
@@ -49,9 +66,9 @@ The skill's grouping quality depends on each campaign already having **creative 
 ## Files
 
 - [`SKILL.md`](./SKILL.md) — the agent-facing skill: when to use, the enrichment prerequisite, the per-campaign match order, conventions, and common mistakes.
-- [`references/algorithm.md`](./references/algorithm.md) — the full algorithm (load → group → reconcile TV → merge → sort → write-back), the AI text-grouping pipeline, embedding-based validation, similar-campaign suggestions, and the design tradeoffs (including why TF-IDF and explicitly **not** embeddings for initial grouping).
-- [`references/halo-config-schema.md`](./references/halo-config-schema.md) — the full read/write per-advertiser config schema, lifecycle phases, TV-reconciliation tiers, and field reference.
-- [`scripts/build_grouping.py`](./scripts/build_grouping.py) — the deterministic reference implementation (the engine the UI workflow invokes): stdlib-only, argparse CLI, emitting six CSVs (groupings + pending_review + four flag files). See [references/algorithm.md](./references/algorithm.md) for the CLI examples.
+- [`references/algorithm.md`](./references/algorithm.md) — the full algorithm (load → group → reconcile TV → merge → sort), the AI text-grouping pipeline, the validation/similar-campaign passes, and the design tradeoffs (including why TF-IDF and explicitly **not** embeddings for initial grouping). Marks which steps are spec vs. in the reference script.
+- [`references/halo-config-schema.md`](./references/halo-config-schema.md) — the full per-advertiser config schema (the design's read/write contract), lifecycle phases, TV-reconciliation tiers, and field reference.
+- [`scripts/build_grouping.py`](./scripts/build_grouping.py) — the deterministic reference implementation (the engine the UI workflow invokes): stdlib-only, argparse CLI, emitting six artifacts as CSV and/or JSON (groupings + pending_review + four flag files). See [references/algorithm.md](./references/algorithm.md) for the CLI examples and [Reference-implementation scope](#reference-implementation-scope) for what it does vs. the design.
 - [`scripts/test_build_grouping.py`](./scripts/test_build_grouping.py) — stdlib `unittest` coverage for the implementation. Run `python3 scripts/test_build_grouping.py`.
 
 ## Conventions
@@ -67,8 +84,8 @@ The skill's grouping quality depends on each campaign already having **creative 
 |---|---|---|
 | Scope | One advertiser at a time | Multi-advertiser by default; `--advertiser` to filter |
 | Input | Multi-tab fetch output + TV sheet | Enriched Meta CSV + deduplicated TV CSV |
-| Output | Multi-tab spreadsheet | Single CSV or JSON |
+| Output | Multi-tab spreadsheet | CSV and/or JSON artifacts |
 | Pre-filter | Reach-aligned only | Includes all campaigns; reach filtering is downstream |
-| Config | None | Optional per-advertiser config (read/write, evolves with use) |
+| Config | None | Optional per-advertiser config (reference reads it; read/write evolution is design) |
 | Demo defaults | Per-tab handling | `"all adults"` literal for empty Age/Gender |
 | TV ongoing dates | Blank | `"ongoing"` sentinel |

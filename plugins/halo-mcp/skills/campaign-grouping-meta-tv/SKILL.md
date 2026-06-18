@@ -6,7 +6,7 @@ description: Use when grouping a portfolio of cross-media (Meta + TV) campaigns 
 # Campaign Grouping (Meta + TV)
 
 ## Overview
-Groups cross-media campaigns into a 3-level hierarchy — **Advertiser (L1) → Product Group (L2) → Campaign rows (L3)** — from two CSV inputs: an enriched Meta-side export and a deduplicated TV-side export. Emits a single CSV or JSON artifact. An optional per-advertiser config (read/write) makes grouping deterministic and lets it improve with use.
+Groups cross-media campaigns into a 3-level hierarchy — **Advertiser (L1) → Product Group (L2) → Campaign rows (L3)** — from two CSV inputs: an enriched Meta-side export and a deduplicated TV-side export. Emits CSV and/or JSON artifacts. An optional per-advertiser config makes grouping deterministic — the reference script **reads** it; write-back/evolution is spec-only for now (see [README.md](./README.md)).
 
 This skill is the **engine for a UI-driven, human-in-the-loop workflow**, not a one-shot command. See [README.md](./README.md) for the full intent and [references/algorithm.md](./references/algorithm.md) for the algorithm.
 
@@ -26,7 +26,7 @@ When NOT to use:
 
 ## Quick reference
 
-**Inputs:** `--meta-csv`, `--tv-csv`, `--out-dir` (required); optional `--config-dir`, `--advertiser`, `--output-format csv|json|both`, `--no-config-write`.
+**Inputs:** `--meta-csv`, `--tv-csv`, `--out-dir` (required); optional `--config-dir`, `--advertiser`, `--output-format csv|json|both`.
 
 **Output:** six artifacts to `--out-dir` — `groupings` (the 3-level hierarchy: L1 advertiser keyed on MC ID, L2 product group, L3 campaign rows sorted by `end_date`, `ongoing` last) plus `pending_review` and four `flags_*`. CSV by default; `json`/`both` also emit a nested `groupings_nested.json`.
 
@@ -43,5 +43,5 @@ Run `scripts/build_grouping.py` — the deterministic reference implementation (
 
 ## Common mistakes
 - **Skipping enrichment** — grouping on campaign names alone collapses to noise; confirm creative metadata is present first.
-- **Using embeddings for initial grouping** — they cluster by product *category*, not brand, and cross-merge different brands. Use TF-IDF; embeddings are only for the validation/similarity passes.
+- **Using embeddings for initial grouping** — they cluster by product *category*, not brand, and cross-merge different brands. Use TF-IDF; embeddings are reserved for the optional validation/similarity passes.
 - **Hiding `lifecycle.phase`** — first-run review is the whole portfolio; steady-state is a few rows. Surface the phase or the UI feels broken on day one.

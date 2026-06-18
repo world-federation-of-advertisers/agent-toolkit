@@ -3,7 +3,7 @@
 """campaign-grouping-meta-tv reference implementation.
 
 Implements the algorithm described in the sibling SKILL.md: portfolio-scoped
-campaign grouping over enriched Meta + TV CSV exports, with optional read/write
+campaign grouping over enriched Meta + TV CSV exports, with optional (read-only)
 per-advertiser configs. Emits six artifacts to --out-dir — CSV by default, or
 JSON / both via --output-format (JSON adds a nested groupings_nested.json):
 
@@ -794,8 +794,8 @@ def main() -> None:
     parser.add_argument(
         "--config-dir",
         default=None,
-        help="Per-advertiser config directory (read/write). If omitted, "
-        "pure-AI grouping with no config writes.",
+        help="Per-advertiser config directory (read-only). If omitted, "
+        "pure-AI grouping.",
     )
     parser.add_argument(
         "--out-dir", required=True, help="Output directory for the CSV/JSON artifacts"
@@ -810,11 +810,6 @@ def main() -> None:
     )
     parser.add_argument(
         "--advertiser", default=None, help="Filter to one advertiser by name or MC_ID"
-    )
-    parser.add_argument(
-        "--no-config-write",
-        action="store_true",
-        help="Read existing config but skip writing back",
     )
     parser.add_argument(
         "--log-level", default="INFO", choices=("DEBUG", "INFO", "WARNING", "ERROR")

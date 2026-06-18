@@ -2,10 +2,12 @@
 
 > **All values in this document are placeholder examples** (Acme Corporation / Widget Alpha / etc.). Do not treat them as real data — when seeding a new config, replace all values with the actual advertiser's identifiers, group names, and rules.
 
-This is the **full read/write schema** the skill operates on. It reads existing config to drive grouping and writes back AI suggestions, anomaly flags, and lifecycle state at the end of each run.
+This describes the **full read/write schema** of the *design*: configs are read to drive grouping, and AI suggestions / anomaly flags / lifecycle state are written back at the end of each run.
+
+> **Reference-implementation note.** `scripts/build_grouping.py` implements the **read** half only — it loads configs to drive grouping and emits suggestions/flags as **separate output artifacts** (`pending_review`, `flags_*`). It does **not** write back into the config files. The "Writes (config evolution)" section below is the intended design; a UI/integrator performs those writes. See [README — Reference-implementation scope](../README.md#reference-implementation-scope).
 
 ## File layout
-One file per advertiser, named by MCID or internal slug (e.g. `mc_acme_001.yaml` or `acme.yaml`). YAML or JSON both parse.
+One file per advertiser, named by MCID or internal slug (e.g. `mc_acme_001.json`). The reference script loads **`*.json` only** (stdlib, no YAML parser); the design also allows YAML.
 
 ## Lifecycle phases
 The config evolves through three phases; the skill auto-advances `lifecycle.phase` based on activity:
@@ -150,7 +152,7 @@ lifecycle:
 | `flags.unrecognized[]` | Campaigns the pipeline couldn't bucket via rules, with no high-confidence AI cluster. |
 | `flags.metadata_anomalies[]` | Campaigns with malformed/missing/contradictory metadata. |
 | `flags.stale_activity[]` | Campaigns whose `End Date` is far in the past or that haven't appeared in recent exports. |
-| `flags.cluster_drift[]` | Campaigns whose embedding distance from their group centroid exceeds 2σ above the group mean. Includes the suggested next-closest group. |
+| `flags.cluster_drift[]` | Campaigns whose distance from their group centroid exceeds 2σ above the group mean (reference uses **TF-IDF cosine**; design uses embeddings). Includes the suggested next-closest group. |
 | `flags.tv_reconciliation_low_confidence[]` | TV advertiser names partially matching an MC_ID (Jaccard ∈ [0.4, 0.7)) but not strongly enough to auto-merge. |
 | `lifecycle.phase` | Auto-advances `initial_setup → steady_state → adaptive_learning`. |
 | `lifecycle.last_run_at` | ISO timestamp every run. |

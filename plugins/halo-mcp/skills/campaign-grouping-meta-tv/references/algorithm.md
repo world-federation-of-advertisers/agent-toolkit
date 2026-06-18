@@ -14,13 +14,12 @@
    - `End Date = 31-12-9999` is the sentinel for **ongoing** campaigns.
 
 ### Optional
-3. **Per-advertiser config directory** (`--config-dir`) — one file per MCID, read/write. See [halo-config-schema.md](./halo-config-schema.md).
+3. **Per-advertiser config directory** (`--config-dir`) — one JSON file per MCID. The reference script **reads** these (config write-back is design-only — see [halo-config-schema.md](./halo-config-schema.md)).
 
 ### Output / filters
 - `--out-dir <dir>` (required) — directory for the emitted artifacts (see below).
 - `--output-format csv|json|both` (default `csv`).
 - `--advertiser <name-or-mcid>` — restrict to one advertiser (default: all).
-- `--no-config-write` — read config but skip writing back (config-side dry run).
 - `--log-level DEBUG|INFO|WARNING|ERROR` (default `INFO`).
 
 The reference `build_grouping.py` writes six artifacts to `--out-dir`:
@@ -118,10 +117,10 @@ Nested `advertiser → groups[] → campaigns[]`, all values illustrative placeh
         - **Platform/retailer noise** (post-splitting): generic platform and major-retailer tokens — e.g. placeholder forms like `partner`, `bigboxmart`, `megamart`, `grocerco`, `ecommerceco`, `valuestore`, `meta`, `instagram`, `facebook`, plus the actual retailer/platform names in your market. Add new ones as you encounter them — these appear at scale across creative copy/hashtags but never define a brand grouping.
 
       **v. Two-tier clustering**, picking one group per campaign:
-        - **Tier 1 — Discriminative (preferred)**: tokens appearing in ≥ 2 campaigns and < 70% of the advertiser's portfolio. Score by `weight × len(token) × log(N/df) × brand_boost` (TF-IDF flavor with a **3× multiplier** for tokens in the brand dictionary from step i). The brand boost ensures a real brand token (e.g. `widgetalpha`) beats a random high-IDF creative word. Handles multi-brand advertisers — picks `Widget Alpha` / `Widget Beta` / `Widget Gamma` as distinct labels.
+        - **Tier 1 — Discriminative (preferred)**: tokens appearing in ≥ 2 campaigns and < 70% of the advertiser's portfolio. Score by `weight × len(token) × log(N/df) × brand_boost` (TF-IDF flavor with a **3× multiplier** for tokens in the brand dictionary from step i). The brand boost ensures a real brand token (e.g. `alpha`) beats a random high-IDF creative word. Handles multi-brand advertisers — picks the distinct per-brand token for each (e.g. `Alpha` / `Beta` / `Gamma`).
         - **Tier 2 — Brand-defining (fallback)**: triggered only when Tier 1 produces ≤ 2 distinct labels across the advertiser's whole portfolio (i.e. effectively single-brand-line). Promotes tokens with ≥ 80% coverage instead. Among those, the scorer **prefers proper-noun-shaped tokens** (capitalized in any source field) over generic English copy. Catches single-brand-line advertisers that TF-IDF would otherwise ignore (their brand token has IDF ≈ 0) — e.g. a parent "ParentCo Holdings" whose only brand is `BrandName`.
 
-      **vi. Display normalization** — AI-derived labels are emitted with first-letter capitalization (`widgetalpha` → `Widget Alpha`) so they merge cleanly with TV-side labels (already proper-cased from `parts[1]`).
+      **vi. Display normalization** — the AI label is the single top discriminative token, emitted with first-letter capitalization (`alpha` → `Alpha`). **Known limitation:** because these are single tokens, they do **not** always merge with multi-word TV-side labels from `Brand parts[1]` (e.g. `Widget Alpha`), so one brand can surface as two L2 groups across Meta and TV. Recover by adding a `groups[].display_name` / `bucketing.rules[]` in config, or by normalizing TV `parts[1]` to a single token. (A multi-word-label improvement is tracked as a follow-up.)
 
       Every Tier-1/Tier-2 assignment goes into `pending_review[]` for the user to stamp (subject to lifecycle phase — see the schema doc).
 5. **TV → MC_ID reconciliation** (Meta is grouped first; TV joins to it). For each TV row, take `parts[0]` and tier-match it against **all advertiser names registered under each MC_ID**. Normalization includes NFKD accent folding, corp-suffix stripping (`Inc`/`SA`/`Corp`/`Intl`/etc.), and **apostrophe folding** — curly right `’` (U+2019), curly left `‘` (U+2018), backtick `` ` `` (U+0060), and acute `´` (U+00B4) all collapse to straight `'` (U+0027). (Required because TV often emits curly apostrophes while Meta uses straight — e.g. `ExampleCo’s` vs `ExampleCo's Corp` — and without folding they tokenize to different sets and never match.)
@@ -133,9 +132,9 @@ Nested `advertiser → groups[] → campaigns[]`, all values illustrative placeh
    Group (L2) for TV rows comes from `parts[1]`. If empty/generic, fall back to text-clustering the `Advert` field. TV anomalies (empty `Brand`, no ` - ` split) go to `flags.metadata_anomalies[]`.
 6. **Merge** Meta + TV under the same `(mc_id_or_canonical_name, group_name)` keys.
 7. **Sort & emit:** L1 alphabetical by `advertiser_name`; L2 alphabetical by `group_name`; L3 by `end_date` ascending (`ongoing` last).
-8. **Cluster validation** (optional — see below): for each L2 group with ≥ 3 campaigns, flag embedding outliers to `flags.cluster_drift[]`.
-9. **Similar-campaign suggestions** (optional — see below): for net-new campaigns, suggest a group via KNN to `confirmed_campaigns[]`.
-10. **Write-back** (unless `--no-config-write`): persist AI suggestions to `pending_review[]`, anomalies/drift/low-conf TV merges to `flags.*`, and update `lifecycle.last_run_at`.
+8. **Cluster-drift detection** (optional — see below): for each L2 group with ≥ 3 campaigns, flag drift outliers to `flags.cluster_drift`. The reference uses **TF-IDF cosine** distance; the design specifies neural embeddings.
+9. **Similar-campaign suggestions** (*design-only — not in the reference script*): for net-new campaigns, suggest a group via embedding KNN to `confirmed_campaigns`.
+10. **Config write-back** (*design-only — not in the reference script*): the design persists `pending_review` / `flags` / `lifecycle` back into the per-advertiser config. The reference instead emits these as separate output artifacts and never mutates the config files.
 
 ## Demographic defaults
 If `Age Min`, `Age Max`, or `Gender` is empty/missing in the Meta CSV, write the literal `"all adults"`. Do not invent numeric defaults. TV rows always emit `"all adults"` (TV CSV carries no demo).
@@ -156,6 +155,9 @@ def normalize(s):
 ```
 
 ## Embedding-based cluster validation
+
+> **Reference script:** uses **TF-IDF cosine** distance as a stand-in (same `flags.cluster_drift` output, no dependencies). The neural-embedding version described in this section is the design, not current script behavior.
+
 Once L2 groups are assigned (rules + AI clustering), optionally verify intra-cluster cohesion using campaign-level text embeddings.
 
 **Why:** TF-IDF token clustering is fast and yields human-readable labels but can't catch *semantic* drift — e.g. a campaign bucketed into "Brand A" because its name contains that literal token, even though the creative content is actually about "Brand B".
@@ -171,6 +173,9 @@ Once L2 groups are assigned (rules + AI clustering), optionally verify intra-clu
 **Not done here:** drifted campaigns are not auto-re-bucketed — drift goes to `flags.cluster_drift[]` for the user to triage (accept the suggestion, or stamp the original assignment into `confirmed_campaigns[]` to suppress future flags).
 
 ## Similar-campaign suggestions for net-new campaigns
+
+> **Design-only — not in the reference script** (it needs embeddings + cross-run state). Documented here as intended behavior.
+
 When a net-new campaign appears (its `campaign_id` wasn't in the previous run's input), check whether it looks like an existing confirmed campaign.
 
 **How:**
@@ -209,25 +214,25 @@ python3 scripts/build_grouping.py \
   --tv-csv /path/to/tv_campaigns_deduplicated.csv \
   --out-dir /tmp/grouping_out
 
-# All advertisers, with read/write config dir
+# All advertisers, with a config dir (read-only), JSON + CSV
 python3 scripts/build_grouping.py \
   --meta-csv meta.csv --tv-csv tv.csv \
   --config-dir /path/to/configs \
+  --output-format both \
   --out-dir /tmp/grouping_out
 
-# One advertiser by MCID, with config (config gets read AND updated)
+# One advertiser by MCID, with config
 python3 scripts/build_grouping.py \
   --meta-csv meta.csv --tv-csv tv.csv \
   --advertiser mc_acme_001 \
   --config-dir /path/to/configs \
   --out-dir /tmp/grouping_out
 
-# One advertiser by name (accent-insensitive), dry-run config side
+# One advertiser by name (accent-insensitive)
 python3 scripts/build_grouping.py \
   --meta-csv meta.csv --tv-csv tv.csv \
   --advertiser "Acme Corp" \
   --config-dir /path/to/configs \
-  --no-config-write \
   --out-dir /tmp/grouping_out
 ```
 
