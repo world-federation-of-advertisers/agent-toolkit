@@ -230,6 +230,36 @@ def build_brand_dictionary(
     return bd
 
 
+def build_canonical_labels(
+    tv_rows_for_mc: list[dict[str, str]],
+    cfg: dict[str, object] | None,
+) -> dict[str, str]:
+    """Map a single token → the canonical multi-word L2 label it belongs to,
+    sourced from this advertiser's TV `Brand` parts[1] and config group
+    display names. Used so a Meta-side AI label (a single discriminative token
+    like `alpha`) is emitted as the multi-word brand (`Widget Alpha`) and merges
+    with the TV-side group instead of fragmenting into a separate L2.
+
+    A token that maps to more than one label is ambiguous and dropped (the
+    caller falls back to `token.capitalize()`), so we never force a wrong merge."""
+    token_to_labels: dict[str, set[str]] = defaultdict(set)
+    for r in tv_rows_for_mc:
+        parts = [p.strip() for p in r.get("Brand", "").strip().split(" - ")]
+        label = parts[1] if len(parts) > 1 and parts[1] else ""
+        if label:
+            for t in tokenize(label):
+                token_to_labels[t].add(label)
+    adv = (cfg.get("advertiser") if cfg else None) or {}
+    if isinstance(adv, dict):
+        for g in adv.get("groups", []):
+            if isinstance(g, dict) and g.get("display_name"):
+                label = g["display_name"]
+                for t in tokenize(label):
+                    token_to_labels[t].add(label)
+    # Keep only unambiguous tokens (exactly one canonical label).
+    return {t: next(iter(s)) for t, s in token_to_labels.items() if len(s) == 1}
+
+
 # Pre-tokenization regexes for structured campaign-code stripping (Algorithm 4d-ii)
 _RE_KV_PAIR: re.Pattern[str] = re.compile(r"\b\w+~[^\s_]+", re.UNICODE)
 _RE_CAMPAIGN_ID: re.Pattern[str] = re.compile(r"\bcp_\d+\b|\b[Dd]\d[A-Za-z0-9]{4,}\b")
@@ -449,11 +479,18 @@ def detect_groups_text(
     advertiser_name: str,
     rows: list[dict[str, str]],
     brand_dict: set[str],
+    canonical_labels: dict[str, str] | None = None,
 ) -> list[tuple[str | None, str]]:
     """Two-tier text clustering. Returns per-row (group_label, rationale)."""
     adv_tokens = set(tokenize(advertiser_name))
     stop = GENERIC_TOKENS | adv_tokens
     sorted_brand = sorted(brand_dict, key=len, reverse=True)
+    labels = canonical_labels or {}
+
+    def label_for(token: str) -> str:
+        # Prefer the multi-word canonical label (from TV parts[1] / config) so
+        # Meta-side groups merge with TV-side ones; else title-case the token.
+        return labels.get(token, token.capitalize())
 
     per_camp_token_weight: list[dict[str, float]] = []
     proper_noun_tokens: set[str] = set()
@@ -523,7 +560,7 @@ def detect_groups_text(
             if top:
                 assignments.append(
                     (
-                        top.capitalize(),
+                        label_for(top),
                         f'Token "{top}" (in {doc_freq[top]}/{n} campaigns ≥80% — single-brand-line)',
                     )
                 )
@@ -531,7 +568,7 @@ def detect_groups_text(
         if disc_top is not None:
             assignments.append(
                 (
-                    disc_top.capitalize(),
+                    label_for(disc_top),
                     f'Token "{disc_top}" (in {doc_freq[disc_top]}/{n} campaigns)',
                 )
             )
@@ -540,7 +577,7 @@ def detect_groups_text(
         if top:
             assignments.append(
                 (
-                    top.capitalize(),
+                    label_for(top),
                     f'Token "{top}" (in {doc_freq[top]}/{n} campaigns ≥80% — fallback)',
                 )
             )
@@ -913,6 +950,7 @@ def main() -> None:
 
         tv_rows_for_mc = tv_rows_by_mcid.get(mc, [])
         brand_dict = build_brand_dictionary(rows, tv_rows_for_mc)
+        canonical_labels = build_canonical_labels(tv_rows_for_mc, cfg)
         tfidf_vecs = build_tfidf_vectors(rows, canonical, brand_dict)
 
         if cfg:
@@ -926,7 +964,9 @@ def main() -> None:
             fallback_idx = [i for i, (g, _) in enumerate(cfg_assignments) if g is None]
             fallback_rows = [rows[i] for i in fallback_idx]
             if fallback_rows:
-                fallback = detect_groups_text(canonical, fallback_rows, brand_dict)
+                fallback = detect_groups_text(
+                    canonical, fallback_rows, brand_dict, canonical_labels
+                )
                 for i, fa in zip(fallback_idx, fallback):
                     final[i] = fa
 
