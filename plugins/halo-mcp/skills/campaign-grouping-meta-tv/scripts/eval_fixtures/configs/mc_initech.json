@@ -1,0 +1,17 @@
+{
+  "advertiser": {
+    "mc_id": "mc_initech",
+    "display_name": "Initech",
+    "groups": [
+      {"slug": "cloud", "display_name": "Cloud"},
+      {"slug": "initech_other", "display_name": "Initech Other"}
+    ]
+  },
+  "bucketing": {
+    "rules": [
+      {"target_group": "cloud", "match_field": "campaign_name", "keywords": ["cloud"]}
+    ],
+    "catch_all": "initech_other"
+  },
+  "lifecycle": {"phase": "steady_state"}
+}

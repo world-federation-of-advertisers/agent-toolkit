@@ -15,3 +15,35 @@ jobs:
           python-version: "3.11"
       - name: Validate SKILL.md files
         run: python3 scripts/lint-skills.py
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Run skill unit tests
+        run: |
+          set -e
+          found=0
+          for t in plugins/*/skills/*/scripts/test_*.py; do
+            [ -e "$t" ] || continue
+            found=1
+            echo "::group::unittest $t"
+            ( cd "$(dirname "$t")" && python3 -m unittest "$(basename "${t%.py}")" -v )
+            echo "::endgroup::"
+          done
+          [ "$found" = 1 ] || echo "no skill unit tests found"
+      - name: Run skill evals
+        run: |
+          set -e
+          found=0
+          for e in plugins/*/skills/*/scripts/eval_*.py; do
+            [ -e "$e" ] || continue
+            found=1
+            echo "::group::eval $e"
+            python3 "$e"
+            echo "::endgroup::"
+          done
+          [ "$found" = 1 ] || echo "no skill evals found"
