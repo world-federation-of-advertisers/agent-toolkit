@@ -1,0 +1,18 @@
+Advertiser Name,MCID,Ad Account ID,Ad Account Name,Campaign ID,Campaign Name,Creative ID,Creative Titles,Creative Bodies,Optimization Goal,Objective,Age Min,Age Max,Gender,Media Type,Start Date,End Date
+Acme Corporation,mc_acme,widget alpha,Widget Alpha,100000000000001,Widget Alpha Spring,100000000000001c,Alpha hydration,Try Widget Alpha,REACH,AWARENESS,25,54,All,social,2026-01-15,2026-03-01
+Acme Corporation,mc_acme,widget alpha,Widget Alpha,100000000000002,Widget Alpha Summer,100000000000002c,Alpha glow,Widget Alpha summer,REACH,AWARENESS,25,54,All,social,2026-01-15,2026-03-01
+Acme Corporation,mc_acme,widget alpha,Widget Alpha,100000000000003,Widget Alpha Fall,100000000000003c,Alpha care,Widget Alpha fall,REACH,AWARENESS,45,35,All,social,2026-01-15,2026-03-01
+Acme Corporation,mc_acme,widget beta,Widget Beta,100000000000004,Widget Beta Launch,100000000000004c,Beta strong,Widget Beta launch,REACH,AWARENESS,25,54,All,social,2026-01-15,2026-03-01
+Acme Corporation,mc_acme,widget beta,Widget Beta,100000000000005,Widget Beta Promo,100000000000005c,Beta bold,Widget Beta promo,REACH,AWARENESS,25,54,All,social,2026-01-15,2026-03-01
+Acme Corporation,mc_acme,widget beta,Widget Beta,100000000000006,Widget Beta Deal,100000000000006c,Beta value,Widget Beta deal,REACH,AWARENESS,25,54,All,social,2026-01-15,2026-03-01
+Acme Corporation,mc_acme,widget gamma,Widget Gamma,100000000000007,Widget Gamma One,100000000000007c,Gamma shine,Widget Gamma one,REACH,AWARENESS,25,54,All,social,2026-01-15,2026-03-01
+Acme Corporation,mc_acme,widget gamma,Widget Gamma,100000000000008,Widget Gamma Two,100000000000008c,Gamma fresh,Widget Gamma two,REACH,AWARENESS,25,54,All,social,2026-01-15,2026-03-01
+Acme Corporation,mc_acme,widget gamma,Widget Gamma,100000000000009,Widget Gamma Three,100000000000009c,Gamma pure,Widget Gamma three,REACH,AWARENESS,25,54,All,social,2026-01-15,2026-03-01
+Globex Holdings,mc_globex,brightwash,Brightwash,200000000000001,Brightwash Daily,200000000000001c,Brightwash clean,Brightwash daily,REACH,AWARENESS,25,54,All,social,2026-01-15,2026-03-01
+Globex Holdings,mc_globex,brightwash,Brightwash,200000000000002,Brightwash Fresh,200000000000002c,Brightwash fresh,Brightwash fresh,REACH,AWARENESS,25,54,All,social,2026-01-15,2026-03-01
+Globex Holdings,mc_globex,brightwash,Brightwash,200000000000003,Brightwash Max,200000000000003c,Brightwash max,Brightwash max,REACH,AWARENESS,25,54,All,social,2026-01-15,2026-03-01
+Globex Holdings,mc_globex,brightwash,Brightwash,200000000000004,Brightwash Eco,200000000000004c,Brightwash eco,Brightwash eco,REACH,AWARENESS,25,54,All,social,2026-01-15,2026-03-01
+Initech Inc,mc_initech,initech cloud,Initech Cloud,300000000000001,Initech Cloud Reach,300000000000001c,Cloud deploy,Initech cloud,REACH,AWARENESS,25,54,All,social,2026-01-15,2026-03-01
+Initech Inc,mc_initech,initech cloud,Initech Cloud,300000000000002,Initech Cloud Spring,300000000000002c,Cloud scale,Initech cloud,REACH,AWARENESS,25,54,All,social,2026-01-15,2026-03-01
+Initech Inc,mc_initech,initech cloud,Initech Cloud,300000000000003,Initech Cloud Deploy,300000000000003c,Cloud build,Initech cloud,REACH,AWARENESS,25,54,All,social,2026-01-15,2026-03-01
+Initech Inc,mc_initech,initech,Initech,300000000000004,ID~B0000X00_YR~26_CN~AAAA_OB~AWA,300000000000004c,,,REACH,AWARENESS,25,54,All,social,2026-01-15,2026-03-01
